@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>레퍼런스 갤러리 | AXIS Design Gallery</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <script>try{var t=localStorage.getItem('axis-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const INDUSTRY_FILTERS = ['전체', '공공·금융', '제조·유통', '의료·제약', '서비스·기타', '에너지•인프라', '관리•지원'];
+    const SCREEN_FILTERS   = ['전체', 'EPA', 'Dashboard', 'UI/UX', 'Reporting', 'BI/OLAP'];
+
+    const PURPOSE_FILTERS = ['전체', '경영 현황 파악', '실적 모니터링', '운영 관제', '업무 처리', '데이터 분석', '보고서 조회'];
+    const LAYOUT_FILTERS  = ['전체', 'KPI 요약형', '좌측 필터형', '상단 필터형', '카드 리스트형', '차트 중심형', '테이블 중심형', '지도/관제형', '마스터-디테일형', '프로세스 단계형'];
+    const TONE_FILTERS    = ['전체', '클린', '엔터프라이즈', '하이테크', '공공/신뢰', '데이터 중심', '다크모드', '라이트모드'];
+
+    const TEMPLATE_META = [
+      { title: 'Q-Energy 재무 실적 및 성과 보고',  industry: '에너지•인프라',  screenType: 'Dashboard', purpose: '실적 모니터링', layout: 'KPI 요약형',         tone: '클린' },
+      { title: '공영홈쇼핑 전사 대시보드', industry: '제조·유통',  screenType: 'Dashboard',  purpose: '업무 처리',      layout: 'KPI 요약형',    tone: '하이테크' },
+      { title: '독성과학연구소 성과 및 인력 현황', industry: '공공•금융', screenType: 'Dashboard', purpose: '운영 관제',      layout: 'KPI 요약형',      tone: '공공/신뢰' },
+      { title: 'DY 글로벌 손익 실적 보고', industry: '공공•금융',  screenType: 'Dashboard', purpose: '업무 처리',      layout: '테이블 중심형',      tone: '공공/신뢰' },
+
+      { title: '롯데글로벌로지스 운영 대시보드', industry: '제조·유통',  screenType: 'Dashboard', purpose: '경영 현황 파악',  layout: 'KPI 요약형',        tone: '하이테크' },
+      { title: '출장 비용 및 현황 모니터링', industry: '관리•지원', screenType: 'Dashboard', purpose: '실적 모니터링',  layout: '지도/관제형',        tone: '클린' },
+      { title: '성신양회 경영요약정보', industry: '제조•유통',  screenType: 'Dashboard', purpose: '경영 현황 파악',  layout: 'KPI 요약형',        tone: '클린' },
+      { title: '전사 실적별 성과 요약 서비스', industry: '제조•유통',  screenType: 'Dashboard', purpose: '보고서 조회',   layout: '차트 중심형',    tone: '클린' },
+
+      { title: '일성IS 영업 실적 종합 대시보드', industry: '제조·유통',  screenType: 'Dashboard', purpose: '경영 현황 파악',  layout: 'KPI 요약형',        tone: '하이테크' },
+      { title: '월별 주요 경영 성과 지표', industry: '제조·유통', screenType: 'Dashboard', purpose: '실적 모니터링',  layout: 'KPI 요약형',        tone: '클린' },
+      { title: '종합 공사비 및 현장별 실적 현황', industry: '제조•유통',  screenType: 'Reporting', purpose: '데이터 분석',  layout: '테이블 중심형',        tone: '데이터 중심' },
+      { title: '연간 누적 실적 현황', industry: '공공•금융',  screenType: 'Dashboard', purpose: '보고서 조회',   layout: '카드 리스트형',    tone: '공공/신뢰' },
+
+      { title: '실리콘 매출계획 및 실적 현황', industry: '제조·유통',  screenType: 'Dashboard', purpose: '경영 현황 파악',  layout: 'KPI 요약형',        tone: '하이테크' },
+      { title: 'LAWA Scanning Overview', industry: '서비스•기타', screenType: 'Dashboard', purpose: '실적 모니터링',  layout: '지도/관제형',        tone: '클린' },
+      { title: 'LX인터내셔널 주요 지표 월별 현황', industry: '제조•유통',  screenType: 'Dashboard', purpose: '실적 모니터링',  layout: 'KPI 요약형',        tone: '엔터프라이즈' },
+      { title: '전사 실적별 성과 요약 서비스', industry: '제조·유통',  screenType: 'Dashboard', purpose: '실적 모니터링',   layout: '프로세스 단계형',    tone: '하이테크' },
+    ];
+
+    const RAW_DATA = TEMPLATE_META.map((meta, idx) => ({
+      id: idx + 1,
+      title: meta.title,
+      industry: meta.industry,
+      screenType: meta.screenType,
+      purpose: meta.purpose,
+      layout: meta.layout,
+      tone: meta.tone,
+      image: `images/templates/template-${idx + 1}.png`,
+    }));
+
+    const PAGE_SIZE = 16;
+
+    const INDUSTRY_CLS = {
+      '공공·금융':  'badge-ind-public',
+      '제조·유통':  'badge-ind-mfg',
+      '의료·제약':  'badge-ind-med',
+      '서비스·기타': 'badge-ind-svc',
+    };
+    const SCREEN_CLS = {
+      'EPA':       'badge-scr-epa',
+      'Dashboard': 'badge-scr-dash',
+      'UI/UX':     'badge-scr-uiux',
+      'Reporting': 'badge-scr-report',
+      'BI/OLAP':   'badge-scr-bi',
+    };
+
+    function GalleryCard({ item }) {
+      return (
+        <div className="gallery-card">
+          <div className="gallery-card-thumb">
+            <img
+              src={item.image}
+              alt={item.title}
+              onError={(e) => { e.currentTarget.style.display = 'none'; }}
+            />
+          </div>
+          <div className="p-5">
+            <div style={{display:'flex', gap:'6px', marginBottom:'12px', flexWrap:'wrap'}}>
+              <span className={`gallery-badge-field ${INDUSTRY_CLS[item.industry] || ''}`}>{item.industry}</span>
+              <span className={`gallery-badge ${SCREEN_CLS[item.screenType] || ''}`}>{item.screenType}</span>
+            </div>
+            <h3 className="text-base font-semibold leading-snug">{item.title}</h3>
+          </div>
+        </div>
+      );
+    }
+
+    function FilterButton({ label, active, onClick }) {
+      return (
+        <button
+          className={`filter-btn ${active ? 'active' : ''}`}
+          onClick={onClick}
+        >
+          {label}
+        </button>
+      );
+    }
+
+    function FilterDropdown({ label, value, options, open, onToggle, onSelect }) {
+      const ref = React.useRef(null);
+      const [focusIdx, setFocusIdx] = React.useState(0);
+
+      React.useEffect(() => {
+        if (!open) return;
+        const onKey = (e) => {
+          if (e.key === 'Escape') { onToggle(); }
+          if (e.key === 'ArrowDown') { e.preventDefault(); setFocusIdx(i => Math.min(i + 1, options.length - 1)); }
+          if (e.key === 'ArrowUp') { e.preventDefault(); setFocusIdx(i => Math.max(i - 1, 0)); }
+          if (e.key === 'Enter') { e.preventDefault(); onSelect(options[focusIdx]); }
+        };
+        const onDocClick = (ev) => { if (ref.current && !ref.current.contains(ev.target)) onToggle(); };
+        document.addEventListener('keydown', onKey);
+        document.addEventListener('click', onDocClick);
+        return () => { document.removeEventListener('keydown', onKey); document.removeEventListener('click', onDocClick); };
+      }, [open, options, focusIdx]);
+
+      return (
+        <div className="filter-dropdown" ref={ref}>
+          <button
+            type="button"
+            className="filter-dropdown-button"
+            onClick={onToggle}
+            aria-haspopup="listbox"
+            aria-expanded={open}
+          >
+            <span>{label}</span>
+            <span>{value} ▾</span>
+          </button>
+          {open && (
+            <div className="filter-dropdown-menu" role="listbox">
+              {options.map((option, idx) => (
+                <button
+                  key={option}
+                  type="button"
+                  role="option"
+                  aria-selected={value === option}
+                  className={`filter-dropdown-item ${value === option ? 'active' : ''} ${focusIdx === idx ? 'focused' : ''}`}
+                  onMouseEnter={() => setFocusIdx(idx)}
+                  onClick={() => onSelect(option)}
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    function GalleryPage() {
+      const [familySiteOpen, setFamilySiteOpen] = React.useState(false);
+      const [theme, setTheme] = React.useState(() => { try{return localStorage.getItem('axis-theme')||'dark';}catch(e){return 'dark';} });
+      React.useEffect(() => { document.documentElement.setAttribute('data-theme', theme); }, [theme]);
+      const toggleTheme = () => { const n=theme==='dark'?'light':'dark'; setTheme(n); try{localStorage.setItem('axis-theme',n);}catch(e){} };
+      const ic  = theme==='dark' ? 'rgba(255,255,255,0.75)' : 'rgba(9,30,66,0.55)';
+      const ics = theme==='dark' ? 'rgba(255,255,255,0.4)'  : 'rgba(9,30,66,0.3)';
+      const icm = theme==='dark' ? 'rgba(255,255,255,0.6)'  : 'rgba(9,30,66,0.45)';
+      const [searchQuery, setSearchQuery] = React.useState('');
+      const [selectedIndustry, setSelectedIndustry] = React.useState('전체');
+      const [selectedScreen, setSelectedScreen] = React.useState('전체');
+      const [selectedPurpose, setSelectedPurpose] = React.useState('전체');
+      const [selectedLayout, setSelectedLayout] = React.useState('전체');
+      const [selectedTone, setSelectedTone] = React.useState('전체');
+      const [openFilter, setOpenFilter] = React.useState(null);
+      const [visibleCount, setVisibleCount] = React.useState(PAGE_SIZE);
+
+      const query = searchQuery.trim().toLowerCase();
+      const filtered = RAW_DATA.filter(item => {
+        const byIndustry = selectedIndustry === '전체' || item.industry === selectedIndustry;
+        const byScreen   = selectedScreen   === '전체' || item.screenType === selectedScreen;
+        const byPurpose  = selectedPurpose  === '전체' || item.purpose === selectedPurpose;
+        const byLayout   = selectedLayout   === '전체' || item.layout === selectedLayout;
+        const byTone     = selectedTone     === '전체' || item.tone === selectedTone;
+        const bySearch   = !query || [item.title, item.industry, item.screenType, item.purpose, item.layout, item.tone]
+          .some(value => value.toLowerCase().includes(query));
+        return byIndustry && byScreen && byPurpose && byLayout && byTone && bySearch;
+      });
+
+      const visible = filtered.slice(0, visibleCount);
+      const hasMore = visibleCount < filtered.length;
+
+      const handleIndustry = (f) => { setSelectedIndustry(f); setVisibleCount(PAGE_SIZE); };
+      const handleScreen   = (f) => { setSelectedScreen(f);   setVisibleCount(PAGE_SIZE); };
+      const handlePurpose  = (f) => { setSelectedPurpose(f);  setVisibleCount(PAGE_SIZE); };
+      const handleLayout   = (f) => { setSelectedLayout(f);   setVisibleCount(PAGE_SIZE); };
+      const handleTone     = (f) => { setSelectedTone(f);     setVisibleCount(PAGE_SIZE); };
+
+      return (
+        <div className="page-root min-h-screen">
+
+          {/* GNB */}
+          <header className="gnb-header sticky top-0 z-50 border-b border-white/10">
+            <div className="gnb-grid mx-auto grid max-w-7xl items-center px-8 h-full">
+              <div className="flex items-center gap-2">
+                <a href="index.html">
+                  <img src="images/axis-logo.png" alt="AXIS Logo" className="gnb-logo" />
+                </a>
+              </div>
+
+              <nav className="hidden gap-10 font-medium text-white/80 md:flex h-full items-stretch">
+                <a href="gallery.html"       className="gnb-link active transition hover:text-white">레퍼런스 갤러리</a>
+                <a href="resources.html" className="gnb-link transition hover:text-white">디자인 리소스</a>
+                <a href="archive.html" className="gnb-link transition hover:text-white">프로젝트 아카이브</a>
+              </nav>
+
+              <div className="flex items-center gap-2 justify-self-end">
+                <div className="flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 w-52 focus-within:border-white/30 transition">
+                  <svg width="15" height="15" viewBox="0 0 20 20" fill="none">
+                    <circle cx="9" cy="9" r="6.5" stroke={ics} strokeWidth="1.8"/>
+                    <path d="M14 14L18 18" stroke={ics} strokeWidth="1.8" strokeLinecap="round"/>
+                  </svg>
+                  <input placeholder="검색" className="bg-transparent text-sm outline-none placeholder:text-white/35 text-white w-full" />
+                </div>
+                <button onClick={toggleTheme} className="w-9 h-9 flex items-center justify-center rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition" title={theme==='dark'?'라이트 모드로 전환':'다크 모드로 전환'} style={{display:'none'}}>
+                  {theme==='dark'
+                    ? <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke={ic} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                    : <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke={ic} strokeWidth="1.8"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke={ic} strokeWidth="1.8" strokeLinecap="round"/></svg>
+                  }
+                </button>
+                <button className="flex items-center gap-1.5 h-9 px-3 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition text-sm text-white/75 font-medium">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="9" stroke={icm} strokeWidth="1.8"/>
+                    <path d="M12 3C12 3 9 7 9 12C9 17 12 21 12 21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
+                    <path d="M12 3C12 3 15 7 15 12C15 17 12 21 12 21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
+                    <path d="M3 12H21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
+                  </svg>
+                  KR
+                  <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
+                    <path d="M3 4.5L6 7.5L9 4.5" stroke={icm} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </header>
+
+          {/* Page Header */}
+          <div className="page-header">
+            <div className="mx-auto max-w-7xl px-8">
+              <p className="page-header-label">Reference Gallery</p>
+              <h1 className="page-header-title">레퍼런스 갤러리</h1>
+            </div>
+          </div>
+
+          {/* Content */}
+          <div className="mx-auto max-w-7xl px-8 py-10">
+            <section className="filter-toolbar">
+              <div className="filter-toolbar-row">
+                <div className="filter-search-box">
+                  <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden>
+                    <circle cx="9" cy="9" r="6.5" stroke="rgba(255,255,255,0.45)" strokeWidth="1.8"/>
+                    <path d="M14 14L18 18" stroke="rgba(255,255,255,0.45)" strokeWidth="1.8" strokeLinecap="round"/>
+                  </svg>
+                  <input
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="검색"
+                    aria-label="레퍼런스 검색"
+                    onKeyDown={(e) => { if (e.key === 'Escape') setSearchQuery(''); }}
+                  />
+                  {searchQuery && (
+                    <button
+                      type="button"
+                      className="filter-search-clear"
+                      aria-label="검색어 지우기"
+                      onClick={() => setSearchQuery('')}
+                    >
+                      ×
+                    </button>
+                  )}
+                </div>
+
+                <FilterDropdown
+                  label="산업군"
+                  value={selectedIndustry}
+                  options={INDUSTRY_FILTERS}
+                  open={openFilter === 'industry'}
+                  onToggle={() => setOpenFilter(openFilter === 'industry' ? null : 'industry')}
+                  onSelect={(value) => { setSelectedIndustry(value); setOpenFilter(null); setVisibleCount(PAGE_SIZE); }}
+                />
+                <FilterDropdown
+                  label="화면 유형"
+                  value={selectedScreen}
+                  options={SCREEN_FILTERS}
+                  open={openFilter === 'screen'}
+                  onToggle={() => setOpenFilter(openFilter === 'screen' ? null : 'screen')}
+                  onSelect={(value) => { setSelectedScreen(value); setOpenFilter(null); setVisibleCount(PAGE_SIZE); }}
+                />
+                <FilterDropdown
+                  label="활용 목적"
+                  value={selectedPurpose}
+                  options={PURPOSE_FILTERS}
+                  open={openFilter === 'purpose'}
+                  onToggle={() => setOpenFilter(openFilter === 'purpose' ? null : 'purpose')}
+                  onSelect={(value) => { setSelectedPurpose(value); setOpenFilter(null); setVisibleCount(PAGE_SIZE); }}
+                />
+                <FilterDropdown
+                  label="레이아웃 구조"
+                  value={selectedLayout}
+                  options={LAYOUT_FILTERS}
+                  open={openFilter === 'layout'}
+                  onToggle={() => setOpenFilter(openFilter === 'layout' ? null : 'layout')}
+                  onSelect={(value) => { setSelectedLayout(value); setOpenFilter(null); setVisibleCount(PAGE_SIZE); }}
+                />
+                <FilterDropdown
+                  label="디자인톤"
+                  value={selectedTone}
+                  options={TONE_FILTERS}
+                  open={openFilter === 'tone'}
+                  onToggle={() => setOpenFilter(openFilter === 'tone' ? null : 'tone')}
+                  onSelect={(value) => { setSelectedTone(value); setOpenFilter(null); setVisibleCount(PAGE_SIZE); }}
+                />
+
+                <button
+                  type="button"
+                  className="filter-reset"
+                  onClick={() => {
+                    setSearchQuery('');
+                    setSelectedIndustry('전체');
+                    setSelectedScreen('전체');
+                    setSelectedPurpose('전체');
+                    setSelectedLayout('전체');
+                    setSelectedTone('전체');
+                    setOpenFilter(null);
+                    setVisibleCount(PAGE_SIZE);
+                  }}
+                >
+                  초기화
+                </button>
+              </div>
+
+              <div className="filter-tag-row">
+                {selectedIndustry !== '전체' && (
+                  <button type="button" className="filter-tag" onClick={() => setSelectedIndustry('전체')}>
+                    {selectedIndustry} ×
+                  </button>
+                )}
+                {selectedScreen !== '전체' && (
+                  <button type="button" className="filter-tag" onClick={() => setSelectedScreen('전체')}>
+                    {selectedScreen} ×
+                  </button>
+                )}
+                {selectedPurpose !== '전체' && (
+                  <button type="button" className="filter-tag" onClick={() => setSelectedPurpose('전체')}>
+                    {selectedPurpose} ×
+                  </button>
+                )}
+                {selectedLayout !== '전체' && (
+                  <button type="button" className="filter-tag" onClick={() => setSelectedLayout('전체')}>
+                    {selectedLayout} ×
+                  </button>
+                )}
+                {selectedTone !== '전체' && (
+                  <button type="button" className="filter-tag" onClick={() => setSelectedTone('전체')}>
+                    {selectedTone} ×
+                  </button>
+                )}
+              </div>
+            </section>
+
+            {/* Main */}
+            <main className="gallery-main">
+              <p className="result-count">
+                총 <strong>{filtered.length}개</strong>의 레퍼런스
+              </p>
+
+              {filtered.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-32 text-white/30">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" className="mb-4">
+                    <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="1.5"/>
+                    <path d="M16.5 16.5L21 21" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                  </svg>
+                  <p className="text-sm">해당 조건의 레퍼런스가 없습니다.</p>
+                </div>
+              ) : (
+                <>
+                  <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                    {visible.map(item => (
+                      <GalleryCard key={item.id} item={item} />
+                    ))}
+                  </div>
+
+                  {hasMore && (
+                    <button
+                      className="load-more-btn"
+                      onClick={() => setVisibleCount(v => v + PAGE_SIZE)}
+                    >
+                      더보기 ({filtered.length - visibleCount}개 남음)
+                    </button>
+                  )}
+                </>
+              )}
+            </main>
+          </div>
+
+          {/* Footer */}
+          <footer className="site-footer">
+            <div className="mx-auto max-w-7xl px-8 py-10">
+              <div className="flex items-start justify-between gap-8">
+                <div className="flex flex-col gap-6">
+                  <div className="flex items-center gap-4">
+                    <a href="https://www.youtube.com/@BIMATRIXKR" target="_blank" rel="noopener noreferrer"
+                       className="flex items-center justify-center w-9 h-9 rounded-full border border-white/15 bg-white/5 hover:bg-white/15 transition">
+                      <svg viewBox="-1 -1 26 26" aria-hidden="true" focusable="false" fill="rgba(255,255,255,0.65)" width="20">
+                        <path d="M 23.498 6.186 a 3.016 3.016 0 0 0 -2.122 -2.136 C 19.505 3.545 12 3.545 12 3.545 s -7.505 0 -9.377 0.505 A 3.017 3.017 0 0 0 0.502 6.186 C 0 8.07 0 12 0 12 s 0 3.93 0.502 5.814 a 3.016 3.016 0 0 0 2.122 2.136 c 1.871 0.505 9.376 0.505 9.376 0.505 s 7.505 0 9.377 -0.505 a 3.015 3.015 0 0 0 2.122 -2.136 C 24 15.93 24 12 24 12 s 0 -3.93 -0.502 -5.814 Z M 9.545 15.568 V 8.432 L 15.818 12 l -6.273 3.568 Z"></path>
+                      </svg>
+                    </a>
+                    <a href="https://www.facebook.com/bimatrixkorea" target="_blank" rel="noopener noreferrer"
+                       className="flex items-center justify-center w-9 h-9 rounded-full border border-white/15 bg-white/5 hover:bg-white/15 transition">
+                      <svg viewBox="2 2 22 22" aria-hidden="true" focusable="false" fill="rgba(255,255,255,0.65)" width="23">
+                        <path d="M13.6 21v-7.1h2.4l.4-3h-2.8V9c0-.87.24-1.47 1.5-1.47H16.5V4.85C16.2 4.81 15.4 4.75 14.47 4.75c-1.95 0-3.28 1.19-3.28 3.38v2.77H9v3h2.19V21h2.41Z"></path>
+                      </svg>
+                    </a>
+                    <a href="https://blog.naver.com/bi_matrix" target="_blank" rel="noopener noreferrer"
+                       className="flex items-center justify-center w-9 h-9 rounded-full border border-white/15 bg-white/5 hover:bg-white/15 transition">
+                      <svg viewBox="0 0 106.4 86" width="20" height="20" aria-hidden="true" fill="rgba(255,255,255,0.65)">
+                        <path d="M59.5,34c-2.3,0-4.2,1.9-4.2,4.2s1.9,4.2,4.2,4.2,4.2-1.9,4.2-4.2-1.9-4.2-4.2-4.2Z"/>
+                        <path d="M84.6,34c-2.3,0-4.2,1.9-4.2,4.2s1.9,4.2,4.2,4.2,4.2-1.9,4.2-4.2-1.9-4.2-4.2-4.2Z"/>
+                        <path d="M89.6,0H16.8C7.5,0,0,7.3,0,16.2v38.5c0,9,7.5,16.2,16.8,16.2h25.1l8.6,13.4s0,.2.3.4c.5.8,1.4,1.4,2.5,1.4s2-.6,2.5-1.4c.2-.2.3-.4.3-.4l8.6-13.4h25.1c9.3,0,16.8-7.3,16.8-16.2V16.2C106.4,7.3,98.9,0,89.6,0h0ZM23.6,48.1c-3.9,0-5.5-2.8-5.5-2.8v2.1h-6.6v-27.1h6.5v10.3c2.6-2.6,5.5-2.6,5.5-2.6,8.8,0,9.2,9.9,9.2,9.9,0,9.8-9.2,10.1-9.2,10.1h0ZM44.2,29.9v17.5h-6.3v-16.1c0-5.5-3-5.4-3-5.4v-6.3c9.5,0,9.2,10.2,9.2,10.2ZM70.5,38.2c0,9.9-11,9.9-11,9.9-11.1,0-10.8-9.9-10.8-9.9,0-10,10.8-10.1,10.8-10.1,11.4,0,11,10.1,11,10.1ZM94.8,47.2c0,10.3-9.5,10.2-9.5,10.2h-2.5v-5.8h1.6c4.6,0,4.2-4.8,4.2-4.8v-1.5c-2,2.6-5.7,2.5-5.7,2.5-9.1,0-9-9.7-9-9.7,0-10.4,9.2-10,9.2-10,3.6,0,5.5,2.5,5.5,2.5v-1.8h6.3v18.4h0Z"/>
+                        <path d="M22.2,34c-2.3,0-4.2,1.9-4.2,4.2s1.9,4.2,4.2,4.2,4.2-1.9,4.2-4.2-1.9-4.2-4.2-4.2Z"/>
+                      </svg>
+                    </a>
+                  </div>
+                  <div className="flex items-center gap-6 text-sm text-white/50">
+                    <a href="https://www.bimatrix.co.kr/privacy/" target="_blank" className="hover:text-white/80 transition">
+                      개인정보처리방침</a>
+                    <span className="text-white/20">|</span>
+                    <a href="https://www.bimatrix.co.kr/pr/newsletter/subscription/" target="_blank" className="hover:text-white/80 transition">
+                      뉴스레터 구독</a>
+                    <span className="text-white/20">|</span>
+                    <a href="https://www.bimatrix.co.kr/support/contact/" target="_blank" className="hover:text-white/80 transition">
+                      문의하기</a>
+                  </div>
+                </div>
+
+                <div className="relative flex-shrink-0">
+                  <button
+                    onClick={() => setFamilySiteOpen(!familySiteOpen)}
+                    className="flex items-center gap-2 rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 text-sm text-white/70 hover:bg-white/10 transition min-w-[160px] justify-between"
+                  >
+                    <span>Family Site</span>
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
+                         className={`family-site-chevron ${familySiteOpen ? 'open' : ''}`}>
+                      <path d="M3 4.5L6 7.5L9 4.5" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </button>
+                  {familySiteOpen && (
+                    <div className="family-site-dropdown absolute right-0 bottom-full mb-1 w-48 rounded-lg border border-white/15 overflow-hidden z-10">
+                      {[
+                        {label: "비아이매트릭스 홈페이지", href: "https://www.bimatrix.co.kr/"},
+                        {label: "AUD플랫폼 아카데미", href: "https://audp.bimatrix.co.kr/"},
+                        {label: "AUD플랫폼 데모", href: "http://aud.bimatrix.co.kr/extention/sso/SimpleSSO4.jsp"},
+                        {label: "고객지원 사이트", href: "https://cs.bimatrix.co.kr/"},
+                      ].map((item) => (
+                        <a key={item.label} href={item.href} target="_blank"
+                           className="block px-4 py-2.5 text-sm text-white/60 hover:bg-white/10 hover:text-white/90 transition">
+                          {item.label}
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="footer-bottom">
+              <div className="mx-auto max-w-7xl px-8 py-6 flex items-end justify-between gap-8">
+                <div className="flex flex-col gap-1.5 text-xs text-white/35 leading-relaxed">
+                  <p className="text-white/50 font-medium text-sm">(주)비아이매트릭스</p>
+                  <p>서울시 강남구 선릉로 433, 세방빌딩 신관 17층(역삼동) &nbsp;|&nbsp; 대표이사: 배영근</p>
+                  <p>Tel: 02-561-4475 &nbsp;|&nbsp; Fax: 02-561-4479</p>
+                  <p className="mt-1">© BI MATRIX CO., LTD. ALL RIGHTS RESERVED.</p>
+                </div>
+                <div className="flex-shrink-0">
+                  <img src="images/img_logo_footer.svg" alt="AXIS" className="footer-logo" />
+                </div>
+              </div>
+            </div>
+          </footer>
+
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<GalleryPage />);
+  </script>
+</body>
+</html>

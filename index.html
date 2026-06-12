@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AXIS Design Gallery</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <script>try{var t=localStorage.getItem('axis-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const INDUSTRY_CLS = {
+      '공공·금융':  'badge-ind-public',
+      '제조·유통':  'badge-ind-mfg',
+      '의료·제약':  'badge-ind-med',
+      '서비스·기타': 'badge-ind-svc',
+    };
+    const SCREEN_CLS = {
+      'EPA':       'badge-scr-epa',
+      'Dashboard': 'badge-scr-dash',
+      'UI/UX':     'badge-scr-uiux',
+      'Reporting': 'badge-scr-report',
+      'BI/OLAP':   'badge-scr-bi',
+    };
+
+    function BxdiMainPagePrototype() {
+      const [familySiteOpen, setFamilySiteOpen] = React.useState(false);
+      const [theme, setTheme] = React.useState(() => { try{return localStorage.getItem('axis-theme')||'dark';}catch(e){return 'dark';} });
+      React.useEffect(() => { document.documentElement.setAttribute('data-theme', theme); }, [theme]);
+      const toggleTheme = () => { const n=theme==='dark'?'light':'dark'; setTheme(n); try{localStorage.setItem('axis-theme',n);}catch(e){} };
+      const ic  = theme==='dark' ? 'rgba(255,255,255,0.75)' : 'rgba(9,30,66,0.55)';
+      const ics = theme==='dark' ? 'rgba(255,255,255,0.4)'  : 'rgba(9,30,66,0.3)';
+      const icm = theme==='dark' ? 'rgba(255,255,255,0.6)'  : 'rgba(9,30,66,0.45)';
+      const [activeResourceTab, setActiveResourceTab] = React.useState('Chart');
+      const [selectedGalleryIndex, setSelectedGalleryIndex] = React.useState(null);
+      const [selectedChartIndex, setSelectedChartIndex] = React.useState(null);
+
+      // Mini chart renderer - available globally
+      const P='#7D60FF', S='#2B67FF', A='#63E4B9';
+      const miniChartRenderer = (id) => {
+        const vb = {viewBox:'0 0 200 100', width:'100%', style:{display:'block', height:'84px'}};
+        const ax = theme==='dark' ? 'rgba(255,255,255,0.15)' : 'rgba(9,30,66,0.15)';
+        if (id===1) return (
+          <svg {...vb}>
+            <line x1="8" y1="92" x2="192" y2="92" stroke={ax} strokeWidth="0.8"/>
+            {[55,38,72,28,50,40].map((h,i) => (
+              <rect key={i} x={12+i*30} y={92-h} width="22" height={h} rx="2" fill={i===2?A:P} fillOpacity={i===2?0.8:0.65}/>
+            ))}
+          </svg>
+        );
+        if (id===2) return (
+          <svg {...vb}>
+            <line x1="8" y1="92" x2="192" y2="92" stroke={ax} strokeWidth="0.8"/>
+            {[[28,40,18],[22,36,24],[32,38,16],[26,30,28],[30,34,16]].map((segs,i) => {
+              let y=92;
+              return <g key={i}>{[P,S,A].map((col,j)=>{const h=segs[j];y-=h;return <rect key={j} x={16+i*36} y={y} width="26" height={h} rx={j===2?2:0} fill={col} fillOpacity="0.72"/>;})}</g>;
+            })}
+          </svg>
+        );
+        if (id===3) return (
+          <svg {...vb}>
+            <line x1="8" y1="92" x2="192" y2="92" stroke={ax} strokeWidth="0.8"/>
+            <polyline points="12,75 45,52 78,62 112,28 145,42 178,18 192,30" fill="none" stroke={P} strokeWidth="2" strokeLinejoin="round" strokeLinecap="round"/>
+            {[[12,75],[45,52],[78,62],[112,28],[145,42],[178,18],[192,30]].map(([x,y],i) => <circle key={i} cx={x} cy={y} r="2.8" fill={P}/>)}
+            <polyline points="12,85 45,68 78,76 112,55 145,62 178,42 192,52" fill="none" stroke={A} strokeWidth="1.5" strokeDasharray="5,3" strokeLinejoin="round" strokeLinecap="round" strokeOpacity="0.6"/>
+          </svg>
+        );
+        if (id===4) return (
+          <svg {...vb}>
+            <defs><linearGradient id="igag" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor={P} stopOpacity="0.4"/><stop offset="100%" stopColor={P} stopOpacity="0.02"/></linearGradient></defs>
+            <line x1="8" y1="92" x2="192" y2="92" stroke={ax} strokeWidth="0.8"/>
+            <polygon points="12,92 12,75 45,52 78,64 112,28 145,44 178,18 192,30 192,92" fill="url(#igag)"/>
+            <polyline points="12,75 45,52 78,64 112,28 145,44 178,18 192,30" fill="none" stroke={P} strokeWidth="2" strokeLinejoin="round" strokeLinecap="round"/>
+          </svg>
+        );
+        if (id===5) {
+          const arc = (cx,cy,R,r,s,e) => {
+            const rad=d=>(d-90)*Math.PI/180,c=Math.cos,sn=Math.sin;
+            const [a0,a1]=[rad(s),rad(e)],lg=e-s>180?1:0,f=n=>n.toFixed(1);
+            return `M${f(cx+R*c(a0))},${f(cy+R*sn(a0))} A${R},${R},0,${lg},1,${f(cx+R*c(a1))},${f(cy+R*sn(a1))} L${f(cx+r*c(a1))},${f(cy+r*sn(a1))} A${r},${r},0,${lg},0,${f(cx+r*c(a0))},${f(cy+r*sn(a0))} Z`;
+          };
+          return (
+            <svg {...vb}>
+              <path d={arc(90,50,42,20,  0,130)} fill={P} fillOpacity="0.82"/>
+              <path d={arc(90,50,42,20,130,220)} fill={S} fillOpacity="0.82"/>
+              <path d={arc(90,50,42,20,220,295)} fill={A} fillOpacity="0.82"/>
+              <path d={arc(90,50,42,20,295,360)} fill="rgba(255,255,255,0.18)"/>
+            </svg>
+          );
+        }
+        if (id===6) return (
+          <svg {...vb}>
+            <rect x="8" y="8" width="75" height="55" rx="2" fill={P} fillOpacity="0.62"/>
+            <rect x="8" y="65" width="75" height="27" rx="2" fill={P} fillOpacity="0.28"/>
+            <rect x="86" y="8" width="52" height="36" rx="2" fill={S} fillOpacity="0.62"/>
+            <rect x="86" y="46" width="52" height="46" rx="2" fill={S} fillOpacity="0.28"/>
+            <rect x="141" y="8" width="51" height="48" rx="2" fill={A} fillOpacity="0.62"/>
+            <rect x="141" y="58" width="51" height="34" rx="2" fill={A} fillOpacity="0.28"/>
+          </svg>
+        );
+        if (id===7) return (
+          <svg {...vb}>
+            <line x1="12" y1="8" x2="12" y2="92" stroke={ax} strokeWidth="0.8"/>
+            <line x1="12" y1="92" x2="192" y2="92" stroke={ax} strokeWidth="0.8"/>
+            <line x1="18" y1="88" x2="188" y2="15" stroke="rgba(255,255,255,0.1)" strokeWidth="1" strokeDasharray="4,3"/>
+            {[[25,85,2.5,P],[45,72,3,P],[62,65,2.5,A],[80,74,3,P],[95,60,2.5,A],[112,52,3,P],[128,45,2.5,P],[145,55,2.5,A],[162,38,3,P],[178,30,2.5,P],[36,78,2,A],[105,56,2.5,P],[155,42,2.5,A],[175,22,3,P]].map(([x,y,r,col],i) => (
+              <circle key={i} cx={x} cy={y} r={r} fill={col} fillOpacity="0.72"/>
+            ))}
+          </svg>
+        );
+        if (id===8) return (
+          <svg {...vb}>
+            <line x1="8" y1="92" x2="192" y2="92" stroke={ax} strokeWidth="0.8"/>
+            {[8,18,36,60,70,58,36,20,10].map((h,i) => (
+              <rect key={i} x={10+i*20} y={92-h} width="20" height={h} fill={P} fillOpacity={0.35+(h/70)*0.45}/>
+            ))}
+          </svg>
+        );
+        return null;
+      };
+
+      const chartGuides = [
+        {
+          id: 1, name: 'Bar Chart', purpose: '비교',
+          definition: '범주 간 값을 가로/세로 막대로 비교하는 가장 기본적인 차트',
+          anatomy: [
+            { label: 'X축 (범주)', color: '#7D60FF' }, { label: 'Y축 (수치)', color: '#2B67FF' },
+            { label: '데이터 막대', color: '#63E4B9' }, { label: '범례', color: '#9CA3AF' }, { label: '툴팁', color: '#F59E0B' },
+          ],
+          do: '소수의 범주(7개 이하) 간 값을 직접 비교할 때',
+          dont: '시간 흐름에 따른 연속 데이터 표현 (→ Line Chart 사용)',
+        },
+        {
+          id: 2, name: 'Stacked Bar Chart', purpose: '비교',
+          definition: '각 막대를 구성 요소로 분할해 전체 합계와 내부 구성비를 동시에 표현',
+          anatomy: [
+            { label: 'X축 (범주)', color: '#7D60FF' }, { label: 'Y축 (누적 합계)', color: '#2B67FF' },
+            { label: '세그먼트 (색상)', color: '#63E4B9' }, { label: '범례', color: '#9CA3AF' },
+          ],
+          do: '항목별 합계 비교 + 내부 구성을 함께 보여줄 때',
+          dont: '개별 세그먼트 값의 정밀 비교 (→ Grouped Bar 사용)',
+        },
+        {
+          id: 3, name: 'Line Chart', purpose: '추세',
+          definition: '시간 축을 따라 연속 데이터의 변화 추세를 선으로 표현',
+          anatomy: [
+            { label: 'X축 (시간)', color: '#7D60FF' }, { label: 'Y축 (수치)', color: '#2B67FF' },
+            { label: '데이터 포인트', color: '#63E4B9' }, { label: '연결선', color: '#9CA3AF' }, { label: '범례', color: '#F59E0B' },
+          ],
+          do: '시간에 따른 추세, 패턴, 이상값 탐지',
+          dont: '범주 간 단순 비교 (→ Bar Chart 사용)',
+        },
+        {
+          id: 4, name: 'Area Chart', purpose: '추세',
+          definition: '선 아래 영역을 채워 누적량이나 볼륨 변화를 강조하는 차트',
+          anatomy: [
+            { label: 'X축 (시간)', color: '#7D60FF' }, { label: 'Y축 (수치)', color: '#2B67FF' },
+            { label: '채움 영역', color: '#63E4B9' }, { label: '경계선', color: '#9CA3AF' },
+          ],
+          do: '전체 볼륨의 증감, 누적 추세를 표현할 때',
+          dont: '여러 시리즈가 겹쳐 가독성이 떨어지는 경우 (→ Line Chart 사용)',
+        },
+        {
+          id: 5, name: 'Pie / Donut Chart', purpose: '구성비',
+          definition: '전체 대비 각 항목의 비율을 원형 슬라이스로 표현',
+          anatomy: [
+            { label: '슬라이스 (비율)', color: '#7D60FF' }, { label: '라벨/퍼센트', color: '#2B67FF' },
+            { label: '범례', color: '#63E4B9' }, { label: '중앙 KPI (Donut)', color: '#9CA3AF' },
+          ],
+          do: '5개 이하 항목의 구성 비율을 직관적으로 표현',
+          dont: '항목이 많거나 비율 차이가 작을 때 (→ Bar Chart 사용)',
+        },
+        {
+          id: 6, name: 'Treemap', purpose: '구성비',
+          definition: '계층 구조 데이터를 면적 비례 사각형으로 표현하는 차트',
+          anatomy: [
+            { label: '노드 사각형 (면적=값)', color: '#7D60FF' }, { label: '그룹 색상', color: '#2B67FF' },
+            { label: '라벨', color: '#63E4B9' }, { label: '계층 구분선', color: '#9CA3AF' },
+          ],
+          do: '다수 항목의 상대적 크기와 계층 구조를 동시에 표현',
+          dont: '정확한 수치 비교가 필요한 경우 (→ Bar Chart 사용)',
+        },
+        {
+          id: 7, name: 'Scatter Plot', purpose: '분포',
+          definition: '두 변수 간 상관관계와 데이터 분포를 점으로 표현',
+          anatomy: [
+            { label: 'X축 (변수 A)', color: '#7D60FF' }, { label: 'Y축 (변수 B)', color: '#2B67FF' },
+            { label: '데이터 포인트', color: '#63E4B9' }, { label: '회귀선 (옵션)', color: '#9CA3AF' }, { label: '색상 인코딩', color: '#F59E0B' },
+          ],
+          do: '두 변수 간 상관관계, 클러스터, 이상값 탐지',
+          dont: '시계열 추세 표현 (→ Line Chart 사용)',
+        },
+        {
+          id: 8, name: 'Histogram', purpose: '분포',
+          definition: '연속형 데이터를 구간(bin)으로 나눠 빈도 분포를 막대로 표현',
+          anatomy: [
+            { label: 'X축 (구간/Bin)', color: '#7D60FF' }, { label: 'Y축 (빈도/밀도)', color: '#2B67FF' },
+            { label: '막대 (연속형, 간격 없음)', color: '#63E4B9' },
+          ],
+          do: '데이터 분포 형태(정규, 편향 등) 파악',
+          dont: '범주형 데이터 비교 (→ Bar Chart 사용, 막대 사이 간격 있음)',
+        },
+      ];
+      const galleryItems = [
+        {
+          id: 1,
+          title: 'Q-Energy 재무 실적 및 성과 보고',
+          industry: '에너지•인프라',
+          screenType: 'Dashboard',
+          image: 'images/templates/template-1.png',
+          layoutType: 'KPI Summary',
+          referencePoints: '',
+          suitableFor: '글로벌 에너지 프로젝트 성과 및 권역별 매출 실적 모니터링',
+        },
+        {
+          id: 2,
+          title: '공영홈쇼핑 전사 대시보드',
+          industry: '제조·유통',
+          screenType: 'Dashboard',
+          image: 'images/templates/template-2.png',
+          layoutType: 'KPI SUMMARY',
+          referencePoints: '',
+          suitableFor: '전사 매출 실적 성과 및 카테고리/고객 서비스(CS) 운영 현황 모니터링',
+        },
+        {
+          id: 3,
+          title: '독성과학연구소 성과 및 인력 현황',
+          industry: '공공•금융',
+          screenType: 'Dashboard',
+          image: 'images/templates/template-3.png',
+          layoutType: 'KPI SUMMARY',
+          referencePoints: '',
+          suitableFor: '연구 성과(수탁고/논문/특허) 달성률 및 부서별 인적 자원 배분 모니터링',
+        },
+        {
+          id: 4,
+          title: 'DY 글로벌 손익 실적 보고',
+          industry: '공공•금융',
+          screenType: 'Dashboard',
+          image: 'images/templates/template-4.png',
+          layoutType: 'DATA GRID SHEET',
+          referencePoints: '',
+          suitableFor: '글로벌 경영 계획 대비 실적 및 외환 효과를 반영한 손익 관리',
+        },
+        {
+          id: 5,
+          title: '롯데글로벌로지스 운영 대시보드',
+          industry: '제조·유통',
+          screenType: 'Dashboard',
+          image: 'images/templates/template-5.png',
+          layoutType: 'KPI Summary',
+          referencePoints: '',
+          suitableFor: '운송 방식별 배차 효율 관리 및 매입 · 매출 운송단가 모니터링',
+        },
+        {
+          id: 6,
+          title: '출장 비용 및 현황 모니터링',
+          industry: '관리•지원',
+          screenType: 'Dashboard',
+          image: 'images/templates/template-6.png',
+          layoutType: 'GEOGRAPHIC MAP',
+          referencePoints: '',
+          suitableFor: '부서/지역별 출장 예산 관리, 현황 모니터링',
+        },
+        {
+          id: 7,
+          title: '성신양회 경영요약정보',
+          industry: '제조·유통',
+          screenType: 'Dashboard',
+          image: 'images/templates/template-7.png',
+          layoutType: 'KPI Summary',
+          referencePoints: '',
+          suitableFor: '일일 출하/생산 실적 목표 대비 달성률 및 재고 현황 모니터링',
+        },
+        {
+          id: 8,
+          title: '전사 실적별 성과 요약 서비스',
+          industry: '제조•유통',
+          screenType: 'Dashboard',
+          image: 'images/templates/template-8.png',
+          layoutType: 'Sales & Performance',
+          referencePoints: '',
+          suitableFor: '전사 실적 및 MD 상품별 매출 모니터링',
+        },
+        {
+          id: 9,
+          title: '일성IS 영업 실적 종합 대시보드',
+          industry: '제조•유통',
+          screenType: 'Dashboard',
+          image: 'images/templates/template-9.png',
+          layoutType: 'KPI SUMMARY',
+          referencePoints: '',
+          suitableFor: '제약 영업 활동 지표 및 품목별·팀별 매출 실적 모니터링',
+        },
+        {
+          id: 10,
+          title: '월별 주요 경영 성과 지표',
+          industry: '제조•유통',
+          screenType: 'Dashboard',
+          image: 'images/templates/template-10.png',
+          layoutType: 'KPI SUMMARY',
+          referencePoints: '',
+          suitableFor: '환경·판매·생산 부문 월별 전사 경영 성과 지표 모니터링',
+        },
+        {
+          id: 11,
+          title: '종합 공사비 및 현장별 실적 현황',
+          industry: '제조•유통',
+          screenType: 'Reporting',
+          image: 'images/templates/template-11.png',
+          layoutType: 'DATA GRID SHEET',
+          referencePoints: '',
+          suitableFor: '전사 실적 및 MD 상품별 매출 모니터링',
+        },
+        {
+          id: 12,
+          title: '연간 누적 실적 현황',
+          industry: '공공•금융',
+          screenType: 'Dashboard',
+          image: 'images/templates/template-12.png',
+          layoutType: 'FINANCIAL REPORTING',
+          referencePoints: '',
+          suitableFor: '제휴사·상품·개인별 보험 영업 실적 및 지표 모니터링',
+        },
+        {
+          id: 13,
+          title: '실리콘 매출계획 및 실적 현황',
+          industry: '제조•유통',
+          screenType: 'Dashboard',
+          image: 'images/templates/template-13.png',
+          layoutType: 'KPI SUMMARY',
+          referencePoints: '',
+          suitableFor: '관계사·사업별 매출 계획 대비 실적 및 거래선 모니터링',
+        },
+        {
+          id: 14,
+          title: 'LAWA Scanning Overview',
+          industry: '서비스•기타',
+          screenType: 'Dashboard',
+          image: 'images/templates/template-14.png',
+          layoutType: 'GEOGRAPHIC MAP',
+          referencePoints: '',
+          suitableFor: '공항 터미널별 실시간 관제 및 지표 모니터링',
+        },
+        {
+          id: 15,
+          title: 'LX인터내셔널 주요 지표 월별 현황',
+          industry: '제조•유통',
+          screenType: 'Dashboard',
+          image: 'images/templates/template-15.png',
+          layoutType: 'KPI Surmmary',
+          referencePoints: '',
+          suitableFor: '경영 성과 지표 및 대외 시장 • 환율 추이 모니터링',
+        },
+        {
+          id: 16,
+          title: '전사 실적별 성과 요약 서비스',
+          industry: '제조•유통',
+          screenType: 'Dashboard',
+          image: 'images/templates/template-16.png',
+          layoutType: 'Sales & Performance',
+          referencePoints: '',
+          suitableFor: '전사 실적 및 MD 상품별 매출 모니터링',
+        },
+      ];
+
+      const [selectedArchiveIndex, setSelectedArchiveIndex] = React.useState(null);
+      const archiveItems = [
+        { id: 1, logo:'images/logos/logo-1.png',  back:'images/archive/1.png',  color:'#1A3320', accent:'#4CAF50', client:'신한은행', projectName:'경영성과 리포트', title:'은행 경영성과 대시보드', screenType:'Dashboard', industry:'공공·금융'},
+        { id: 2, logo:'images/logos/logo-2.png',  back:'images/archive/2.png',  color:'#0A1F33', accent:'#4FC3F7', client:'현대자동차', projectName:'제조 공정 모니터링', title:'생산 라인 운영 현황', screenType:'EPA', industry:'제조·유통'},
+        { id: 3, logo:'images/logos/logo-3.png',  back:'images/archive/3.png',  color:'#15175A', accent:'#7986CB', client:'LG CNS', projectName:'서비스 이슈 분석', title:'서비스 운영 분석 대시보드', screenType:'Dashboard', industry:'서비스·기타' },
+        { id: 4, logo:'images/logos/logo-4.png',  back:'images/archive/4.png',  color:'#0B2A3A', accent:'#26C6DA', client:'SK텔레콤', projectName:'통신망 성능 리포트', title:'네트워크 KPI 리포트', screenType:'Dashboard', industry:'서비스·기타'},
+        { id: 5, logo:'images/logos/logo-5.png',  back:'images/archive/5.png',  color:'#142840', accent:'#42A5F5', client:'롯데쇼핑', projectName:'물류 실적 분석', title:'전사 운송 실적 대시보드', screenType:'Dashboard', industry:'제조·유통'},
+        { id: 6, logo:'images/logos/logo-6.png',  back:'images/archive/6.png',  color:'#162416', accent:'#81C784', client:'아워홈', projectName:'교대별 팀 성과', title:'교대별 생산성 대시보드', screenType:'Dashboard', industry:'서비스·기타'},
+        { id: 7, logo:'images/logos/logo-7.png',  back:'images/archive/7.png',  color:'#2E1545', accent:'#BA68C8', client:'신세계인터내셔날', projectName:'고객지표 통합대시보드', title:'고객 관리 실적 대시보드', screenType:'Dashboard', industry:'제조·유통'},
+        { id: 8, logo:'images/logos/logo-8.png',  back:'images/archive/8.png',  color:'#3B1212', accent:'#EF9A9A', client:'하나은행', projectName:'교육통계서비스', title:'학습 현황 통계 화면', screenType:'Dashboard', industry:'공공·금융'},
+        { id: 9, logo:'images/logos/logo-9.png',  back:'images/archive/9.png',  color:'#1A1A10', accent:'#DCE775', client:'KT', projectName:'인프라 상태 모니터링', title:'통신 인프라 운영 대시보드', screenType:'Dashboard', industry:'공공·금융', layoutType:'상태 모니터링', suitableFor:'장비 운영 점검'},
+        { id: 10, logo:'images/logos/logo-10.png', back:'images/archive/10.png', color:'#101820', accent:'#80CBC4', client:'GS칼텍스', projectName:'에너지 관리 시스템', title:'에너지 실적 트래킹 화면', screenType:'Dashboard', industry:'제조·유통', layoutType:'KPI Summary', suitableFor:'에너지 비용 분석', description:'에너지 사용량과 비용 효율을 모니터링하는 실무형 대시보드입니다.' },
+        { id: 11, logo:'images/logos/logo-11.png', back:'images/archive/11.png', color:'#201A10', accent:'#FFCC80', client:'CJ대한통운', projectName:'배송 운영 관리', title:'물류 배송 현황 대시보드', screenType:'Dashboard', industry:'제조·유통', layoutType:'운영현황형', suitableFor:'배송 성과 점검', description:'물류 흐름과 배송 성과를 한눈에 보여주는 운영 화면입니다.' },
+        { id: 12, logo:'images/logos/logo-12.png', back:'images/archive/12.png', color:'#1A1020', accent:'#CE93D8', client:'현대카드', projectName:'고객 행동 분석', title:'마케팅 인사이트 대시보드', screenType:'Reporting', industry:'공공·금융', layoutType:'리포트형', suitableFor:'캠페인 성과 분석', description:'고객 행동 지표와 캠페인 성과를 통합해서 보여주는 인사이트 화면입니다.' },
+        { id: 13, logo:'images/logos/logo-13.png', back:'images/archive/13.png', color:'#101A1A', accent:'#80DEEA', client:'네이버', projectName:'서비스 트래픽 리포트', title:'실시간 트래픽 모니터링', screenType:'EPA', industry:'서비스·기타', layoutType:'모니터링형', suitableFor:'트래픽 분석', description:'트래픽 변화와 응답 지표를 빠르게 확인할 수 있는 모니터링 화면입니다.' },
+        { id: 14, logo:'images/logos/logo-14.png', back:'images/archive/14.png', color:'#1A1018', accent:'#F48FB1', client:'카카오뱅크', projectName:'디지털 앱 분석', title:'앱 이용자 행동 대시보드', screenType:'Dashboard', industry:'공공·금융', layoutType:'분석형', suitableFor:'전환 흐름 분석', description:'사용자 행동과 전환 지표를 중심으로 한 디지털 분석 화면입니다.' },
+        { id: 15, logo:'images/logos/logo-15.png', back:'images/archive/15.png', color:'#1A1A1A', accent:'#FFAB91', client:'SK하이닉스', projectName:'생산성 보고서', title:'반도체 생산성 대시보드', screenType:'Reporting', industry:'제조·유통', layoutType:'리포트형', suitableFor:'생산 효율 분석', description:'생산 안정성과 실적을 시각화한 반도체 현장 보고 화면입니다.' },
+        { id: 16, logo:'images/logos/logo-16.png', back:'images/archive/16.png', color:'#0D1A2A', accent:'#90CAF9', client:'삼성전자', projectName:'고객 만족 분석', title:'고객 경험 리포트', screenType:'Dashboard', industry:'서비스·기타', layoutType:'KPI Summary', suitableFor:'CS 지표 점검', description:'고객 만족도와 서비스 평점을 한눈에 점검할 수 있는 리포트 화면입니다.' },
+      ];
+      const selectedArchive = selectedArchiveIndex !== null ? archiveItems[selectedArchiveIndex] : null;
+      const moveArchiveIndex = (direction) => {
+        setSelectedArchiveIndex((prev) => {
+          if (prev === null) return 0;
+          return (prev + direction + archiveItems.length) % archiveItems.length;
+        });
+      };
+      const selectedGallery = selectedGalleryIndex !== null ? galleryItems[selectedGalleryIndex] : null;
+      const moveGalleryIndex = (direction) => {
+        setSelectedGalleryIndex((prev) => {
+          if (prev === null) return 0;
+          return (prev + direction + galleryItems.length) % galleryItems.length;
+        });
+      };
+
+      return (
+        <div className="page-root min-h-screen main-visual">
+          {/* Header */}
+          <header className="gnb-header sticky top-0 z-50 border-b border-white/10">
+            <div className="gnb-grid mx-auto grid max-w-7xl items-center px-8 h-full">
+              {/* Logo */}
+              <a href="index.html" className="flex items-center gap-2 text-xl font-bold tracking-tight" style={{textDecoration:'none'}}>
+                <img
+                  src="images/axis-logo.png"
+                  alt="AXIS Logo"
+                  className="gnb-logo"
+                />
+              </a>
+
+              {/* GNB */}
+              <nav className="hidden gap-10 font-medium text-white/80 md:flex h-full items-stretch">
+                <a href="gallery.html" className="gnb-link transition hover:text-white">레퍼런스 갤러리</a>
+                <a href="resources.html" className="gnb-link transition hover:text-white">디자인 리소스</a>
+                <a href="archive.html" className="gnb-link transition hover:text-white">프로젝트 아카이브</a>
+              </nav>
+
+              {/* Utility */}
+              <div className="flex items-center gap-2 justify-self-end">
+                {/* Search */}
+                <div className="flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 w-52 focus-within:border-white/30 transition">
+                  <svg width="15" height="15" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="9" cy="9" r="6.5" stroke={ics} strokeWidth="1.8"/>
+                    <path d="M14 14L18 18" stroke={ics} strokeWidth="1.8" strokeLinecap="round"/>
+                  </svg>
+                  <input
+                    placeholder="검색"
+                    className="bg-transparent text-sm outline-none placeholder:text-white/35 text-white w-full"
+                  />
+                </div>
+                {/* Dark mode */}
+                <button onClick={toggleTheme} className="w-9 h-9 flex items-center justify-center rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition" title={theme==='dark'?'라이트 모드로 전환':'다크 모드로 전환'} style={{display:'none'}}>
+                  {theme==='dark'
+                    ? <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke={ic} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                    : <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke={ic} strokeWidth="1.8"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke={ic} strokeWidth="1.8" strokeLinecap="round"/></svg>
+                  }
+                </button>
+                {/* Language */}
+                <button className="flex items-center gap-1.5 h-9 px-3 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition text-sm text-white/75 font-medium">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="9" stroke={icm} strokeWidth="1.8"/>
+                    <path d="M12 3C12 3 9 7 9 12C9 17 12 21 12 21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
+                    <path d="M12 3C12 3 15 7 15 12C15 17 12 21 12 21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
+                    <path d="M3 12H21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
+                  </svg>
+                  KR
+                  <svg width="10" height="10" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 4.5L6 7.5L9 4.5" stroke={icm} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </header>
+
+          {/* Hero Section */}
+
+          <section class="hero-section">
+            <div class="hero-canvas">
+
+              <div class="hero-content">
+                <p class="hero-subtitle">레퍼런스가 필요하신가요?</p>
+
+                <h1 class="hero-title">
+                  더 높은 품질을 위한
+                </h1>
+
+                <div class="hero-logo">
+                  <span>Design Gallery</span>
+                </div>
+              </div>
+
+              <div class="hero-visual">
+                <img src="images/hero-visual.png" alt="Design Gallery" />
+              </div>
+
+            </div>
+          </section>
+            
+
+          {/* Gallery Teaser */}
+          <section className="mx-auto max-w-7xl px-8 py-20">
+            <div className="mb-6 flex items-end justify-between">
+              <div>
+                <p className="page-header-label">Reference Gallery</p>
+                <h2 className="mt-2 text-3xl font-bold">레퍼런스 갤러리</h2>
+              </div>
+              <a href="gallery.html" className="rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm hover:bg-white/10">
+                전체 보기 →
+              </a>
+            </div>
+
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {galleryItems.map((item, index) => (
+                <div key={item.id} className="gallery-card" onClick={() => setSelectedGalleryIndex(index)} style={{cursor: 'pointer'}}>
+                  <div className="gallery-card-thumb">
+                    <img
+                      src={item.image.replace('/templates/', '/templates-thumbnail/')}
+                      alt={item.title}
+                      onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                    />
+                  </div>
+                  <div className="p-5">
+                    <div className="gallery-card-badges">
+                      <span className={`gallery-badge-field ${INDUSTRY_CLS[item.industry] || ''}`}>{item.industry}</span>
+                      <span className={`gallery-badge ${SCREEN_CLS[item.screenType] || ''}`}>{item.screenType}</span>
+                    </div>
+                    <div className="gallery-card-layout-subtitle">{item.layoutType}</div>
+                    <h3 className="gallery-card-title">{item.title}</h3>
+                    <div className="gallery-card-footer">
+                      <div className="gallery-suitable-box">
+                        <p>{item.suitableFor}</p>
+                      </div>
+                      <div className="gallery-card-hover-footer">
+                        {/* <div className="gallery-card-hover-title">참고 포인트</div>
+                        <p>{item.referencePoints}</p> */}
+                        <a href="#" onClick={(e) => { e.preventDefault(); setSelectedGalleryIndex(index); }} className="gallery-card-link">자세히보기 →</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Resources Highlight */}
+          <section className="mx-auto max-w-7xl px-8 py-20">
+            {/* Section Header */}
+            <div className="mb-8 flex items-end justify-between">
+              <div>
+                <p className="page-header-label">Resources</p>
+                <h2 className="mt-2 text-3xl font-bold" style={{color:theme==='dark'?'#ffffff':'#172B4D'}}>디자인 리소스</h2>
+                <p style={{marginTop:'8px', fontSize:'14px', color:theme==='dark'?'rgba(255,255,255,0.4)':'rgba(9,30,66,0.45)'}}>색상 · 차트 · 폰트 · 아이콘 실무 가이드</p>
+              </div>
+              <a href="resources.html"
+                className="rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm hover:bg-white/10 transition">
+                전체 보기 →
+              </a>
+            </div>
+
+            {/* Tab Navigation */}
+            <div style={{display:'flex', borderBottom:`1px solid ${theme==='dark'?'rgba(255,255,255,0.08)':'rgba(9,30,66,0.1)'}`, marginBottom:'28px'}}>
+              {['Chart','Font','Icon','Color'].map(tab => (
+                <button key={tab} onClick={() => setActiveResourceTab(tab)} style={{
+                  padding:'12px 28px', fontSize:'15px', fontWeight:'500',
+                  fontFamily:'Pretendard, sans-serif',
+                  color: activeResourceTab===tab ? (theme==='dark'?'#fff':'#172B4D') : (theme==='dark'?'rgba(255,255,255,0.4)':'rgba(9,30,66,0.4)'),
+                  background:'transparent', border:'none',
+                  borderBottom:`2px solid ${activeResourceTab===tab ? (theme==='dark'?'#7D60FF':'#0C66E4') : 'transparent'}`,
+                  marginBottom:'-1px', cursor:'pointer',
+                  transition:'color 0.2s, border-color 0.2s',
+                }}>{tab}</button>
+              ))}
+            </div>
+
+            {/* ── Color Tab ─────────────────────────── */}
+            {activeResourceTab === 'Color' && (() => {
+              const themes = [
+                { name:'AXIS Core',     theme:'cool', cat:'디자인',      colors:['#7D60FF','#2B67FF','#63E4B9'] },
+                { name:'산림조합중앙회',  theme:'cool', cat:'엔터프라이즈', colors:['#2D6A27','#8B5E15','#6AAF5B'] },
+                { name:'Toss',          theme:'cool', cat:'핀테크',       colors:['#0064FF','#1A1C5E','#70B8FF'] },
+                { name:'GitHub',        theme:'cool', cat:'개발자도구',    colors:['#6E40C9','#24292F','#F778BA'] },
+                { name:'한화건설',       theme:'warm', cat:'엔터프라이즈', colors:['#E8401C','#1A2744','#FF7A56'] },
+                { name:'Adobe',         theme:'warm', cat:'디자인',       colors:['#FF0000','#1C1C1C','#FF6B00'] },
+                { name:'카카오뱅크',     theme:'warm', cat:'핀테크',       colors:['#FFCD00','#3C2000','#FFB800'] },
+                { name:'AWS',           theme:'warm', cat:'인프라',        colors:['#FF9900','#232F3E','#FFB84D'] },
+              ];
+              return (
+                <div>
+                  <div style={{display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:'14px'}}>
+                    {themes.map((t, i) => (
+                      <a key={i} href="resources.html" style={{textDecoration:'none', display:'block', borderRadius:'16px', border:`1px solid ${theme==='dark'?'rgba(255,255,255,0.08)':'rgba(9,30,66,0.1)'}`, background:theme==='dark'?'rgba(255,255,255,0.03)':'#FFFFFF', overflow:'hidden', transition:'transform 0.15s, border-color 0.15s'}}
+                        onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-3px)';e.currentTarget.style.borderColor=theme==='dark'?'rgba(255,255,255,0.18)':'rgba(9,30,66,0.22)';}}
+                        onMouseLeave={e=>{e.currentTarget.style.transform='';e.currentTarget.style.borderColor=theme==='dark'?'rgba(255,255,255,0.08)':'rgba(9,30,66,0.1)';}}>
+                        <div style={{height:'58px', display:'flex'}}>
+                          {t.colors.map((c,j) => <div key={j} style={{flex:1, background:c}}/>)}
+                        </div>
+                        <div style={{padding:'10px 12px'}}>
+                          <div style={{display:'flex', gap:'5px', marginBottom:'6px', flexWrap:'wrap'}}>
+                            <span style={{fontSize:'9px', fontWeight:'700', letterSpacing:'0.08em', textTransform:'uppercase', padding:'2px 6px', borderRadius:'4px', background:t.theme==='cool'?'rgba(43,103,255,0.18)':'rgba(232,100,28,0.18)', color:t.theme==='cool'?'#7AADFF':'#FFAA7A'}}>{t.theme==='cool'?'Cool':'Warm'}</span>
+                            <span style={{fontSize:'9px', fontWeight:'600', padding:'2px 6px', borderRadius:'4px', background:theme==='dark'?'rgba(255,255,255,0.07)':'rgba(9,30,66,0.07)', color:theme==='dark'?'rgba(255,255,255,0.45)':'rgba(9,30,66,0.5)'}}>{t.cat}</span>
+                          </div>
+                          <div style={{fontSize:'12px', fontWeight:'600', color:theme==='dark'?'rgba(255,255,255,0.85)':'#172B4D', overflow:'hidden', whiteSpace:'nowrap', textOverflow:'ellipsis'}}>{t.name}</div>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                  <p style={{marginTop:'10px', fontSize:'12px', color:'rgba(255,255,255,0.3)', textAlign:'right'}}>총 12개 테마 · <a href="resources.html" style={{color:'rgba(99,228,185,0.6)', textDecoration:'none'}}>전체 보기 →</a></p>
+                </div>
+              );
+            })()}
+
+            {/* ── Chart Tab ─────────────────────────── */}
+            {activeResourceTab === 'Chart' && (() => {
+              const charts = [
+                {id:1, name:'Bar Chart',    purpose:'비교', index: 0},
+                {id:3, name:'Line Chart',   purpose:'추세', index: 2},
+                {id:5, name:'Pie / Donut',  purpose:'구성비', index: 4},
+                {id:6, name:'Treemap',      purpose:'구성비', index: 5},
+                {id:2, name:'Stacked Bar',  purpose:'비교', index: 1},
+                {id:4, name:'Area Chart',   purpose:'추세', index: 3},
+                {id:7, name:'Scatter Plot', purpose:'분포', index: 6},
+                {id:8, name:'Histogram',    purpose:'분포', index: 7},
+              ];
+              return (
+                <div>
+                  <div style={{display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:'14px'}}>
+                    {charts.map((chart, i) => (
+                      <div key={i} onClick={() => setSelectedChartIndex(chart.index)} style={{textDecoration:'none', display:'block', borderRadius:'16px', border:`1px solid ${theme==='dark'?'rgba(255,255,255,0.08)':'rgba(9,30,66,0.1)'}`, background:theme==='dark'?'rgba(255,255,255,0.03)':'#FFFFFF', overflow:'hidden', transition:'transform 0.15s, border-color 0.15s', cursor: 'pointer'}}
+                        onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-3px)';e.currentTarget.style.borderColor='rgba(255,255,255,0.18)';}}
+                        onMouseLeave={e=>{e.currentTarget.style.transform='';e.currentTarget.style.borderColor=theme==='dark'?'rgba(255,255,255,0.08)':'rgba(9,30,66,0.1)';}}>
+                        <div style={{background:'rgba(0,0,0,0.2)', padding:'14px 14px 8px'}}>
+                          {miniChartRenderer(chart.id)}
+                        </div>
+                        <div style={{padding:'10px 14px'}}>
+                          <span style={{fontSize:'9px', fontWeight:'700', letterSpacing:'0.08em', textTransform:'uppercase', padding:'2px 6px', borderRadius:'4px', background:'rgba(125,96,255,0.15)', color:'#b5a0ff', display:'inline-block', marginBottom:'5px'}}>{chart.purpose}</span>
+                          <div style={{fontSize:'12px', fontWeight:'600', color:'rgba(255,255,255,0.85)'}}>{chart.name}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <p style={{marginTop:'10px', fontSize:'12px', color:'rgba(255,255,255,0.3)', textAlign:'right'}}>총 8개 차트 가이드 · <a href="resources.html" style={{color:'rgba(99,228,185,0.6)', textDecoration:'none'}}>전체 보기 →</a></p>
+                </div>
+              );
+            })()}
+
+            {/* ── Font Tab ──────────────────────────── */}
+            {activeResourceTab === 'Font' && (() => {
+              const specs = [
+                {role:'Display', size:'56px', weight:'700', ls:'-0.03em', sample:'AXIS Design Gallery'},
+                {role:'H1',      size:'40px', weight:'700', ls:'-0.02em', sample:'디자인 갤러리'},
+                {role:'H2',      size:'32px', weight:'600', ls:'-0.02em', sample:'레퍼런스 갤러리'},
+                {role:'H3',      size:'24px', weight:'600', ls:'-0.01em', sample:'산업별 템플릿'},
+                {role:'Body L',  size:'18px', weight:'400', ls:'0',       sample:'실무에 바로 활용 가능한 디자인 시스템'},
+                {role:'Body M',  size:'16px', weight:'400', ls:'0',       sample:'실무에 바로 활용 가능한 디자인 시스템'},
+                {role:'Caption', size:'12px', weight:'400', ls:'0.01em',  sample:'2026년 05월 07일 — 디자인 가이드라인'},
+                {role:'Label',   size:'11px', weight:'600', ls:'0.07em',  sample:'TEMPLATE CURATION'},
+              ];
+              return (
+                <div>
+                  <div style={{display:'flex', flexDirection:'column', gap:'4px'}}>
+                    {specs.map((spec, i) => (
+                      <div key={i} style={{display:'flex', alignItems:'center', gap:'16px', padding:'12px 20px', borderRadius:'16px', border:'1px solid rgba(255,255,255,0.05)', background:'rgba(255,255,255,0.02)'}}>
+                        <span style={{fontSize:'10px', fontWeight:'700', letterSpacing:'0.06em', padding:'3px 8px', borderRadius:'5px', background:'rgba(125,96,255,0.15)', color:'#b5a0ff', flexShrink:0, width:'58px', textAlign:'center', display:'inline-block'}}>{spec.role}</span>
+                        <div style={{fontSize:Math.min(parseInt(spec.size),22)+'px', fontWeight:spec.weight, letterSpacing:spec.ls, color:'rgba(255,255,255,0.85)', overflow:'hidden', whiteSpace:'nowrap', textOverflow:'ellipsis', flex:1}}>{spec.sample}</div>
+                        <span style={{fontSize:'11px', fontFamily:'monospace', color:'rgba(99,228,185,0.7)', flexShrink:0}}>{spec.size}</span>
+                        <span style={{fontSize:'11px', fontFamily:'monospace', color:'rgba(255,255,255,0.28)', flexShrink:0}}>{spec.weight}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <p style={{marginTop:'10px', fontSize:'12px', color:'rgba(255,255,255,0.3)', textAlign:'right'}}>Pretendard 10단계 타입 스케일 · <a href="resources.html" style={{color:'rgba(99,228,185,0.6)', textDecoration:'none'}}>전체 보기 →</a></p>
+                </div>
+              );
+            })()}
+
+            {/* ── Icon Tab ──────────────────────────── */}
+            {activeResourceTab === 'Icon' && (() => {
+              const icons = [
+                {name:'Edit',      paths:['M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7','M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z']},
+                {name:'Delete',    paths:['M3 6h18','M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2']},
+                {name:'Add',       paths:['M12 5v14','M5 12h14']},
+                {name:'Download',  paths:['M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4','M7 10l5 5 5-5','M12 15V3']},
+                {name:'Search',    paths:['M11 17a6 6 0 1 0 0-12 6 6 0 0 0 0 12z','M21 21l-4.35-4.35']},
+                {name:'Filter',    paths:['M22 3H2l8 9.46V19l4 2v-8.54L22 3']},
+                {name:'Refresh',   paths:['M1 4v6h6','M23 20v-6h-6','M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15']},
+                {name:'Copy',      paths:['M20 9h-9a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2z','M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1']},
+                {name:'Info',      paths:['M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z','M12 8v4','M12 16h.01']},
+                {name:'Warning',   paths:['M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z','M12 9v4','M12 17h.01']},
+                {name:'Bell',      paths:['M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9','M13.73 21a2 2 0 0 1-3.46 0']},
+                {name:'Home',      paths:['M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z','M9 22V12h6v10']},
+                {name:'Menu',      paths:['M3 12h18','M3 6h18','M3 18h18']},
+                {name:'BarChart',  paths:['M12 20V10','M18 20V4','M6 20v-4']},
+                {name:'Settings',  paths:['M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16z','M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4z','M12 2v2','M12 20v2','M4.93 4.93l1.41 1.41','M17.66 17.66l1.41 1.41','M2 12h2','M20 12h2']},
+                {name:'User',      paths:['M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2','M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z']},
+              ];
+              return (
+                <div>
+                  <div style={{display:'grid', gridTemplateColumns:'repeat(8,1fr)', gap:'10px'}}>
+                    {icons.map((icon, i) => (
+                      <a key={i} href="resources.html" style={{display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:'8px', padding:'16px 8px 12px', borderRadius:'16px', border:'1px solid rgba(255,255,255,0.06)', background:'rgba(255,255,255,0.02)', cursor:'pointer', transition:'all 0.15s', textDecoration:'none', color:'rgba(255,255,255,0.4)'}}
+                        onMouseEnter={e=>{e.currentTarget.style.background='rgba(125,96,255,0.1)';e.currentTarget.style.borderColor='rgba(125,96,255,0.3)';e.currentTarget.style.color='rgba(255,255,255,0.7)';}}
+                        onMouseLeave={e=>{e.currentTarget.style.background='rgba(255,255,255,0.02)';e.currentTarget.style.borderColor='rgba(255,255,255,0.06)';e.currentTarget.style.color='rgba(255,255,255,0.4)';}}>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                          {icon.paths.map((d,j) => <path key={j} d={d}/>)}
+                        </svg>
+                        <span style={{fontSize:'9px', textAlign:'center', lineHeight:'1.3', fontFamily:'Pretendard, sans-serif'}}>{icon.name}</span>
+                      </a>
+                    ))}
+                  </div>
+                  <p style={{marginTop:'10px', fontSize:'12px', color:'rgba(255,255,255,0.3)', textAlign:'right'}}>총 40개 아이콘 · <a href="resources.html" style={{color:'rgba(99,228,185,0.6)', textDecoration:'none'}}>전체 보기 →</a></p>
+                </div>
+              );
+            })()}
+          </section>
+
+          {/* Project Archive */}
+          {(() => {
+            const ROW1 = archiveItems.slice(0, 8);
+            const ROW2 = archiveItems.slice(8, 16);
+
+            const bgEdgeL = theme==='dark'
+              ? 'linear-gradient(to right, #050814, transparent)'
+              : 'linear-gradient(to right, #F7F8F9, transparent)';
+            const bgEdgeR = theme==='dark'
+              ? 'linear-gradient(to left, #050814, transparent)'
+              : 'linear-gradient(to left, #F7F8F9, transparent)';
+            const nameCl  = theme==='dark' ? '#ffffff' : '#172B4D';
+            const frontBg = theme==='dark' ? null : '#F1F2F4';
+
+            const W = 330, H = 220, GAP = 16, R = 16;
+
+            const makeTrack = (data, animName, speed) => {
+              const cards = [...data, ...data];
+              return (
+                <div
+                  style={{display:'flex', gap:`${GAP}px`, width:'max-content', padding:'8px 0',
+                    animation:`${animName} ${speed}s linear infinite`}}
+                  onMouseEnter={e => e.currentTarget.style.animationPlayState='paused'}
+                  onMouseLeave={e => e.currentTarget.style.animationPlayState='running'}
+                >
+                  {cards.map((item, i) => {
+                    const frontBackground = frontBg
+                      ? frontBg
+                      : `linear-gradient(145deg, ${item.color} 0%, ${item.color}CC 100%)`;
+                    return (
+                      <div key={`${item.id}-${i}`}
+                        style={{
+                          width:`${W}px`, height:`${H}px`, flexShrink:0,
+                          cursor:'pointer', perspective:'1200px',
+                          transition:'transform 0.3s cubic-bezier(0.34,1.56,0.64,1)',
+                        }}
+                        onClick={() => setSelectedArchiveIndex(item.id - 1)}
+                        onMouseEnter={e => {
+                          e.currentTarget.style.transform = 'translateY(-10px)';
+                          e.currentTarget.querySelector('.archive-inner').style.transform = 'rotateY(180deg)';
+                        }}
+                        onMouseLeave={e => {
+                          e.currentTarget.style.transform = 'translateY(0)';
+                          e.currentTarget.querySelector('.archive-inner').style.transform = 'rotateY(0deg)';
+                        }}
+                      >
+                        <div className="archive-inner" style={{
+                          width:'100%', height:'100%', position:'relative',
+                          transformStyle:'preserve-3d',
+                          transition:'transform 0.65s cubic-bezier(0.4,0,0.2,1)',
+                          borderRadius:`${R}px`,
+                        }}>
+                          {/* Front: logo only */}
+                          <div style={{
+                            position:'absolute', inset:0, borderRadius:`${R}px`,
+                            backfaceVisibility:'hidden', WebkitBackfaceVisibility:'hidden',
+                            background: frontBackground,
+                            //border:`1px solid ${item.accent}28`,
+                            border:'none', display:'flex', alignItems:'center', justifyContent:'center',
+                          }}>
+                            <img
+                              src={item.logo}
+                              alt=""
+                              style={{maxWidth:'75%', maxHeight:'75%', objectFit:'contain'}}
+                              onError={e => { e.currentTarget.style.display='none'; }}
+                            />
+                          </div>
+
+                          {/* Back: archive image full-bleed */}
+                          <div style={{
+                            position:'absolute', inset:0, borderRadius:`${R}px`,
+                            backfaceVisibility:'hidden', WebkitBackfaceVisibility:'hidden',
+                            transform:'rotateY(180deg)',
+                            overflow:'hidden',
+                          }}>
+                            <img
+                              src={item.back}
+                              alt=""
+                              style={{width:'100%', height:'100%', objectFit:'cover', display:'block'}}
+                              onError={e => {
+                                e.currentTarget.parentElement.style.background = `linear-gradient(145deg, ${item.color}, ${item.color}88)`;
+                                e.currentTarget.style.display = 'none';
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            };
+
+            return (
+              <section
+      style={{
+        padding:'80px 0 72px',
+        overflow:'hidden',
+        position:'relative'
+      }}
+    >
+      {/* Section Header - 타이틀/버튼은 기존 콘텐츠 폭 유지 */}
+      <div className="mx-auto max-w-7xl px-8" style=        {{marginBottom:'32px', width:'100%', boxSizing:'border-box'
+        }}>
+        <div className="flex items-end justify-between">
+          <div>
+            <p className="page-header-label">Project Archive</p>
+            <h2 className="mt-2 text-3xl font-bold" style={{color:nameCl
+              }}>
+              프로젝트 자료 아카이브
+            </h2>
+          </div>
+          <a href="resources.html"
+            className="rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm hover:bg-white/10 transition">
+            전체 보기 →
+          </a>
+        </div>
+      </div>
+
+      {/* Two-row carousel - 카드 영역만 화면 좌우 끝까지 확장 */}
+      <div
+        style={{
+          width:'100vw',
+          marginLeft:'calc(50% - 50vw)',
+          position:'relative',
+          overflow:'hidden',
+          display:'flex',
+          flexDirection:'column',
+          gap:'0px'
+        }}
+      >
+                  {/* Edge fades */}
+                  <div style={{position:'absolute',left:0,top:0,bottom:0,width:'160px',background:bgEdgeL,zIndex:2,pointerEvents:'none'}}/>
+                  <div style={{position:'absolute',right:0,top:0,bottom:0,width:'160px',background:bgEdgeR,zIndex:2,pointerEvents:'none'}}/>
+
+                  {/* Row 1: left */}
+                  {makeTrack(ROW1, 'archiveScroll', 250)}
+                  {/* Row 2: right (reverse) */}
+                  {makeTrack(ROW2, 'archiveScrollRev', 240)}
+                </div>
+              </section>
+            );
+          })()}
+
+          {selectedArchive && (
+            <div className="archive-popup-overlay" onClick={(e) => { if (e.target === e.currentTarget) setSelectedArchiveIndex(null); }}>
+              <div className="archive-popup" role="dialog" aria-modal="true" aria-labelledby="archive-popup-title">
+                    <div className="archive-popup-controls">
+                    <button type="button" className="archive-popup-action" onClick={() => moveArchiveIndex(-1)} aria-label="이전 프로젝트">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </button>
+                    <button type="button" className="archive-popup-action" onClick={() => moveArchiveIndex(1)} aria-label="다음 프로젝트">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </button>
+                    <button type="button" className="archive-popup-action archive-popup-close" onClick={() => setSelectedArchiveIndex(null)} aria-label="팝업 닫기">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+                      </svg>
+                    </button>
+                  </div>
+                  <div className="archive-popup-left">
+                    <img src={selectedArchive.back} alt={selectedArchive.title} />
+                  </div>
+
+                  <div className="archive-popup-right">
+                    <div className="archive-popup-content">
+                      <div>
+                        <h3 id="archive-popup-title" className="archive-popup-title">{selectedArchive.title}</h3>
+                        <div className="archive-popup-meta">
+                          <div className="archive-popup-meta-item"><strong>고객사</strong><span>{selectedArchive.client}</span></div>
+                          <div className="archive-popup-meta-item"><strong>프로젝트명</strong><span>{selectedArchive.projectName}</span></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          )}
+
+          {selectedGallery && (
+            <div className="archive-popup-overlay" onClick={(e) => { if (e.target === e.currentTarget) setSelectedGalleryIndex(null); }}>
+              <div className="archive-popup" role="dialog" aria-modal="true" aria-labelledby="gallery-popup-title">
+                    <div className="archive-popup-controls">
+                    <button type="button" className="archive-popup-action" onClick={() => moveGalleryIndex(-1)} aria-label="이전 갤러리">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </button>
+                    <button type="button" className="archive-popup-action" onClick={() => moveGalleryIndex(1)} aria-label="다음 갤러리">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </button>
+                    <button type="button" className="archive-popup-action archive-popup-close" onClick={() => setSelectedGalleryIndex(null)} aria-label="팝업 닫기">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+                      </svg>
+                    </button>
+                  </div>
+                  <div className="archive-popup-left">
+                    <img src={selectedGallery.image} alt={selectedGallery.title} />
+                  </div>
+
+                  <div className="archive-popup-right">
+                    <div className="archive-popup-content">
+                      <div>
+                        <h3 id="gallery-popup-title" className="archive-popup-title">{selectedGallery.title}</h3>
+                        <div className="archive-popup-meta">
+                          <div className="archive-popup-meta-item"><strong>산업</strong><span>{selectedGallery.industry}</span></div>
+                          <div className="archive-popup-meta-item"><strong>화면 유형</strong><span>{selectedGallery.screenType}</span></div>
+                          <div className="archive-popup-meta-item"><strong>레이아웃</strong><span>{selectedGallery.layoutType}</span></div>
+                          {/* <div className="archive-popup-meta-item"><strong>참고 포인트</strong><span>{selectedGallery.referencePoints}</span></div> */}
+                          <div className="archive-popup-meta-item"><strong>사용 목적</strong><span>{selectedGallery.suitableFor}</span></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          )}
+
+          {selectedChartIndex !== null && chartGuides[selectedChartIndex] && (() => {
+            const chart = chartGuides[selectedChartIndex];
+            const moveChartIndex = (direction) => {
+              setSelectedChartIndex((prev) => (prev + direction + chartGuides.length) % chartGuides.length);
+            };
+            return (
+              <div className="archive-popup-overlay" onClick={(e) => { if (e.target === e.currentTarget) setSelectedChartIndex(null); }}>
+                <div
+                className="archive-popup chart-popup-one-column"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="chart-popup-title"
+                style={{display:'block', maxWidth:'760px', width:'calc(100vw - 48px)', padding:0}}
+                >
+                  <div className="archive-popup-controls">
+                    <button type="button" className="archive-popup-action" onClick={() => moveChartIndex(-1)} aria-label="이전 차트">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </button>
+                    <button type="button" className="archive-popup-action" onClick={() => moveChartIndex(1)} aria-label="다음 차트">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </button>
+                    <button type="button" className="archive-popup-action archive-popup-close" onClick={() => setSelectedChartIndex(null)} aria-label="팝업 닫기">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+                      </svg>
+                    </button>
+                  </div>
+                  <article className="chart-card" style={{margin:0, borderRadius:'24px', overflow:'hidden', width:'100%', background:'rgba(255,255,255,0.04)', border:'1px solid rgba(255,255,255,0.08)'}}>
+                    <div className="chart-card-header" style={{padding:'28px 32px 18px', borderBottom:'1px solid rgba(255,255,255,0.06)'}}>
+                      <div>
+                        <div style={{display:'flex', alignItems:'center', gap:'10px', marginBottom:'8px', flexWrap:'wrap'}}>
+                          <span className="chart-purpose-badge">{chart.purpose}</span>
+                          <h3 className="chart-card-title" style={{margin:0}}>{chart.name}</h3>
+                        </div>
+                        <p className="chart-card-definition" style={{margin:0}}>{chart.definition}</p>
+                      </div>
+                    </div>
+                    <div className="chart-card-content" style={{gridTemplateColumns:'1fr 1fr', minHeight:'420px'}}>
+                      <div className="chart-card-left" style={{background:'rgba(0,0,0,0.16)', borderRight:'1px solid rgba(255,255,255,0.08)', padding:'28px'}}>
+                        {miniChartRenderer(chart.id)}
+                      </div>
+                      <div className="chart-card-body" style={{padding:'28px 32px', gap:'24px'}}>
+                        <div>
+                          <p className="chart-inner-label">Anatomy — 구성 요소</p>
+                          <div className="anatomy-list" style={{marginBottom:'22px'}}>
+                            {chart.anatomy.map((a, i) => (
+                              <div key={i} className="anatomy-item">
+                                <span className="anatomy-dot" style={{backgroundColor: a.color}} />
+                                {a.label}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        <div>
+                          <p className="chart-inner-label">Do &amp; Don't</p>
+                          <div className="do-dont-grid">
+                            <div className="do-box">
+                              <div className="do-dont-label">✓ Do</div>
+                              <p style={{margin:0, fontSize:'13px', color:'rgba(255,255,255,0.75)', lineHeight:'1.6'}}>{chart.do}</p>
+                            </div>
+                            <div className="dont-box">
+                              <div className="do-dont-label">✕ Don't</div>
+                              <p style={{margin:0, fontSize:'13px', color:'rgba(255,255,255,0.75)', lineHeight:'1.6'}}>{chart.dont}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* Footer */}
+          <footer className="site-footer">
+            {/* Footer Top */}
+            <div className="mx-auto max-w-7xl px-8 py-10">
+              <div className="flex items-start justify-between gap-8">
+
+                {/* Left: SNS + Nav links */}
+                <div className="flex flex-col gap-6">
+                  {/* SNS Icons */}
+                  <div className="flex items-center gap-4">
+                    {/* YouTube */}
+                    <a href="https://www.youtube.com/@BIMATRIXKR" target="_blank" rel="noopener noreferrer"
+                       className="flex items-center justify-center w-9 h-9 rounded-full border border-white/15 bg-white/5 hover:bg-white/15 transition">
+                      <svg viewBox="-1 -1 26 26" aria-hidden="true" focusable="false" fill="rgba(255,255,255,0.65)" width="20">
+                        <path d="M 23.498 6.186 a 3.016 3.016 0 0 0 -2.122 -2.136 C 19.505 3.545 12 3.545 12 3.545 s -7.505 0 -9.377 0.505 A 3.017 3.017 0 0 0 0.502 6.186 C 0 8.07 0 12 0 12 s 0 3.93 0.502 5.814 a 3.016 3.016 0 0 0 2.122 2.136 c 1.871 0.505 9.376 0.505 9.376 0.505 s 7.505 0 9.377 -0.505 a 3.015 3.015 0 0 0 2.122 -2.136 C 24 15.93 24 12 24 12 s 0 -3.93 -0.502 -5.814 Z M 9.545 15.568 V 8.432 L 15.818 12 l -6.273 3.568 Z"></path>
+                      </svg>
+                    </a>
+                    {/* Facebook */}
+                    <a href="https://www.facebook.com/bimatrixkorea" target="_blank" rel="noopener noreferrer"
+                       className="flex items-center justify-center w-9 h-9 rounded-full border border-white/15 bg-white/5 hover:bg-white/15 transition">
+                      <svg viewBox="2 2 22 22" aria-hidden="true" focusable="false" fill="rgba(255,255,255,0.65)" width="23">
+                        <path d="M13.6 21v-7.1h2.4l.4-3h-2.8V9c0-.87.24-1.47 1.5-1.47H16.5V4.85C16.2 4.81 15.4 4.75 14.47 4.75c-1.95 0-3.28 1.19-3.28 3.38v2.77H9v3h2.19V21h2.41Z"></path>
+                      </svg>
+                    </a>
+                    {/* Naver Blog */}
+                    <a href="https://blog.naver.com/bi_matrix" target="_blank" rel="noopener noreferrer"
+                       className="flex items-center justify-center w-9 h-9 rounded-full border border-white/15 bg-white/5 hover:bg-white/15 transition">
+                      <svg viewBox="0 0 106.4 86" width="20" height="20" aria-hidden="true" fill="rgba(255,255,255,0.65)">
+                        <path d="M59.5,34c-2.3,0-4.2,1.9-4.2,4.2s1.9,4.2,4.2,4.2,4.2-1.9,4.2-4.2-1.9-4.2-4.2-4.2Z"/>
+                        <path d="M84.6,34c-2.3,0-4.2,1.9-4.2,4.2s1.9,4.2,4.2,4.2,4.2-1.9,4.2-4.2-1.9-4.2-4.2-4.2Z"/>
+                        <path d="M89.6,0H16.8C7.5,0,0,7.3,0,16.2v38.5c0,9,7.5,16.2,16.8,16.2h25.1l8.6,13.4s0,.2.3.4c.5.8,1.4,1.4,2.5,1.4s2-.6,2.5-1.4c.2-.2.3-.4.3-.4l8.6-13.4h25.1c9.3,0,16.8-7.3,16.8-16.2V16.2C106.4,7.3,98.9,0,89.6,0h0ZM23.6,48.1c-3.9,0-5.5-2.8-5.5-2.8v2.1h-6.6v-27.1h6.5v10.3c2.6-2.6,5.5-2.6,5.5-2.6,8.8,0,9.2,9.9,9.2,9.9,0,9.8-9.2,10.1-9.2,10.1h0ZM44.2,29.9v17.5h-6.3v-16.1c0-5.5-3-5.4-3-5.4v-6.3c9.5,0,9.2,10.2,9.2,10.2ZM70.5,38.2c0,9.9-11,9.9-11,9.9-11.1,0-10.8-9.9-10.8-9.9,0-10,10.8-10.1,10.8-10.1,11.4,0,11,10.1,11,10.1ZM94.8,47.2c0,10.3-9.5,10.2-9.5,10.2h-2.5v-5.8h1.6c4.6,0,4.2-4.8,4.2-4.8v-1.5c-2,2.6-5.7,2.5-5.7,2.5-9.1,0-9-9.7-9-9.7,0-10.4,9.2-10,9.2-10,3.6,0,5.5,2.5,5.5,2.5v-1.8h6.3v18.4h0Z"/>
+                        <path d="M22.2,34c-2.3,0-4.2,1.9-4.2,4.2s1.9,4.2,4.2,4.2,4.2-1.9,4.2-4.2-1.9-4.2-4.2-4.2Z"/>
+                      </svg>
+                    </a>
+                  </div>
+
+                  {/* Nav Links */}
+                  <div className="flex items-center gap-6 text-sm text-white/50">
+                    <a href="https://www.bimatrix.co.kr/privacy/" target="_blank" className="hover:text-white/80 transition">
+                      개인정보처리방침</a>
+                    <span className="text-white/20">|</span>
+                    <a href="https://www.bimatrix.co.kr/pr/newsletter/subscription/" target="_blank" className="hover:text-white/80 transition">
+                      뉴스레터 구독</a>
+                    <span className="text-white/20">|</span>
+                    <a href="https://www.bimatrix.co.kr/support/contact/" target="_blank" className="hover:text-white/80 transition">
+                      문의하기</a>
+                  </div>
+                </div>
+
+                {/* Right: Family Site Dropdown */}
+                <div className="relative flex-shrink-0">
+                  <button
+                    onClick={() => setFamilySiteOpen(!familySiteOpen)}
+                    className="flex items-center gap-2 rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 text-sm text-white/70 hover:bg-white/10 transition min-w-[160px] justify-between"
+                  >
+                    <span>Family Site</span>
+                    <svg
+                      width="12" height="12" viewBox="0 0 12 12" fill="none"
+                      className={`family-site-chevron ${familySiteOpen ? 'open' : ''}`}
+                    >
+                      <path d="M3 4.5L6 7.5L9 4.5" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </button>
+                  {familySiteOpen && (
+                    <div className="family-site-dropdown absolute right-0 bottom-full mb-1 w-48 rounded-lg border border-white/15 overflow-hidden z-10">
+                      {[
+                        {label: "비아이매트릭스 홈페이지", href: "https://www.bimatrix.co.kr/"},
+                        {label: "AUD플랫폼 아카데미", href: "https://audp.bimatrix.co.kr/"},
+                        {label: "AUD플랫폼 데모", href: "http://aud.bimatrix.co.kr/extention/sso/SimpleSSO4.jsp"},
+                        {label: "고객지원 사이트", href: "https://cs.bimatrix.co.kr/"},
+                      ].map((item) => (
+                        <a key={item.label} href={item.href} target="_blank"
+                           className="block px-4 py-2.5 text-sm text-white/60 hover:bg-white/10 hover:text-white/90 transition">
+                          {item.label}
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Footer Bottom */}
+            <div className="footer-bottom">
+              <div className="mx-auto max-w-7xl px-8 py-6 flex items-end justify-between gap-8">
+                {/* Company Info */}
+                <div className="flex flex-col gap-1.5 text-xs text-white/35 leading-relaxed">
+                  <p className="text-white/50 font-medium text-sm">(주)비아이매트릭스</p>
+                  <p>서울시 강남구 선릉로 433, 세방빌딩 신관 17층(역삼동) &nbsp;|&nbsp; 대표이사: 배영근</p>
+                  <p>Tel: 02-561-4475 &nbsp;|&nbsp; Fax: 02-561-4479</p>
+                  <p className="mt-1">© BI MATRIX CO., LTD. ALL RIGHTS RESERVED.</p>
+                </div>
+
+                {/* BI MATRIX Logo */}
+                <div className="flex-shrink-0">
+                  <img
+                    src="images/img_logo_footer.svg"
+                    alt="BI MATRIX"
+                    className="footer-logo"
+                  />
+                </div>
+              </div>
+            </div>
+          </footer>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<BxdiMainPagePrototype />);
+  </script>
+</body>
+</html>

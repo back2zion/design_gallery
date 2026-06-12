@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>프로젝트 아카이브 | AXIS Design Gallery</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <script>try{var t=localStorage.getItem('axis-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const INDUSTRY_CLS = {
+      '공공·금융':  'badge-ind-public',
+      '제조·유통':  'badge-ind-mfg',
+      '의료·제약':  'badge-ind-med',
+      '서비스·기타': 'badge-ind-svc',
+    };
+    const SCREEN_CLS = {
+      'EPA':       'badge-scr-epa',
+      'Dashboard': 'badge-scr-dash',
+      'UI/UX':     'badge-scr-uiux',
+      'Reporting': 'badge-scr-report',
+      'BI/OLAP':   'badge-scr-bi',
+    };
+
+    function ArchivePage() {
+      const [theme, setTheme] = React.useState(() => { try{return localStorage.getItem('axis-theme')||'dark';}catch(e){return 'dark';} });
+      React.useEffect(() => { document.documentElement.setAttribute('data-theme', theme); }, [theme]);
+      const toggleTheme = () => { const n=theme==='dark'?'light':'dark'; setTheme(n); try{localStorage.setItem('axis-theme',n);}catch(e){} };
+      const ic  = theme==='dark' ? 'rgba(255,255,255,0.75)' : 'rgba(9,30,66,0.55)';
+      const ics = theme==='dark' ? 'rgba(255,255,255,0.4)'  : 'rgba(9,30,66,0.3)';
+      const icm = theme==='dark' ? 'rgba(255,255,255,0.6)'  : 'rgba(9,30,66,0.45)';
+
+      const [selectedArchiveIndex, setSelectedArchiveIndex] = React.useState(null);
+      
+      // 패밀리 사이트 드롭다운 상태 추가
+      const [familySiteOpen, setFamilySiteOpen] = React.useState(false);
+
+      const archiveItems = [
+        { id: 1, logo:'images/logos/logo-1.png',  back:'images/archive/1.png',  color:'#1A3320', accent:'#4CAF50', client:'신한은행', projectName:'경영성과 리포트', title:'은행 경영성과 대시보드', screenType:'Dashboard', industry:'공공·금융'},
+        { id: 2, logo:'images/logos/logo-2.png',  back:'images/archive/2.png',  color:'#0A1F33', accent:'#4FC3F7', client:'현대자동차', projectName:'제조 공정 모니터링', title:'생산 라인 운영 현황', screenType:'EPA', industry:'제조·유통'},
+        { id: 3, logo:'images/logos/logo-3.png',  back:'images/archive/3.png',  color:'#15175A', accent:'#7986CB', client:'LG CNS', projectName:'서비스 이슈 분석', title:'서비스 운영 분석 대시보드', screenType:'Dashboard', industry:'서비스·기타' },
+        { id: 4, logo:'images/logos/logo-4.png',  back:'images/archive/4.png',  color:'#0B2A3A', accent:'#26C6DA', client:'SK텔레콤', projectName:'통신망 성능 리포트', title:'네트워크 KPI 리포트', screenType:'Dashboard', industry:'서비스·기타'},
+        { id: 5, logo:'images/logos/logo-5.png',  back:'images/archive/5.png',  color:'#142840', accent:'#42A5F5', client:'롯데쇼핑', projectName:'물류 실적 분석', title:'전사 운송 실적 대시보드', screenType:'Dashboard', industry:'제조·유통'},
+        { id: 6, logo:'images/logos/logo-6.png',  back:'images/archive/6.png',  color:'#162416', accent:'#81C784', client:'아워홈', projectName:'교대별 팀 성과', title:'교대별 생산성 대시보드', screenType:'Dashboard', industry:'서비스·기타'},
+        { id: 7, logo:'images/logos/logo-7.png',  back:'images/archive/7.png',  color:'#2E1545', accent:'#BA68C8', client:'신세계인터내셔날', projectName:'고객지표 통합대시보드', title:'고객 관리 실적 대시보드', screenType:'Dashboard', industry:'제조·유통'},
+        { id: 8, logo:'images/logos/logo-8.png',  back:'images/archive/8.png',  color:'#3B1212', accent:'#EF9A9A', client:'하나은행', projectName:'교육통계서비스', title:'학습 현황 통계 화면', screenType:'Dashboard', industry:'공공·금융'},
+        { id: 9, logo:'images/logos/logo-9.png',  back:'images/archive/9.png',  color:'#1A1A10', accent:'#DCE775', client:'KT', projectName:'인프라 상태 모니터링', title:'통신 인프라 운영 대시보드', screenType:'Dashboard', industry:'공공·금융', layoutType:'상태 모니터링', suitableFor:'장비 운영 점검'},
+        { id: 10, logo:'images/logos/logo-10.png', back:'images/archive/10.png', color:'#101820', accent:'#80CBC4', client:'GS칼텍스', projectName:'에너지 관리 시스템', title:'에너지 실적 트래킹 화면', screenType:'Dashboard', industry:'제조·유통', layoutType:'KPI Summary', suitableFor:'에너지 비용 분석', description:'에너지 사용량과 비용 효율을 모니터링하는 실무형 대시보드입니다.' },
+        { id: 11, logo:'images/logos/logo-11.png', back:'images/archive/11.png', color:'#201A10', accent:'#FFCC80', client:'CJ대한통운', projectName:'배송 운영 관리', title:'물류 배송 현황 대시보드', screenType:'Dashboard', industry:'제조·유통', layoutType:'운영현황형', suitableFor:'배송 성과 점검', description:'물류 흐름과 배송 성과를 한눈에 보여주는 운영 화면입니다.' },
+        { id: 12, logo:'images/logos/logo-12.png', back:'images/archive/12.png', color:'#1A1020', accent:'#CE93D8', client:'현대카드', projectName:'고객 행동 분석', title:'마케팅 인사이트 대시보드', screenType:'Reporting', industry:'공공·금융', layoutType:'리포트형', suitableFor:'캠페인 성과 분석', description:'고객 행동 지표와 캠페인 성과를 통합해서 보여주는 인사이트 화면입니다.' },
+        { id: 13, logo:'images/logos/logo-13.png', back:'images/archive/13.png', color:'#101A1A', accent:'#80DEEA', client:'네이버', projectName:'서비스 트래픽 리포트', title:'실시간 트래픽 모니터링', screenType:'EPA', industry:'서비스·기타', layoutType:'모니터링형', suitableFor:'트래픽 분석', description:'트래픽 변화와 응답 지표를 빠르게 확인할 수 있는 모니터링 화면입니다.' },
+        { id: 14, logo:'images/logos/logo-14.png', back:'images/archive/14.png', color:'#1A1018', accent:'#F48FB1', client:'카카오뱅크', projectName:'디지털 앱 분석', title:'앱 이용자 행동 대시보드', screenType:'Dashboard', industry:'공공·금융', layoutType:'분석형', suitableFor:'전환 흐름 분석', description:'사용자 행동과 전환 지표를 중심으로 한 디지털 분석 화면입니다.' },
+        { id: 15, logo:'images/logos/logo-15.png', back:'images/archive/15.png', color:'#1A1A1A', accent:'#FFAB91', client:'SK하이닉스', projectName:'생산성 보고서', title:'반도체 생산성 대시보드', screenType:'Reporting', industry:'제조·유통', layoutType:'리포트형', suitableFor:'생산 효율 분석', description:'생산 안정성과 실적을 시각화한 반도체 현장 보고 화면입니다.' },
+        { id: 16, logo:'images/logos/logo-16.png', back:'images/archive/16.png', color:'#0D1A2A', accent:'#90CAF9', client:'삼성전자', projectName:'고객 만족 분석', title:'고객 경험 리포트', screenType:'Dashboard', industry:'서비스·기타', layoutType:'KPI Summary', suitableFor:'CS 지표 점검', description:'고객 만족도와 서비스 평점을 한눈에 점검할 수 있는 리포트 화면입니다.' },
+      ];
+
+      const selectedArchive = selectedArchiveIndex !== null ? archiveItems[selectedArchiveIndex] : null;
+      const moveArchiveIndex = (direction) => {
+        setSelectedArchiveIndex((prev) => {
+          if (prev === null) return 0;
+          return (prev + direction + archiveItems.length) % archiveItems.length;
+        });
+      };
+
+      return (
+        <div className="page-root min-h-screen flex flex-col justify-between">
+          <div>
+            {/* GNB */}
+            <header className="gnb-header sticky top-0 z-50 border-b border-white/10">
+              <div className="gnb-grid mx-auto grid max-w-7xl items-center px-8 h-full">
+                <div className="flex items-center gap-2">
+                  <a href="index.html">
+                    <img src="images/axis-logo.png" alt="AXIS Logo" className="gnb-logo" />
+                  </a>
+                </div>
+                <nav className="hidden gap-10 font-medium text-white/80 md:flex h-full items-stretch">
+                  <a href="gallery.html"    className="gnb-link transition hover:text-white">레퍼런스 갤러리</a>
+                  <a href="resources.html"  className="gnb-link transition hover:text-white">디자인 리소스</a>
+                  <a href="archive.html" className="gnb-link active transition hover:text-white">프로젝트 아카이브</a>
+                </nav>
+                <div className="flex items-center gap-2 justify-self-end">
+                  <div className="flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 w-52 focus-within:border-white/30 transition">
+                    <svg width="15" height="15" viewBox="0 0 20 20" fill="none">
+                      <circle cx="9" cy="9" r="6.5" stroke={ics} strokeWidth="1.8"/>
+                      <path d="M14 14L18 18" stroke={ics} strokeWidth="1.8" strokeLinecap="round"/>
+                    </svg>
+                    <input placeholder="검색" className="bg-transparent text-sm outline-none placeholder:text-white/35 text-white w-full" />
+                  </div>
+                  <button onClick={toggleTheme} className="w-9 h-9 flex items-center justify-center rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition" title={theme==='dark'?'라이트 모드로 전환':'다크 모드로 전환'} style={{display:'none'}}>
+                    {theme==='dark'
+                      ? <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke={ic} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                      : <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke={ic} strokeWidth="1.8"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke={ic} strokeWidth="1.8" strokeLinecap="round"/></svg>
+                    }
+                  </button>
+                  <button className="flex items-center gap-1.5 h-9 px-3 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition text-sm text-white/75 font-medium">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="12" cy="12" r="9" stroke={icm} strokeWidth="1.8"/>
+                      <path d="M12 3C12 3 9 7 9 12C9 17 12 21 12 21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
+                      <path d="M12 3C12 3 15 7 15 12C15 17 12 21 12 21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
+                      <path d="M3 12H21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
+                    </svg>
+                    KR
+                    <svg width="10" height="10" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M3 4.5L6 7.5L9 4.5" stroke={icm} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </header>
+
+            {/* Main Content */}
+            <section className="mx-auto max-w-7xl px-4 sm:px-8 py-12 sm:py-20">
+              <div className="mb-8 flex items-end justify-between">
+                <div>
+                  <p className="page-header-label">Project Archive</p>
+                  <h1 className="mt-2 text-2xl sm:text-3xl font-bold">프로젝트 자료 아카이브</h1>
+                  <p style={{marginTop:'8px', fontSize:'14px', color:theme==='dark'?'rgba(255,255,255,0.4)':'rgba(9,30,66,0.45)'}}>실무 프로젝트 포트폴리오 및 사례 모음</p>
+                </div>
+              </div>
+
+              {/* Grid */}
+              <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(240px, 1fr))', gap:'20px'}}>
+                {archiveItems.map((item, index) => (
+                  <div
+                    key={item.id}
+                    onClick={() => setSelectedArchiveIndex(index)}
+                    style={{
+                      borderRadius:'16px',
+                      border:`1px solid ${theme==='dark'?'rgba(255,255,255,0.08)':'rgba(9,30,66,0.1)'}`,
+                      background:theme==='dark'?'rgba(255,255,255,0.03)':'#FFFFFF',
+                      overflow:'hidden',
+                      cursor:'pointer',
+                      transition:'all 0.2s ease',
+                    }}
+                    onMouseEnter={e=>{
+                      e.currentTarget.style.transform='translateY(-4px)';
+                      e.currentTarget.style.borderColor=theme==='dark'?'rgba(255,255,255,0.15)':'rgba(9,30,66,0.2)';
+                      e.currentTarget.style.boxShadow=theme==='dark'?'0 8px 32px rgba(0,0,0,0.3)':'0 4px 12px rgba(9,30,66,0.1)';
+                    }}
+                    onMouseLeave={e=>{
+                      e.currentTarget.style.transform='';
+                      e.currentTarget.style.borderColor=theme==='dark'?'rgba(255,255,255,0.08)':'rgba(9,30,66,0.1)';
+                      e.currentTarget.style.boxShadow='none';
+                    }}>
+                    <div style={{
+                      aspectRatio:'1',
+                      background:`linear-gradient(135deg, ${item.color} 0%, ${item.color}cc 100%)`,
+                      display:'flex',
+                      alignItems:'center',
+                      justifyContent:'center',
+                      overflow:'hidden',
+                    }}>
+                      <img
+                        src={item.logo}
+                        alt={item.client}
+                        style={{maxWidth:'60%', maxHeight:'60%', objectFit:'contain'}}
+                        onError={e => { e.currentTarget.style.display='none'; }}
+                      />
+                    </div>
+                    <div style={{padding:'14px 16px'}}>
+                      <div style={{fontSize:'11px', fontWeight:'600', color:theme==='dark'?'rgba(255,255,255,0.5)':'rgba(9,30,66,0.5)', marginBottom:'4px', textTransform:'uppercase', letterSpacing:'0.04em'}}>{item.client}</div>
+                      <h3 style={{fontSize:'13px', fontWeight:'600', color:theme==='dark'?'rgba(255,255,255,0.9)':'#172B4D', lineHeight:'1.4', marginBottom:'8px'}}>{item.title}</h3>
+                      <div style={{display:'flex', gap:'6px', flexWrap:'wrap'}}>
+                        <span className={`gallery-badge ${INDUSTRY_CLS[item.industry] || ''}`} style={{fontSize:'9px'}}>{item.industry}</span>
+                        <span className={`gallery-badge ${SCREEN_CLS[item.screenType] || ''}`} style={{fontSize:'9px'}}>{item.screenType}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Popup */}
+            {selectedArchive && (
+              <div className="archive-popup-overlay" onClick={(e) => { if (e.target === e.currentTarget) setSelectedArchiveIndex(null); }}>
+                <div className="archive-popup" role="dialog" aria-modal="true" aria-labelledby="archive-popup-title">
+                  <div className="archive-popup-controls">
+                    <button type="button" className="archive-popup-action" onClick={() => moveArchiveIndex(-1)} aria-label="이전 프로젝트">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </button>
+                    <button type="button" className="archive-popup-action" onClick={() => moveArchiveIndex(1)} aria-label="다음 프로젝트">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </button>
+                    <button type="button" className="archive-popup-action archive-popup-close" onClick={() => setSelectedArchiveIndex(null)} aria-label="팝업 닫기">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+                      </svg>
+                    </button>
+                  </div>
+                  <div className="archive-popup-left">
+                    <img src={selectedArchive.back} alt={selectedArchive.title} />
+                  </div>
+                  <div className="archive-popup-right">
+                    <div className="archive-popup-content">
+                      <div>
+                        <h3 id="archive-popup-title" className="archive-popup-title">{selectedArchive.title}</h3>
+                        <div className="archive-popup-meta">
+                          <div className="archive-popup-meta-item"><strong>고객사</strong><span>{selectedArchive.client}</span></div>
+                          <div className="archive-popup-meta-item"><strong>프로젝트명</strong><span>{selectedArchive.projectName}</span></div>
+                          <div className="archive-popup-meta-item"><strong>산업</strong><span>{selectedArchive.industry}</span></div>
+                          <div className="archive-popup-meta-item"><strong>화면 유형</strong><span>{selectedArchive.screenType}</span></div>
+                          {selectedArchive.layoutType && <div className="archive-popup-meta-item"><strong>레이아웃</strong><span>{selectedArchive.layoutType}</span></div>}
+                          {selectedArchive.suitableFor && <div className="archive-popup-meta-item"><strong>사용 목적</strong><span>{selectedArchive.suitableFor}</span></div>}
+                          {selectedArchive.description && <div className="archive-popup-meta-item"><strong>설명</strong><span>{selectedArchive.description}</span></div>}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+      <footer className="site-footer">
+        <div className="mx-auto max-w-7xl px-8 py-10">
+          <div className="flex items-start justify-between gap-8">
+            <div className="flex flex-col gap-6">
+              <div className="flex items-center gap-4">
+                    <a href="https://www.youtube.com/@BIMATRIXKR" target="_blank" rel="noopener noreferrer"
+                       className="flex items-center justify-center w-9 h-9 rounded-full border border-white/15 bg-white/5 hover:bg-white/15 transition">
+                      <svg viewBox="-1 -1 26 26" aria-hidden="true" focusable="false" fill="rgba(255,255,255,0.65)" width="20">
+                        <path d="M 23.498 6.186 a 3.016 3.016 0 0 0 -2.122 -2.136 C 19.505 3.545 12 3.545 12 3.545 s -7.505 0 -9.377 0.505 A 3.017 3.017 0 0 0 0.502 6.186 C 0 8.07 0 12 0 12 s 0 3.93 0.502 5.814 a 3.016 3.016 0 0 0 2.122 2.136 c 1.871 0.505 9.376 0.505 9.376 0.505 s 7.505 0 9.377 -0.505 a 3.015 3.015 0 0 0 2.122 -2.136 C 24 15.93 24 12 24 12 s 0 -3.93 -0.502 -5.814 Z M 9.545 15.568 V 8.432 L 15.818 12 l -6.273 3.568 Z"></path>
+                      </svg>
+                    </a>
+                    <a href="https://www.facebook.com/bimatrixkorea" target="_blank" rel="noopener noreferrer"
+                       className="flex items-center justify-center w-9 h-9 rounded-full border border-white/15 bg-white/5 hover:bg-white/15 transition">
+                      <svg viewBox="2 2 22 22" aria-hidden="true" focusable="false" fill="rgba(255,255,255,0.65)" width="23">
+                        <path d="M13.6 21v-7.1h2.4l.4-3h-2.8V9c0-.87.24-1.47 1.5-1.47H16.5V4.85C16.2 4.81 15.4 4.75 14.47 4.75c-1.95 0-3.28 1.19-3.28 3.38v2.77H9v3h2.19V21h2.41Z"></path>
+                      </svg>
+                    </a>
+                    <a href="https://blog.naver.com/bi_matrix" target="_blank" rel="noopener noreferrer"
+                       className="flex items-center justify-center w-9 h-9 rounded-full border border-white/15 bg-white/5 hover:bg-white/15 transition">
+                      <svg viewBox="0 0 106.4 86" width="20" height="20" aria-hidden="true" fill="rgba(255,255,255,0.65)">
+                        <path d="M59.5,34c-2.3,0-4.2,1.9-4.2,4.2s1.9,4.2,4.2,4.2,4.2-1.9,4.2-4.2-1.9-4.2-4.2-4.2Z"/>
+                        <path d="M84.6,34c-2.3,0-4.2,1.9-4.2,4.2s1.9,4.2,4.2,4.2,4.2-1.9,4.2-4.2-1.9-4.2-4.2-4.2Z"/>
+                        <path d="M89.6,0H16.8C7.5,0,0,7.3,0,16.2v38.5c0,9,7.5,16.2,16.8,16.2h25.1l8.6,13.4s0,.2.3.4c.5.8,1.4,1.4,2.5,1.4s2-.6,2.5-1.4c.2-.2.3-.4.3-.4l8.6-13.4h25.1c9.3,0,16.8-7.3,16.8-16.2V16.2C106.4,7.3,98.9,0,89.6,0h0ZM23.6,48.1c-3.9,0-5.5-2.8-5.5-2.8v2.1h-6.6v-27.1h6.5v10.3c2.6-2.6,5.5-2.6,5.5-2.6,8.8,0,9.2,9.9,9.2,9.9,0,9.8-9.2,10.1-9.2,10.1h0ZM44.2,29.9v17.5h-6.3v-16.1c0-5.5-3-5.4-3-5.4v-6.3c9.5,0,9.2,10.2,9.2,10.2ZM70.5,38.2c0,9.9-11,9.9-11,9.9-11.1,0-10.8-9.9-10.8-9.9,0-10,10.8-10.1,10.8-10.1,11.4,0,11,10.1,11,10.1ZM94.8,47.2c0,10.3-9.5,10.2-9.5,10.2h-2.5v-5.8h1.6c4.6,0,4.2-4.8,4.2-4.8v-1.5c-2,2.6-5.7,2.5-5.7,2.5-9.1,0-9-9.7-9-9.7,0-10.4,9.2-10,9.2-10,3.6,0,5.5,2.5,5.5,2.5v-1.8h6.3v18.4h0Z"/>
+                        <path d="M22.2,34c-2.3,0-4.2,1.9-4.2,4.2s1.9,4.2,4.2,4.2,4.2-1.9,4.2-4.2-1.9-4.2-4.2-4.2Z"/>
+                      </svg>
+                    </a>
+              </div>
+                  <div className="flex items-center gap-6 text-sm text-white/50">
+                    <a href="https://www.bimatrix.co.kr/privacy/" target="_blank" className="hover:text-white/80 transition">
+                      개인정보처리방침</a>
+                    <span className="text-white/20">|</span>
+                    <a href="https://www.bimatrix.co.kr/pr/newsletter/subscription/" target="_blank" className="hover:text-white/80 transition">
+                      뉴스레터 구독</a>
+                    <span className="text-white/20">|</span>
+                    <a href="https://www.bimatrix.co.kr/support/contact/" target="_blank" className="hover:text-white/80 transition">
+                      문의하기</a>
+                  </div>
+            </div>
+            <div className="relative flex-shrink-0">
+              <button onClick={() => setFamilySiteOpen(!familySiteOpen)}
+                className="flex items-center gap-2 rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 text-sm text-white/70 hover:bg-white/10 transition min-w-[160px] justify-between">
+                <span>Family Site</span>
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
+                     className={`family-site-chevron ${familySiteOpen ? 'open' : ''}`}>
+                  <path d="M3 4.5L6 7.5L9 4.5" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
+                  {familySiteOpen && (
+                    <div className="family-site-dropdown absolute right-0 bottom-full mb-1 w-48 rounded-lg border border-white/15 overflow-hidden z-10">
+                      {[
+                        {label: "비아이매트릭스 홈페이지", href: "https://www.bimatrix.co.kr/"},
+                        {label: "AUD플랫폼 아카데미", href: "https://audp.bimatrix.co.kr/"},
+                        {label: "AUD플랫폼 데모", href: "http://aud.bimatrix.co.kr/extention/sso/SimpleSSO4.jsp"},
+                        {label: "고객지원 사이트", href: "https://cs.bimatrix.co.kr/"},
+                      ].map((item) => (
+                        <a key={item.label} href={item.href} target="_blank"
+                           className="block px-4 py-2.5 text-sm text-white/60 hover:bg-white/10 hover:text-white/90 transition">
+                          {item.label}
+                        </a>
+                      ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+        <div className="footer-bottom">
+          <div className="mx-auto max-w-7xl px-8 py-6 flex items-end justify-between gap-8">
+            <div className="flex flex-col gap-1.5 text-xs text-white/35 leading-relaxed">
+                  <p className="text-white/50 font-medium text-sm">(주)비아이매트릭스</p>
+                  <p>서울시 강남구 선릉로 433, 세방빌딩 신관 17층(역삼동) &nbsp;|&nbsp; 대표이사: 배영근</p>
+                  <p>Tel: 02-561-4475 &nbsp;|&nbsp; Fax: 02-561-4479</p>
+                  <p className="mt-1">© BI MATRIX CO., LTD. ALL RIGHTS RESERVED.</p>
+            </div>
+            <div className="flex-shrink-0">
+              <img src="images/img_logo_footer.svg" alt="AXIS" className="footer-logo" />
+            </div>
+          </div>
+        </div>
+      </footer>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<ArchivePage />);
+  </script>
+</body>
+</html>

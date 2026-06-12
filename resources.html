@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>디자인 리소스 | AXIS Design Gallery</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <script>try{var t=localStorage.getItem('axis-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+
+/* ═══════════════════════════════════════════════════════════════════
+   DATA
+═══════════════════════════════════════════════════════════════════ */
+
+const COLOR_THEMES = [
+  // ── Cool ───────────────────────────────────────────────────────────
+  {
+    id: 'axis', name: 'AXIS Core', theme: 'cool', clientCat: '디자인',
+    brand: [
+      { name: 'Purple', hex: '#7D60FF', rgb: '125, 96, 255',  role: 'Primary'   },
+      { name: 'Blue',   hex: '#2B67FF', rgb: '43, 103, 255',  role: 'Secondary' },
+      { name: 'Mint',   hex: '#63E4B9', rgb: '99, 228, 185',  role: 'Accent'    },
+    ],
+    semantic: [
+      { name: 'Primary', hex: '#7D60FF', rgb: '125, 96, 255', desc: '주요 액션, CTA 버튼' },
+      { name: 'Success', hex: '#22C55E', rgb: '34, 197, 94',  desc: '성공, 완료 상태'     },
+      { name: 'Warning', hex: '#F59E0B', rgb: '245, 158, 11', desc: '경고, 주의 상태'     },
+      { name: 'Error',   hex: '#EF4444', rgb: '239, 68, 68',  desc: '오류, 위험 상태'     },
+      { name: 'Info',    hex: '#3B82F6', rgb: '59, 130, 246', desc: '정보, 안내 메시지'   },
+    ],
+    neutrals: [
+      { name: '50',  hex: '#F9FAFB' }, { name: '100', hex: '#F3F4F6' },
+      { name: '200', hex: '#E5E7EB' }, { name: '300', hex: '#D1D5DB' },
+      { name: '400', hex: '#9CA3AF' }, { name: '500', hex: '#6B7280' },
+      { name: '600', hex: '#4B5563' }, { name: '700', hex: '#374151' },
+      { name: '800', hex: '#1F2937' }, { name: '900', hex: '#111827' },
+    ],
+  },
+  {
+    id: 'sanrim', name: '산림조합중앙회', theme: 'cool', clientCat: '엔터프라이즈',
+    brand: [
+      { name: 'Forest Green', hex: '#2D6A27', rgb: '45, 106, 39',  role: 'Primary'   },
+      { name: 'Wood Brown',   hex: '#8B5E15', rgb: '139, 94, 21',  role: 'Secondary' },
+      { name: 'Leaf',         hex: '#6AAF5B', rgb: '106, 175, 91', role: 'Accent'    },
+    ],
+    semantic: [
+      { name: 'Primary', hex: '#2D6A27', rgb: '45, 106, 39',  desc: '주요 액션, CTA 버튼' },
+      { name: 'Success', hex: '#22C55E', rgb: '34, 197, 94',  desc: '성공, 완료 상태'     },
+      { name: 'Warning', hex: '#F59E0B', rgb: '245, 158, 11', desc: '경고, 주의 상태'     },
+      { name: 'Error',   hex: '#EF4444', rgb: '239, 68, 68',  desc: '오류, 위험 상태'     },
+      { name: 'Info',    hex: '#3B82F6', rgb: '59, 130, 246', desc: '정보, 안내 메시지'   },
+    ],
+    neutrals: [
+      { name: '50',  hex: '#FAFAF7' }, { name: '100', hex: '#F4F4EE' },
+      { name: '200', hex: '#E8E8DF' }, { name: '300', hex: '#D5D5C8' },
+      { name: '400', hex: '#B0B09F' }, { name: '500', hex: '#8A8A78' },
+      { name: '600', hex: '#6A6A5A' }, { name: '700', hex: '#4E4E40' },
+      { name: '800', hex: '#35352A' }, { name: '900', hex: '#1E1E17' },
+    ],
+  },
+  {
+    id: 'toss', name: 'Toss', theme: 'cool', clientCat: '핀테크',
+    brand: [
+      { name: 'Blue',     hex: '#0064FF', rgb: '0, 100, 255',    role: 'Primary'   },
+      { name: 'Navy',     hex: '#1A1C5E', rgb: '26, 28, 94',     role: 'Secondary' },
+      { name: 'Sky Blue', hex: '#70B8FF', rgb: '112, 184, 255',  role: 'Accent'    },
+    ],
+    semantic: [
+      { name: 'Primary', hex: '#0064FF', rgb: '0, 100, 255',   desc: '주요 액션, CTA 버튼' },
+      { name: 'Success', hex: '#22C55E', rgb: '34, 197, 94',   desc: '성공, 완료 상태'     },
+      { name: 'Warning', hex: '#F59E0B', rgb: '245, 158, 11',  desc: '경고, 주의 상태'     },
+      { name: 'Error',   hex: '#EF4444', rgb: '239, 68, 68',   desc: '오류, 위험 상태'     },
+      { name: 'Info',    hex: '#3B82F6', rgb: '59, 130, 246',  desc: '정보, 안내 메시지'   },
+    ],
+    neutrals: [
+      { name: '50',  hex: '#F8FAFF' }, { name: '100', hex: '#EEF2FF' },
+      { name: '200', hex: '#DDE5FF' }, { name: '300', hex: '#C4D0FF' },
+      { name: '400', hex: '#97AAFF' }, { name: '500', hex: '#6B80FF' },
+      { name: '600', hex: '#4F63CC' }, { name: '700', hex: '#3A4A99' },
+      { name: '800', hex: '#263166' }, { name: '900', hex: '#141933' },
+    ],
+  },
+  {
+    id: 'github', name: 'GitHub', theme: 'cool', clientCat: '개발자도구',
+    brand: [
+      { name: 'Purple', hex: '#6E40C9', rgb: '110, 64, 201',  role: 'Primary'   },
+      { name: 'Dark',   hex: '#24292F', rgb: '36, 41, 47',    role: 'Secondary' },
+      { name: 'Pink',   hex: '#F778BA', rgb: '247, 120, 186', role: 'Accent'    },
+    ],
+    semantic: [
+      { name: 'Primary', hex: '#6E40C9', rgb: '110, 64, 201', desc: '주요 액션, CTA 버튼' },
+      { name: 'Success', hex: '#22C55E', rgb: '34, 197, 94',  desc: '성공, 완료 상태'     },
+      { name: 'Warning', hex: '#F59E0B', rgb: '245, 158, 11', desc: '경고, 주의 상태'     },
+      { name: 'Error',   hex: '#EF4444', rgb: '239, 68, 68',  desc: '오류, 위험 상태'     },
+      { name: 'Info',    hex: '#3B82F6', rgb: '59, 130, 246', desc: '정보, 안내 메시지'   },
+    ],
+    neutrals: [
+      { name: '50',  hex: '#F6F8FA' }, { name: '100', hex: '#EAEEF2' },
+      { name: '200', hex: '#D0D7DE' }, { name: '300', hex: '#AFB8C1' },
+      { name: '400', hex: '#8C959F' }, { name: '500', hex: '#6E7781' },
+      { name: '600', hex: '#57606A' }, { name: '700', hex: '#424A53' },
+      { name: '800', hex: '#32383F' }, { name: '900', hex: '#24292F' },
+    ],
+  },
+  {
+    id: 'naver-cloud', name: 'Naver Cloud', theme: 'cool', clientCat: '인프라',
+    brand: [
+      { name: 'Green',     hex: '#03C75A', rgb: '3, 199, 90',   role: 'Primary'   },
+      { name: 'Dark Navy', hex: '#1A2236', rgb: '26, 34, 54',   role: 'Secondary' },
+      { name: 'Teal',      hex: '#00C4B4', rgb: '0, 196, 180',  role: 'Accent'    },
+    ],
+    semantic: [
+      { name: 'Primary', hex: '#03C75A', rgb: '3, 199, 90',   desc: '주요 액션, CTA 버튼' },
+      { name: 'Success', hex: '#22C55E', rgb: '34, 197, 94',  desc: '성공, 완료 상태'     },
+      { name: 'Warning', hex: '#F59E0B', rgb: '245, 158, 11', desc: '경고, 주의 상태'     },
+      { name: 'Error',   hex: '#EF4444', rgb: '239, 68, 68',  desc: '오류, 위험 상태'     },
+      { name: 'Info',    hex: '#3B82F6', rgb: '59, 130, 246', desc: '정보, 안내 메시지'   },
+    ],
+    neutrals: [
+      { name: '50',  hex: '#F0FBF5' }, { name: '100', hex: '#DCFAED' },
+      { name: '200', hex: '#B4EED2' }, { name: '300', hex: '#85DEB3' },
+      { name: '400', hex: '#4CC48C' }, { name: '500', hex: '#1FAA68' },
+      { name: '600', hex: '#12884E' }, { name: '700', hex: '#0C6337' },
+      { name: '800', hex: '#084023' }, { name: '900', hex: '#04200F' },
+    ],
+  },
+  {
+    id: 'upstage', name: 'Upstage', theme: 'cool', clientCat: 'AI',
+    brand: [
+      { name: 'Teal', hex: '#00B2CC', rgb: '0, 178, 204',   role: 'Primary'   },
+      { name: 'Dark', hex: '#0D1B2A', rgb: '13, 27, 42',    role: 'Secondary' },
+      { name: 'Cyan', hex: '#7DEEFC', rgb: '125, 238, 252', role: 'Accent'    },
+    ],
+    semantic: [
+      { name: 'Primary', hex: '#00B2CC', rgb: '0, 178, 204',  desc: '주요 액션, CTA 버튼' },
+      { name: 'Success', hex: '#22C55E', rgb: '34, 197, 94',  desc: '성공, 완료 상태'     },
+      { name: 'Warning', hex: '#F59E0B', rgb: '245, 158, 11', desc: '경고, 주의 상태'     },
+      { name: 'Error',   hex: '#EF4444', rgb: '239, 68, 68',  desc: '오류, 위험 상태'     },
+      { name: 'Info',    hex: '#3B82F6', rgb: '59, 130, 246', desc: '정보, 안내 메시지'   },
+    ],
+    neutrals: [
+      { name: '50',  hex: '#F0FAFC' }, { name: '100', hex: '#D9F2F7' },
+      { name: '200', hex: '#B0E5EF' }, { name: '300', hex: '#80D4E6' },
+      { name: '400', hex: '#4ABFD6' }, { name: '500', hex: '#00A3BE' },
+      { name: '600', hex: '#008099' }, { name: '700', hex: '#006073' },
+      { name: '800', hex: '#00414E' }, { name: '900', hex: '#00222A' },
+    ],
+  },
+  // ── Warm ───────────────────────────────────────────────────────────
+  {
+    id: 'hanwha', name: '한화건설', theme: 'warm', clientCat: '엔터프라이즈',
+    brand: [
+      { name: 'Orange',       hex: '#E8401C', rgb: '232, 64, 28',  role: 'Primary'   },
+      { name: 'Navy',         hex: '#1A2744', rgb: '26, 39, 68',   role: 'Secondary' },
+      { name: 'Light Orange', hex: '#FF7A56', rgb: '255, 122, 86', role: 'Accent'    },
+    ],
+    semantic: [
+      { name: 'Primary', hex: '#E8401C', rgb: '232, 64, 28',  desc: '주요 액션, CTA 버튼' },
+      { name: 'Success', hex: '#22C55E', rgb: '34, 197, 94',  desc: '성공, 완료 상태'     },
+      { name: 'Warning', hex: '#F59E0B', rgb: '245, 158, 11', desc: '경고, 주의 상태'     },
+      { name: 'Error',   hex: '#EF4444', rgb: '239, 68, 68',  desc: '오류, 위험 상태'     },
+      { name: 'Info',    hex: '#3B82F6', rgb: '59, 130, 246', desc: '정보, 안내 메시지'   },
+    ],
+    neutrals: [
+      { name: '50',  hex: '#F7F8FA' }, { name: '100', hex: '#EEF0F4' },
+      { name: '200', hex: '#DDE1E9' }, { name: '300', hex: '#C5CBD8' },
+      { name: '400', hex: '#9BA4B5' }, { name: '500', hex: '#737E93' },
+      { name: '600', hex: '#566070' }, { name: '700', hex: '#3E4757' },
+      { name: '800', hex: '#293040' }, { name: '900', hex: '#171D2B' },
+    ],
+  },
+  {
+    id: 'adobe', name: 'Adobe', theme: 'warm', clientCat: '디자인',
+    brand: [
+      { name: 'Red',    hex: '#FF0000', rgb: '255, 0, 0',   role: 'Primary'   },
+      { name: 'Dark',   hex: '#1C1C1C', rgb: '28, 28, 28',  role: 'Secondary' },
+      { name: 'Orange', hex: '#FF6B00', rgb: '255, 107, 0', role: 'Accent'    },
+    ],
+    semantic: [
+      { name: 'Primary', hex: '#FF0000', rgb: '255, 0, 0',    desc: '주요 액션, CTA 버튼' },
+      { name: 'Success', hex: '#22C55E', rgb: '34, 197, 94',  desc: '성공, 완료 상태'     },
+      { name: 'Warning', hex: '#F59E0B', rgb: '245, 158, 11', desc: '경고, 주의 상태'     },
+      { name: 'Error',   hex: '#EF4444', rgb: '239, 68, 68',  desc: '오류, 위험 상태'     },
+      { name: 'Info',    hex: '#3B82F6', rgb: '59, 130, 246', desc: '정보, 안내 메시지'   },
+    ],
+    neutrals: [
+      { name: '50',  hex: '#FFF5F5' }, { name: '100', hex: '#FFE8E8' },
+      { name: '200', hex: '#FFCCCC' }, { name: '300', hex: '#FFA8A8' },
+      { name: '400', hex: '#FF7A7A' }, { name: '500', hex: '#FF4C4C' },
+      { name: '600', hex: '#CC0000' }, { name: '700', hex: '#990000' },
+      { name: '800', hex: '#660000' }, { name: '900', hex: '#330000' },
+    ],
+  },
+  {
+    id: 'kakaobank', name: '카카오뱅크', theme: 'warm', clientCat: '핀테크',
+    brand: [
+      { name: 'Yellow', hex: '#FFCD00', rgb: '255, 205, 0', role: 'Primary'   },
+      { name: 'Dark',   hex: '#3C2000', rgb: '60, 32, 0',   role: 'Secondary' },
+      { name: 'Amber',  hex: '#FFB800', rgb: '255, 184, 0', role: 'Accent'    },
+    ],
+    semantic: [
+      { name: 'Primary', hex: '#FFCD00', rgb: '255, 205, 0',  desc: '주요 액션, CTA 버튼' },
+      { name: 'Success', hex: '#22C55E', rgb: '34, 197, 94',  desc: '성공, 완료 상태'     },
+      { name: 'Warning', hex: '#F59E0B', rgb: '245, 158, 11', desc: '경고, 주의 상태'     },
+      { name: 'Error',   hex: '#EF4444', rgb: '239, 68, 68',  desc: '오류, 위험 상태'     },
+      { name: 'Info',    hex: '#3B82F6', rgb: '59, 130, 246', desc: '정보, 안내 메시지'   },
+    ],
+    neutrals: [
+      { name: '50',  hex: '#FFFDF0' }, { name: '100', hex: '#FFF9D6' },
+      { name: '200', hex: '#FFF1A8' }, { name: '300', hex: '#FFE566' },
+      { name: '400', hex: '#FFD900' }, { name: '500', hex: '#CCAD00' },
+      { name: '600', hex: '#998200' }, { name: '700', hex: '#665700' },
+      { name: '800', hex: '#332B00' }, { name: '900', hex: '#1A1600' },
+    ],
+  },
+  {
+    id: 'aws', name: 'AWS', theme: 'warm', clientCat: '인프라',
+    brand: [
+      { name: 'Orange',    hex: '#FF9900', rgb: '255, 153, 0', role: 'Primary'   },
+      { name: 'Dark Navy', hex: '#232F3E', rgb: '35, 47, 62',  role: 'Secondary' },
+      { name: 'Light',     hex: '#FFB84D', rgb: '255, 184, 77',role: 'Accent'    },
+    ],
+    semantic: [
+      { name: 'Primary', hex: '#FF9900', rgb: '255, 153, 0',  desc: '주요 액션, CTA 버튼' },
+      { name: 'Success', hex: '#22C55E', rgb: '34, 197, 94',  desc: '성공, 완료 상태'     },
+      { name: 'Warning', hex: '#F59E0B', rgb: '245, 158, 11', desc: '경고, 주의 상태'     },
+      { name: 'Error',   hex: '#EF4444', rgb: '239, 68, 68',  desc: '오류, 위험 상태'     },
+      { name: 'Info',    hex: '#3B82F6', rgb: '59, 130, 246', desc: '정보, 안내 메시지'   },
+    ],
+    neutrals: [
+      { name: '50',  hex: '#FFF8F0' }, { name: '100', hex: '#FFEFD6' },
+      { name: '200', hex: '#FFD9A8' }, { name: '300', hex: '#FFBF66' },
+      { name: '400', hex: '#FF9F1A' }, { name: '500', hex: '#CC7A00' },
+      { name: '600', hex: '#995B00' }, { name: '700', hex: '#663D00' },
+      { name: '800', hex: '#331F00' }, { name: '900', hex: '#1A0F00' },
+    ],
+  },
+  {
+    id: 'sktelecom', name: 'SK Telecom', theme: 'warm', clientCat: 'AI',
+    brand: [
+      { name: 'Red',   hex: '#E51937', rgb: '229, 25, 55',   role: 'Primary'   },
+      { name: 'Navy',  hex: '#003087', rgb: '0, 48, 135',    role: 'Secondary' },
+      { name: 'Coral', hex: '#FF6680', rgb: '255, 102, 128', role: 'Accent'    },
+    ],
+    semantic: [
+      { name: 'Primary', hex: '#E51937', rgb: '229, 25, 55',  desc: '주요 액션, CTA 버튼' },
+      { name: 'Success', hex: '#22C55E', rgb: '34, 197, 94',  desc: '성공, 완료 상태'     },
+      { name: 'Warning', hex: '#F59E0B', rgb: '245, 158, 11', desc: '경고, 주의 상태'     },
+      { name: 'Error',   hex: '#EF4444', rgb: '239, 68, 68',  desc: '오류, 위험 상태'     },
+      { name: 'Info',    hex: '#3B82F6', rgb: '59, 130, 246', desc: '정보, 안내 메시지'   },
+    ],
+    neutrals: [
+      { name: '50',  hex: '#FFF5F7' }, { name: '100', hex: '#FFE0E5' },
+      { name: '200', hex: '#FFBCC5' }, { name: '300', hex: '#FF8FA0' },
+      { name: '400', hex: '#FF5570' }, { name: '500', hex: '#E51937' },
+      { name: '600', hex: '#B5102A' }, { name: '700', hex: '#85081D' },
+      { name: '800', hex: '#550311' }, { name: '900', hex: '#2B0008' },
+    ],
+  },
+  {
+    id: 'jetbrains', name: 'JetBrains', theme: 'warm', clientCat: '개발자도구',
+    brand: [
+      { name: 'Red',    hex: '#E74C3C', rgb: '231, 76, 60',  role: 'Primary'   },
+      { name: 'Purple', hex: '#9B59B6', rgb: '155, 89, 182', role: 'Secondary' },
+      { name: 'Gold',   hex: '#F39C12', rgb: '243, 156, 18', role: 'Accent'    },
+    ],
+    semantic: [
+      { name: 'Primary', hex: '#E74C3C', rgb: '231, 76, 60',  desc: '주요 액션, CTA 버튼' },
+      { name: 'Success', hex: '#22C55E', rgb: '34, 197, 94',  desc: '성공, 완료 상태'     },
+      { name: 'Warning', hex: '#F59E0B', rgb: '245, 158, 11', desc: '경고, 주의 상태'     },
+      { name: 'Error',   hex: '#EF4444', rgb: '239, 68, 68',  desc: '오류, 위험 상태'     },
+      { name: 'Info',    hex: '#3B82F6', rgb: '59, 130, 246', desc: '정보, 안내 메시지'   },
+    ],
+    neutrals: [
+      { name: '50',  hex: '#FFF5F5' }, { name: '100', hex: '#FFE6E6' },
+      { name: '200', hex: '#FFCCCC' }, { name: '300', hex: '#FFAAAA' },
+      { name: '400', hex: '#FF7777' }, { name: '500', hex: '#E74C3C' },
+      { name: '600', hex: '#B83228' }, { name: '700', hex: '#881C17' },
+      { name: '800', hex: '#590D0A' }, { name: '900', hex: '#2C0403' },
+    ],
+  },
+];
+
+const THEME_FILTERS = [
+  { val: 'all', label: '전체' },
+  { val: 'cool', label: 'Cool' },
+  { val: 'warm', label: 'Warm' },
+];
+
+const CLIENT_FILTERS = ['전체', '엔터프라이즈', '디자인', 'AI', '인프라', '핀테크', '개발자도구'];
+
+const CHART_PURPOSES = ['전체', '비교', '추세', '구성비', '분포'];
+
+const CHART_GUIDES = [
+  {
+    id: 1, name: 'Bar Chart', purpose: '비교',
+    definition: '범주 간 값을 가로/세로 막대로 비교하는 가장 기본적인 차트',
+    anatomy: [
+      { label: 'X축 (범주)', color: '#7D60FF' }, { label: 'Y축 (수치)', color: '#2B67FF' },
+      { label: '데이터 막대', color: '#63E4B9' }, { label: '범례', color: '#9CA3AF' }, { label: '툴팁', color: '#F59E0B' },
+    ],
+    do: '소수의 범주(7개 이하) 간 값을 직접 비교할 때',
+    dont: '시간 흐름에 따른 연속 데이터 표현 (→ Line Chart 사용)',
+  },
+  {
+    id: 2, name: 'Stacked Bar Chart', purpose: '비교',
+    definition: '각 막대를 구성 요소로 분할해 전체 합계와 내부 구성비를 동시에 표현',
+    anatomy: [
+      { label: 'X축 (범주)', color: '#7D60FF' }, { label: 'Y축 (누적 합계)', color: '#2B67FF' },
+      { label: '세그먼트 (색상)', color: '#63E4B9' }, { label: '범례', color: '#9CA3AF' },
+    ],
+    do: '항목별 합계 비교 + 내부 구성을 함께 보여줄 때',
+    dont: '개별 세그먼트 값의 정밀 비교 (→ Grouped Bar 사용)',
+  },
+  {
+    id: 3, name: 'Line Chart', purpose: '추세',
+    definition: '시간 축을 따라 연속 데이터의 변화 추세를 선으로 표현',
+    anatomy: [
+      { label: 'X축 (시간)', color: '#7D60FF' }, { label: 'Y축 (수치)', color: '#2B67FF' },
+      { label: '데이터 포인트', color: '#63E4B9' }, { label: '연결선', color: '#9CA3AF' }, { label: '범례', color: '#F59E0B' },
+    ],
+    do: '시간에 따른 추세, 패턴, 이상값 탐지',
+    dont: '범주 간 단순 비교 (→ Bar Chart 사용)',
+  },
+  {
+    id: 4, name: 'Area Chart', purpose: '추세',
+    definition: '선 아래 영역을 채워 누적량이나 볼륨 변화를 강조하는 차트',
+    anatomy: [
+      { label: 'X축 (시간)', color: '#7D60FF' }, { label: 'Y축 (수치)', color: '#2B67FF' },
+      { label: '채움 영역', color: '#63E4B9' }, { label: '경계선', color: '#9CA3AF' },
+    ],
+    do: '전체 볼륨의 증감, 누적 추세를 표현할 때',
+    dont: '여러 시리즈가 겹쳐 가독성이 떨어지는 경우 (→ Line Chart 사용)',
+  },
+  {
+    id: 5, name: 'Pie / Donut Chart', purpose: '구성비',
+    definition: '전체 대비 각 항목의 비율을 원형 슬라이스로 표현',
+    anatomy: [
+      { label: '슬라이스 (비율)', color: '#7D60FF' }, { label: '라벨/퍼센트', color: '#2B67FF' },
+      { label: '범례', color: '#63E4B9' }, { label: '중앙 KPI (Donut)', color: '#9CA3AF' },
+    ],
+    do: '5개 이하 항목의 구성 비율을 직관적으로 표현',
+    dont: '항목이 많거나 비율 차이가 작을 때 (→ Bar Chart 사용)',
+  },
+  {
+    id: 6, name: 'Treemap', purpose: '구성비',
+    definition: '계층 구조 데이터를 면적 비례 사각형으로 표현하는 차트',
+    anatomy: [
+      { label: '노드 사각형 (면적=값)', color: '#7D60FF' }, { label: '그룹 색상', color: '#2B67FF' },
+      { label: '라벨', color: '#63E4B9' }, { label: '계층 구분선', color: '#9CA3AF' },
+    ],
+    do: '다수 항목의 상대적 크기와 계층 구조를 동시에 표현',
+    dont: '정확한 수치 비교가 필요한 경우 (→ Bar Chart 사용)',
+  },
+  {
+    id: 7, name: 'Scatter Plot', purpose: '분포',
+    definition: '두 변수 간 상관관계와 데이터 분포를 점으로 표현',
+    anatomy: [
+      { label: 'X축 (변수 A)', color: '#7D60FF' }, { label: 'Y축 (변수 B)', color: '#2B67FF' },
+      { label: '데이터 포인트', color: '#63E4B9' }, { label: '회귀선 (옵션)', color: '#9CA3AF' }, { label: '색상 인코딩', color: '#F59E0B' },
+    ],
+    do: '두 변수 간 상관관계, 클러스터, 이상값 탐지',
+    dont: '시계열 추세 표현 (→ Line Chart 사용)',
+  },
+  {
+    id: 8, name: 'Histogram', purpose: '분포',
+    definition: '연속형 데이터를 구간(bin)으로 나눠 빈도 분포를 막대로 표현',
+    anatomy: [
+      { label: 'X축 (구간/Bin)', color: '#7D60FF' }, { label: 'Y축 (빈도/밀도)', color: '#2B67FF' },
+      { label: '막대 (연속형, 간격 없음)', color: '#63E4B9' },
+    ],
+    do: '데이터 분포 형태(정규, 편향 등) 파악',
+    dont: '범주형 데이터 비교 (→ Bar Chart 사용, 막대 사이 간격 있음)',
+  },
+];
+
+const FONT_SPECS = [
+  { role: 'Display',  tag: 'display', size: '56px', weight: '700', lh: '1.1',  ls: '-0.03em', usage: '히어로, 랜딩 타이틀',   sample: 'AXIS Design' },
+  { role: 'H1',       tag: 'h1',      size: '40px', weight: '700', lh: '1.2',  ls: '-0.02em', usage: '페이지 메인 제목',       sample: '디자인 갤러리' },
+  { role: 'H2',       tag: 'h2',      size: '32px', weight: '600', lh: '1.25', ls: '-0.02em', usage: '섹션 제목',             sample: '레퍼런스 갤러리' },
+  { role: 'H3',       tag: 'h3',      size: '24px', weight: '600', lh: '1.3',  ls: '-0.01em', usage: '서브섹션 제목',         sample: '산업별 템플릿' },
+  { role: 'H4',       tag: 'h4',      size: '20px', weight: '600', lh: '1.4',  ls: '0',       usage: '카드 타이틀',           sample: '공공기관 대시보드' },
+  { role: 'Body L',   tag: 'p',       size: '18px', weight: '400', lh: '1.6',  ls: '0',       usage: '본문 대형',             sample: '실무에 바로 활용 가능한 디자인' },
+  { role: 'Body M',   tag: 'p',       size: '16px', weight: '400', lh: '1.6',  ls: '0',       usage: '본문 기본',             sample: '실무에 바로 활용 가능한 디자인' },
+  { role: 'Body S',   tag: 'p',       size: '14px', weight: '400', lh: '1.5',  ls: '0',       usage: '보조 텍스트',           sample: '실무에 바로 활용 가능한 디자인' },
+  { role: 'Caption',  tag: 'span',    size: '12px', weight: '400', lh: '1.4',  ls: '0.01em',  usage: '캡션, 날짜, 메타정보',   sample: '2025년 05월 07일' },
+  { role: 'Label',    tag: 'label',   size: '11px', weight: '600', lh: '1.4',  ls: '0.07em',  usage: '태그, 뱃지, 필터버튼',   sample: 'TEMPLATE CURATION' },
+];
+
+const ICON_CATEGORIES = ['전체', 'Action', 'Alert', 'Navigation', 'Data', 'Interface'];
+
+const ICONS = [
+  /* Action */
+  { id:  1, name: 'Edit',       cat: 'Action',     paths: ['M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7','M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z'] },
+  { id:  2, name: 'Delete',     cat: 'Action',     paths: ['M3 6h18','M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'] },
+  { id:  3, name: 'Add',        cat: 'Action',     paths: ['M12 5v14','M5 12h14'] },
+  { id:  4, name: 'Save',       cat: 'Action',     paths: ['M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z','M17 21v-8H7v8','M7 3v5h8'] },
+  { id:  5, name: 'Download',   cat: 'Action',     paths: ['M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4','M7 10l5 5 5-5','M12 15V3'] },
+  { id:  6, name: 'Upload',     cat: 'Action',     paths: ['M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4','M17 8l-5-5-5 5','M12 3v12'] },
+  { id:  7, name: 'Share',      cat: 'Action',     paths: ['M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8','M16 6l-4-4-4 4','M12 2v13'] },
+  { id:  8, name: 'Copy',       cat: 'Action',     paths: ['M20 9h-9a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2z','M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1'] },
+  { id:  9, name: 'Refresh',    cat: 'Action',     paths: ['M1 4v6h6','M23 20v-6h-6','M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15'] },
+  { id: 10, name: 'Search',     cat: 'Action',     paths: ['M11 17a6 6 0 1 0 0-12 6 6 0 0 0 0 12z','M21 21l-4.35-4.35'] },
+  { id: 11, name: 'Filter',     cat: 'Action',     paths: ['M22 3H2l8 9.46V19l4 2v-8.54L22 3'] },
+  { id: 12, name: 'Sort',       cat: 'Action',     paths: ['M3 6h18','M7 12h10','M10 18h4'] },
+  /* Alert */
+  { id: 13, name: 'Info',       cat: 'Alert',      paths: ['M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z','M12 8v4','M12 16h.01'] },
+  { id: 14, name: 'Warning',    cat: 'Alert',      paths: ['M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z','M12 9v4','M12 17h.01'] },
+  { id: 15, name: 'Error',      cat: 'Alert',      paths: ['M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z','M15 9l-6 6','M9 9l6 6'] },
+  { id: 16, name: 'Success',    cat: 'Alert',      paths: ['M22 11.08V12a10 10 0 1 1-5.93-9.14','M22 4L12 14.01l-3-3'] },
+  { id: 17, name: 'Bell',       cat: 'Alert',      paths: ['M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9','M13.73 21a2 2 0 0 1-3.46 0'] },
+  { id: 18, name: 'Flag',       cat: 'Alert',      paths: ['M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z','M4 22v-7'] },
+  /* Navigation */
+  { id: 19, name: 'Home',       cat: 'Navigation', paths: ['M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z','M9 22V12h6v10'] },
+  { id: 20, name: 'Menu',       cat: 'Navigation', paths: ['M3 12h18','M3 6h18','M3 18h18'] },
+  { id: 21, name: 'ArrowLeft',  cat: 'Navigation', paths: ['M19 12H5','M12 19l-7-7 7-7'] },
+  { id: 22, name: 'ArrowRight', cat: 'Navigation', paths: ['M5 12h14','M12 5l7 7-7 7'] },
+  { id: 23, name: 'ChevronUp',  cat: 'Navigation', paths: ['M18 15l-6-6-6 6'] },
+  { id: 24, name: 'ChevronDown',cat: 'Navigation', paths: ['M6 9l6 6 6-6'] },
+  { id: 25, name: 'ExternalLink',cat:'Navigation', paths: ['M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6','M15 3h6v6','M10 14L21 3'] },
+  { id: 26, name: 'Link',       cat: 'Navigation', paths: ['M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71','M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'] },
+  /* Data */
+  { id: 27, name: 'BarChart',   cat: 'Data',       paths: ['M12 20V10','M18 20V4','M6 20v-4'] },
+  { id: 28, name: 'LineChart',  cat: 'Data',       paths: ['M23 6l-9.5 9.5-5-5L1 18'] },
+  { id: 29, name: 'PieChart',   cat: 'Data',       paths: ['M21.21 15.89A10 10 0 1 1 8 2.83','M22 12A10 10 0 0 0 12 2v10z'] },
+  { id: 30, name: 'Table',      cat: 'Data',       paths: ['M3 3h18v18H3z','M3 9h18','M3 15h18','M9 3v18','M15 3v18'] },
+  { id: 31, name: 'Database',   cat: 'Data',       paths: ['M12 8c-4.42 0-8-1.79-8-4s3.58-4 8-4 8 1.79 8 4-3.58 4-8 4','M4 8v4c0 2.21 3.58 4 8 4s8-1.79 8-4V8','M4 12v4c0 2.21 3.58 4 8 4s8-1.79 8-4v-4'] },
+  { id: 32, name: 'File',       cat: 'Data',       paths: ['M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z','M14 2v6h6','M16 13H8','M16 17H8','M10 9H8'] },
+  /* Interface */
+  { id: 33, name: 'Settings',   cat: 'Interface',  paths: ['M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16z','M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4z','M12 2v2','M12 20v2','M4.93 4.93l1.41 1.41','M17.66 17.66l1.41 1.41','M2 12h2','M20 12h2','M6.34 17.66l-1.41 1.41','M19.07 4.93l-1.41 1.41'] },
+  { id: 34, name: 'User',       cat: 'Interface',  paths: ['M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2','M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z'] },
+  { id: 35, name: 'Lock',       cat: 'Interface',  paths: ['M19 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2z','M7 11V7a5 5 0 0 1 10 0v4'] },
+  { id: 36, name: 'Calendar',   cat: 'Interface',  paths: ['M19 4H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z','M16 2v4','M8 2v4','M3 10h18'] },
+  { id: 37, name: 'Mail',       cat: 'Interface',  paths: ['M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z','M22 6l-10 7L2 6'] },
+  { id: 38, name: 'Grid',       cat: 'Interface',  paths: ['M3 3h7v7H3z','M14 3h7v7h-7z','M14 14h7v7h-7z','M3 14h7v7H3z'] },
+  { id: 39, name: 'List',       cat: 'Interface',  paths: ['M8 6h13','M8 12h13','M8 18h13','M3 6h.01','M3 12h.01','M3 18h.01'] },
+  { id: 40, name: 'Maximize',   cat: 'Interface',  paths: ['M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3'] },
+];
+
+/* ═══════════════════════════════════════════════════════════════════
+   COMPONENTS
+═══════════════════════════════════════════════════════════════════ */
+
+function IconSvg({ paths, size = 20 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      {paths.map((d, i) => <path key={i} d={d} />)}
+    </svg>
+  );
+}
+
+/* ── Color Panel ─────────────────────────────────────────── */
+function ColorPanel({ showToast }) {
+  const [themeFilter, setThemeFilter] = React.useState('all');
+  const [clientFilter, setClientFilter] = React.useState('전체');
+  const [selectedId, setSelectedId] = React.useState(null);
+
+  const filtered = COLOR_THEMES.filter(t => {
+    if (themeFilter !== 'all' && t.theme !== themeFilter) return false;
+    if (clientFilter !== '전체' && t.clientCat !== clientFilter) return false;
+    return true;
+  });
+
+  const selectedTheme = selectedId ? COLOR_THEMES.find(t => t.id === selectedId) : null;
+
+  const copy = (hex) => {
+    navigator.clipboard.writeText(hex).catch(() => {});
+    showToast(`✓  ${hex}  복사됨`);
+  };
+
+  const handleCardClick = (id) => {
+    setSelectedId(prev => prev === id ? null : id);
+  };
+
+  const handleFilterChange = (setter, val) => {
+    setter(val);
+    setSelectedId(null);
+  };
+
+  return (
+    <div className="gallery-layout">
+      <aside className="lnb">
+        <nav className="lnb-section">
+          <p className="lnb-section-title">Theme</p>
+          {THEME_FILTERS.map(({ val, label }) => (
+            <button key={val}
+              className={`filter-btn ${themeFilter === val ? 'active' : ''}`}
+              onClick={() => handleFilterChange(setThemeFilter, val)}>
+              {label}
+            </button>
+          ))}
+        </nav>
+        <nav className="lnb-section">
+          <p className="lnb-section-title">Client</p>
+          {CLIENT_FILTERS.map(c => (
+            <button key={c}
+              className={`filter-btn ${clientFilter === c ? 'active' : ''}`}
+              onClick={() => handleFilterChange(setClientFilter, c)}>
+              {c}
+            </button>
+          ))}
+        </nav>
+        <div className="lnb-reference">
+          <p className="lnb-ref-label">Reference</p>
+          <a className="lnb-ref-link" href="https://www.supanova.dev/design-systems" target="_blank" rel="noopener noreferrer">
+            <IconSvg paths={['M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6','M15 3h6v6','M10 14L21 3']} size={12} />
+            supanova.dev/design-systems
+          </a>
+        </div>
+      </aside>
+
+      <main className="gallery-main">
+        <p className="result-count">총 <strong>{filtered.length}개</strong>의 테마</p>
+
+        <div className="theme-card-grid">
+          {filtered.map(t => (
+            <div key={t.id}
+              className={`theme-card ${selectedId === t.id ? 'selected' : ''}`}
+              onClick={() => handleCardClick(t.id)}>
+              <div className="theme-card-strip">
+                {t.brand.map(c => (
+                  <div key={c.name} className="theme-card-strip-seg" style={{ backgroundColor: c.hex }} />
+                ))}
+              </div>
+              <div className="theme-card-body">
+                <div className="theme-card-badges">
+                  <span className={`theme-badge-pill ${t.theme}`}>
+                    {t.theme === 'cool' ? 'Cool' : 'Warm'}
+                  </span>
+                  <span className="client-cat-pill">{t.clientCat}</span>
+                </div>
+                <div className="theme-card-name">{t.name}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {selectedTheme && (
+          <div className="theme-detail-panel">
+            <div className="theme-detail-header">
+              <span className="theme-detail-title">{selectedTheme.name}</span>
+              <button className="theme-detail-close" onClick={() => setSelectedId(null)}>
+                <IconSvg paths={['M18 6 6 18','M6 6l12 12']} size={16} />
+              </button>
+            </div>
+
+            <p className="color-section-label">Brand Core</p>
+            <div className="swatch-grid">
+              {selectedTheme.brand.map(c => (
+                <div key={c.name} className="swatch-card" onClick={() => copy(c.hex)} title="클릭하여 복사">
+                  <div className="swatch-color" style={{ backgroundColor: c.hex }} />
+                  <div className="swatch-info">
+                    <div className="swatch-name">{c.name}</div>
+                    <div className="swatch-hex">{c.hex}</div>
+                    <div className="swatch-role">{c.role}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <p className="color-section-label">Semantic Colors</p>
+            <div className="swatch-grid">
+              {selectedTheme.semantic.map(c => (
+                <div key={c.name} className="swatch-card" onClick={() => copy(c.hex)} title="클릭하여 복사">
+                  <div className="swatch-color" style={{ backgroundColor: c.hex }} />
+                  <div className="swatch-info">
+                    <div className="swatch-name">{c.name}</div>
+                    <div className="swatch-hex">{c.hex}</div>
+                    <div className="swatch-role">{c.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <p className="color-section-label">Neutrals (Gray Scale)</p>
+            <div className="neutral-strip">
+              {selectedTheme.neutrals.map(c => (
+                <div key={c.name} className="neutral-swatch" onClick={() => copy(c.hex)} title={c.hex}>
+                  <div className="neutral-color" style={{ backgroundColor: c.hex }} />
+                  <div className="neutral-label">{c.name}</div>
+                </div>
+              ))}
+            </div>
+            <p className="text-xs mt-2" style={{color:'rgba(255,255,255,0.25)'}}>스와치를 클릭하면 HEX 값이 클립보드에 복사됩니다.</p>
+          </div>
+        )}
+      </main>
+    </div>
+  );
+}
+
+/* ── Chart Preview ───────────────────────────────────────── */
+function ChartPreview({ chartId }) {
+  const P = '#7D60FF', S = '#2B67FF', A = '#63E4B9';
+  const ax = 'rgba(255,255,255,0.14)';
+  const gr = 'rgba(255,255,255,0.05)';
+  // viewBox 0 0 400 200: x 15-385, y-bottom 185
+  const sp = { viewBox: '0 0 400 200', width: '100%', style: { display: 'block' } };
+
+  const arcPath = (cx, cy, R, r, s, e) => {
+    const rad = d => (d - 90) * Math.PI / 180;
+    const c = Math.cos, sn = Math.sin;
+    const [a0, a1] = [rad(s), rad(e)];
+    const lg = e - s > 180 ? 1 : 0;
+    const f = n => n.toFixed(2);
+    return `M${f(cx+R*c(a0))},${f(cy+R*sn(a0))} A${R},${R},0,${lg},1,${f(cx+R*c(a1))},${f(cy+R*sn(a1))} L${f(cx+r*c(a1))},${f(cy+r*sn(a1))} A${r},${r},0,${lg},0,${f(cx+r*c(a0))},${f(cy+r*sn(a0))} Z`;
+  };
+
+  if (chartId === 1) return ( // Bar Chart — 6 bars
+    <svg {...sp}>
+      {[55,100,145].map(y => <line key={y} x1="15" x2="385" y1={y} y2={y} stroke={gr} strokeWidth="1"/>)}
+      <line x1="15" y1="185" x2="385" y2="185" stroke={ax} strokeWidth="1"/>
+      {[118,80,155,60,108,85].map((h, i) => (
+        <rect key={i} x={36+i*57} y={185-h} width="44" height={h} rx="3"
+          fill={i===2 ? A : P} fillOpacity={i===2 ? 0.82 : 0.65}/>
+      ))}
+    </svg>
+  );
+
+  if (chartId === 2) return ( // Stacked Bar Chart — 5 bars × 3 segments
+    <svg {...sp}>
+      <line x1="15" y1="185" x2="385" y2="185" stroke={ax} strokeWidth="1"/>
+      {[[50,72,32],[42,65,44],[58,68,35],[45,55,52],[52,64,30]].map((segs, i) => {
+        let y = 185;
+        return (
+          <g key={i}>
+            {[P,S,A].map((col, j) => {
+              const h = segs[j]; y -= h;
+              return <rect key={j} x={44+i*66} y={y} width="48" height={h} rx={j===2?3:0} fill={col} fillOpacity="0.72"/>;
+            })}
+          </g>
+        );
+      })}
+    </svg>
+  );
+
+  if (chartId === 3) return ( // Line Chart — 2 series
+    <svg {...sp}>
+      {[55,100,145].map(y => <line key={y} x1="15" x2="385" y1={y} y2={y} stroke={gr} strokeWidth="1"/>)}
+      <line x1="15" y1="185" x2="385" y2="185" stroke={ax} strokeWidth="1"/>
+      <polyline points="25,148 80,108 135,122 192,62 248,82 305,42 375,65"
+        fill="none" stroke={P} strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round"/>
+      {[[25,148],[80,108],[135,122],[192,62],[248,82],[305,42],[375,65]].map(([x,y],i)=>(
+        <circle key={i} cx={x} cy={y} r="4" fill={P}/>
+      ))}
+      <polyline points="25,165 80,136 135,150 192,108 248,120 305,92 375,112"
+        fill="none" stroke={A} strokeWidth="2" strokeDasharray="7,4"
+        strokeLinejoin="round" strokeLinecap="round" strokeOpacity="0.6"/>
+    </svg>
+  );
+
+  if (chartId === 4) return ( // Area Chart
+    <svg {...sp}>
+      {[60,110].map(y => <line key={y} x1="15" x2="385" y1={y} y2={y} stroke={gr} strokeWidth="1"/>)}
+      <line x1="15" y1="185" x2="385" y2="185" stroke={ax} strokeWidth="1"/>
+      <defs>
+        <linearGradient id="cpag" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={P} stopOpacity="0.42"/>
+          <stop offset="100%" stopColor={P} stopOpacity="0.02"/>
+        </linearGradient>
+      </defs>
+      <polygon points="25,185 25,148 80,110 135,126 192,58 248,80 305,42 375,62 375,185" fill="url(#cpag)"/>
+      <polyline points="25,148 80,110 135,126 192,58 248,80 305,42 375,62"
+        fill="none" stroke={P} strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round"/>
+      {[[25,148],[80,110],[135,126],[192,58],[248,80],[305,42],[375,62]].map(([x,y],i)=>(
+        <circle key={i} cx={x} cy={y} r="3.5" fill={P}/>
+      ))}
+    </svg>
+  );
+
+  if (chartId === 5) return ( // Donut Chart — centered left, legend right
+    <svg {...sp}>
+      <path d={arcPath(118,100,68,34,  0,130)} fill={P} fillOpacity="0.82"/>
+      <path d={arcPath(118,100,68,34,130,220)} fill={S} fillOpacity="0.82"/>
+      <path d={arcPath(118,100,68,34,220,295)} fill={A} fillOpacity="0.82"/>
+      <path d={arcPath(118,100,68,34,295,360)} fill="rgba(255,255,255,0.18)"/>
+      {[P,S,A,'rgba(255,255,255,0.3)'].map((col, i) => (
+        <g key={i} transform={`translate(228,${48+i*28})`}>
+          <rect width="12" height="12" rx="3" fill={col} fillOpacity="0.85"/>
+          <rect x="20" y="1" width={[115,88,72,60][i]} height="10" rx="2" fill="rgba(255,255,255,0.06)"/>
+        </g>
+      ))}
+    </svg>
+  );
+
+  if (chartId === 6) return ( // Treemap
+    <svg {...sp}>
+      <rect x="18" y="18" width="118" height="98" rx="3" fill={P} fillOpacity="0.62"/>
+      <rect x="18" y="118" width="118" height="62" rx="3" fill={P} fillOpacity="0.28"/>
+      <rect x="140" y="18" width="90" height="72" rx="3" fill={S} fillOpacity="0.62"/>
+      <rect x="140" y="92" width="90" height="88" rx="3" fill={S} fillOpacity="0.28"/>
+      <rect x="234" y="18" width="72" height="90" rx="3" fill={A} fillOpacity="0.62"/>
+      <rect x="234" y="110" width="72" height="70" rx="3" fill={A} fillOpacity="0.28"/>
+      <rect x="310" y="18" width="70" height="55" rx="3" fill="rgba(255,255,255,0.2)"/>
+      <rect x="310" y="75" width="70" height="85" rx="3" fill="rgba(255,255,255,0.1)"/>
+    </svg>
+  );
+
+  if (chartId === 7) return ( // Scatter Plot
+    <svg {...sp}>
+      {[55,100,145].map(y => <line key={y} x1="25" x2="385" y1={y} y2={y} stroke={gr} strokeWidth="1"/>)}
+      <line x1="25" y1="20" x2="25" y2="188" stroke={ax} strokeWidth="1"/>
+      <line x1="25" y1="188" x2="385" y2="188" stroke={ax} strokeWidth="1"/>
+      <line x1="35" y1="178" x2="378" y2="30"
+        stroke="rgba(255,255,255,0.1)" strokeWidth="1.5" strokeDasharray="6,4"/>
+      {[
+        [42,178,4,P],[68,158,5,P],[88,145,4,A],[108,162,5,P],[128,138,4,A],
+        [148,125,5,P],[165,115,4,P],[188,128,4,A],[208,108,5,P],[228,98,4,P],
+        [248,115,4,A],[268,88,5,P],[288,100,4,A],[308,78,5,P],[328,90,4,P],
+        [348,68,5,A],[365,75,4,P],[378,55,4,A],[55,168,3.5,A],[135,148,4,P],
+        [198,118,4,A],[285,95,3.5,P],[345,72,4,A],[175,132,4,P],[240,105,4,P],
+      ].map(([x,y,r,col],i)=>(
+        <circle key={i} cx={x} cy={y} r={r} fill={col} fillOpacity="0.72"/>
+      ))}
+    </svg>
+  );
+
+  if (chartId === 8) return ( // Histogram — 9 bins, bell-curve heights
+    <svg {...sp}>
+      {[65,115].map(y => <line key={y} x1="15" x2="385" y1={y} y2={y} stroke={gr} strokeWidth="1"/>)}
+      <line x1="15" y1="185" x2="385" y2="185" stroke={ax} strokeWidth="1"/>
+      {[14,35,70,108,122,102,68,38,16].map((h, i) => (
+        <rect key={i} x={20+i*40} y={185-h} width="40" height={h}
+          fill={P} fillOpacity={0.35+(h/122)*0.45}/>
+      ))}
+    </svg>
+  );
+
+  return null;
+}
+
+/* ── Chart Panel ─────────────────────────────────────────── */
+function ChartPanel() {
+  const [purpose, setPurpose] = React.useState('전체');
+  const filtered = CHART_GUIDES.filter(c => purpose === '전체' || c.purpose === purpose);
+
+  return (
+    <div className="gallery-layout">
+      <aside className="lnb">
+        <nav className="lnb-section">
+          <p className="lnb-section-title">데이터 표현 목적</p>
+          {CHART_PURPOSES.map(p => (
+            <button key={p}
+              className={`filter-btn ${purpose === p ? 'active' : ''}`}
+              onClick={() => setPurpose(p)}>
+              {p}
+            </button>
+          ))}
+        </nav>
+      </aside>
+
+      <main className="gallery-main">
+        <p className="result-count">총 <strong>{filtered.length}개</strong>의 차트 가이드</p>
+        {filtered.map(chart => (
+          <article key={chart.id} className="chart-card">
+            <div className="chart-card-header">
+              <div>
+                <div style={{display:'flex', alignItems:'center', gap:'10px', marginBottom:'6px'}}>
+                  <span className="chart-purpose-badge">{chart.purpose}</span>
+                  <h3 className="chart-card-title">{chart.name}</h3>
+                </div>
+                <p className="chart-card-definition">{chart.definition}</p>
+              </div>
+            </div>
+            <div className="chart-card-content">
+              <div className="chart-card-left">
+                <ChartPreview chartId={chart.id} />
+              </div>
+              <div className="chart-card-body">
+                <div>
+                  <p className="chart-inner-label">Anatomy — 구성 요소</p>
+                  <div className="anatomy-list">
+                    {chart.anatomy.map((a, i) => (
+                      <div key={i} className="anatomy-item">
+                        <span className="anatomy-dot" style={{ backgroundColor: a.color }} />
+                        {a.label}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <p className="chart-inner-label">Do &amp; Don't</p>
+                  <div className="do-dont-grid">
+                    <div className="do-box">
+                      <div className="do-dont-label">✓ Do</div>
+                      <p>{chart.do}</p>
+                    </div>
+                    <div className="dont-box">
+                      <div className="do-dont-label">✕ Don't</div>
+                      <p>{chart.dont}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        ))}
+      </main>
+    </div>
+  );
+}
+
+/* ── Font Panel ──────────────────────────────────────────── */
+function FontPanel({ showToast }) {
+  const linkTag = `<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />`;
+
+  const copyLink = () => {
+    navigator.clipboard.writeText(linkTag).catch(() => {});
+    showToast('✓  웹폰트 link 태그 복사됨');
+  };
+
+  const downloadFont = () => {
+    showToast('⬇  폰트 패키지 준비 중...');
+  };
+
+  return (
+    <div>
+      <div className="font-action-bar">
+        <button className="resource-btn" onClick={copyLink}>
+          <IconSvg paths={['M20 9h-9a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2z','M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1']} size={14} />
+          웹폰트 link 태그 복사
+        </button>
+        <button className="resource-btn" onClick={downloadFont}>
+          <IconSvg paths={['M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4','M7 10l5 5 5-5','M12 15V3']} size={14} />
+          로컬 폰트 패키지 다운로드
+        </button>
+      </div>
+
+      <table className="font-spec-table">
+        <thead>
+          <tr>
+            <th>Role</th>
+            <th>Preview</th>
+            <th>Size</th>
+            <th>Weight</th>
+            <th>Line Height</th>
+            <th>Letter Spacing</th>
+            <th>Usage</th>
+          </tr>
+        </thead>
+        <tbody>
+          {FONT_SPECS.map(spec => (
+            <tr key={spec.role}>
+              <td><span className="font-role-tag">{spec.role}</span></td>
+              <td>
+                <span style={{
+                  fontSize: Math.min(parseInt(spec.size), 28) + 'px',
+                  fontWeight: spec.weight,
+                  lineHeight: spec.lh,
+                  letterSpacing: spec.ls,
+                  color: '#ffffff',
+                  display: 'block',
+                  maxWidth: '220px',
+                  overflow: 'hidden',
+                  whiteSpace: 'nowrap',
+                  textOverflow: 'ellipsis',
+                }}>
+                  {spec.sample}
+                </span>
+              </td>
+              <td><span className="code-val">{spec.size}</span></td>
+              <td><span className="code-val">{spec.weight}</span></td>
+              <td><span className="code-val">{spec.lh}</span></td>
+              <td><span className="code-val">{spec.ls || '0'}</span></td>
+              <td style={{color: 'rgba(255,255,255,0.4)', fontSize: '13px'}}>{spec.usage}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+/* ── Icon Panel ──────────────────────────────────────────── */
+function IconModal({ icon, onClose, showToast }) {
+  const svgCode = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none"\n  xmlns="http://www.w3.org/2000/svg"\n  stroke="currentColor" stroke-width="1.5"\n  stroke-linecap="round" stroke-linejoin="round">\n${icon.paths.map(d => `  <path d="${d}"/>`).join('\n')}\n</svg>`;
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-box" onClick={e => e.stopPropagation()}>
+        <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'20px'}}>
+          <div>
+            <h3 style={{fontSize:'18px', fontWeight:'600', color:'#fff'}}>{icon.name}</h3>
+            <p style={{fontSize:'12px', color:'rgba(255,255,255,0.4)', marginTop:'3px'}}>{icon.cat}</p>
+          </div>
+          <button onClick={onClose} style={{background:'none', border:'none', cursor:'pointer', color:'rgba(255,255,255,0.5)', padding:'4px'}}>
+            <IconSvg paths={['M18 6L6 18','M6 6l12 12']} size={18} />
+          </button>
+        </div>
+
+        <div className="modal-icon-preview">
+          {[16, 24, 32].map(sz => (
+            <div key={sz} style={{display:'flex', flexDirection:'column', alignItems:'center', gap:'8px'}}>
+              <div style={{color:'rgba(255,255,255,0.85)'}}>
+                <IconSvg paths={icon.paths} size={sz} />
+              </div>
+              <span style={{fontSize:'10px', color:'rgba(255,255,255,0.3)'}}>{sz}px</span>
+            </div>
+          ))}
+        </div>
+
+        <pre className="modal-code-block">{svgCode}</pre>
+
+        <div className="modal-actions">
+          <button className="resource-btn" style={{flex:1, justifyContent:'center'}}
+            onClick={() => { navigator.clipboard.writeText(svgCode).catch(()=>{}); showToast('✓  SVG 코드 복사됨'); }}>
+            <IconSvg paths={['M20 9h-9a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2z','M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1']} size={14} />
+            SVG 복사
+          </button>
+          <button className="resource-btn" style={{flex:1, justifyContent:'center'}}
+            onClick={() => showToast('⬇  PNG 다운로드 준비 중...')}>
+            <IconSvg paths={['M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4','M7 10l5 5 5-5','M12 15V3']} size={14} />
+            PNG 다운로드
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function IconPanel({ showToast }) {
+  const [query, setQuery]         = React.useState('');
+  const [category, setCategory]   = React.useState('전체');
+  const [iconSize, setIconSize]   = React.useState(24);
+  const [theme, setTheme]         = React.useState('Outline');
+  const [selectedIcon, setSelectedIcon] = React.useState(null);
+
+  const filtered = ICONS.filter(ic => {
+    const byCat  = category === '전체' || ic.cat === category;
+    const byName = ic.name.toLowerCase().includes(query.toLowerCase());
+    return byCat && byName;
+  });
+
+  return (
+    <div className="gallery-layout">
+      <aside className="lnb">
+        <nav className="lnb-section">
+          <p className="lnb-section-title">Category</p>
+          {ICON_CATEGORIES.map(c => (
+            <button key={c}
+              className={`filter-btn ${category === c ? 'active' : ''}`}
+              onClick={() => setCategory(c)}>
+              {c}
+            </button>
+          ))}
+        </nav>
+      </aside>
+
+      <main className="gallery-main">
+        <div className="icon-controls">
+          <div className="icon-search-wrap">
+            <IconSvg paths={['M11 17a6 6 0 1 0 0-12 6 6 0 0 0 0 12z','M21 21l-4.35-4.35']} size={15} />
+            <input
+              placeholder="아이콘 검색..."
+              value={query}
+              onChange={e => setQuery(e.target.value)}
+            />
+          </div>
+          <div className="toggle-group">
+            {[16, 24, 32].map(s => (
+              <button key={s}
+                className={`toggle-btn ${iconSize === s ? 'active' : ''}`}
+                onClick={() => setIconSize(s)}>
+                {s}px
+              </button>
+            ))}
+          </div>
+          <div className="toggle-group">
+            {['Outline', 'Solid'].map(t => (
+              <button key={t}
+                className={`toggle-btn ${theme === t ? 'active' : ''}`}
+                onClick={() => setTheme(t)}>
+                {t}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <p className="result-count">총 <strong>{filtered.length}개</strong>의 아이콘</p>
+
+        {filtered.length === 0 ? (
+          <div style={{textAlign:'center', padding:'64px 0', color:'rgba(255,255,255,0.25)', fontSize:'14px'}}>
+            검색 결과가 없습니다.
+          </div>
+        ) : (
+          <div className="icon-grid-wrap">
+            {filtered.map(icon => (
+              <div key={icon.id} className="icon-item" onClick={() => setSelectedIcon(icon)}>
+                <div style={{color:'rgba(255,255,255,0.8)'}}>
+                  <IconSvg paths={icon.paths} size={iconSize} />
+                </div>
+                <span className="icon-item-name">{icon.name}</span>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {selectedIcon && (
+          <IconModal icon={selectedIcon} onClose={() => setSelectedIcon(null)} showToast={showToast} />
+        )}
+      </main>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   PAGE
+═══════════════════════════════════════════════════════════════════ */
+
+const TABS = [
+  { id: 'chart', label: 'Chart' },
+  { id: 'font',  label: 'Font'  },
+  { id: 'icon',  label: 'Icon'  },
+  { id: 'color', label: 'Color' },
+];
+
+function ResourcesPage() {
+  const [activeTab,       setActiveTab]       = React.useState('chart');
+  const [theme, setTheme] = React.useState(() => { try{return localStorage.getItem('axis-theme')||'dark';}catch(e){return 'dark';} });
+  React.useEffect(() => { document.documentElement.setAttribute('data-theme', theme); }, [theme]);
+  const toggleTheme = () => { const n=theme==='dark'?'light':'dark'; setTheme(n); try{localStorage.setItem('axis-theme',n);}catch(e){} };
+  const ic  = theme==='dark' ? 'rgba(255,255,255,0.75)' : 'rgba(9,30,66,0.55)';
+  const ics = theme==='dark' ? 'rgba(255,255,255,0.4)'  : 'rgba(9,30,66,0.3)';
+  const icm = theme==='dark' ? 'rgba(255,255,255,0.6)'  : 'rgba(9,30,66,0.45)';
+  const [familySiteOpen,  setFamilySiteOpen]  = React.useState(false);
+  const [toast,           setToast]           = React.useState(null);
+
+  const showToast = (msg) => {
+    setToast(msg);
+    setTimeout(() => setToast(null), 2200);
+  };
+
+  return (
+    <div className="page-root min-h-screen">
+
+      {/* GNB */}
+      <header className="gnb-header sticky top-0 z-50 border-b border-white/10">
+        <div className="gnb-grid mx-auto grid max-w-7xl items-center px-8 h-full">
+          <div className="flex items-center gap-2">
+            <a href="index.html">
+              <img src="images/axis-logo.png" alt="AXIS Logo" className="gnb-logo" />
+            </a>
+          </div>
+          <nav className="hidden gap-10 font-medium text-white/80 md:flex h-full items-stretch">
+            <a href="gallery.html"    className="gnb-link transition hover:text-white">레퍼런스 갤러리</a>
+            <a href="resources.html"  className="gnb-link active transition hover:text-white">디자인 리소스</a>
+            <a href="archive.html" className="gnb-link transition hover:text-white">프로젝트 아카이브</a>
+          </nav>
+          <div className="flex items-center gap-2 justify-self-end">
+            <div className="flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 w-52 focus-within:border-white/30 transition">
+              <svg width="15" height="15" viewBox="0 0 20 20" fill="none">
+                <circle cx="9" cy="9" r="6.5" stroke={ics} strokeWidth="1.8"/>
+                <path d="M14 14L18 18" stroke={ics} strokeWidth="1.8" strokeLinecap="round"/>
+              </svg>
+              <input placeholder="검색" className="bg-transparent text-sm outline-none placeholder:text-white/35 text-white w-full" />
+            </div>
+            <button onClick={toggleTheme} className="w-9 h-9 flex items-center justify-center rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition" title={theme==='dark'?'라이트 모드로 전환':'다크 모드로 전환'} style={{display:'none'}}>
+              {theme==='dark'
+                ? <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke={ic} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                : <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke={ic} strokeWidth="1.8"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke={ic} strokeWidth="1.8" strokeLinecap="round"/></svg>
+              }
+            </button>
+            <button className="flex items-center gap-1.5 h-9 px-3 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition text-sm text-white/75 font-medium">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="9" stroke={icm} strokeWidth="1.8"/>
+                <path d="M12 3C12 3 9 7 9 12C9 17 12 21 12 21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
+                <path d="M12 3C12 3 15 7 15 12C15 17 12 21 12 21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
+                <path d="M3 12H21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
+              </svg>
+              KR
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
+                <path d="M3 4.5L6 7.5L9 4.5" stroke={icm} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Page Header */}
+      <div className="page-header">
+        <div className="mx-auto max-w-7xl px-8">
+          <p className="page-header-label">Design Resources</p>
+          <h1 className="page-header-title">디자인 리소스</h1>
+        </div>
+      </div>
+
+      {/* Tab Nav */}
+      <div className="mx-auto max-w-7xl px-8">
+        <div role="tablist" className="resource-tab-nav">
+          {TABS.map(tab => (
+            <button key={tab.id}
+              role="tab"
+              aria-selected={activeTab === tab.id}
+              className="resource-tab-btn"
+              onClick={() => setActiveTab(tab.id)}>
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Tab Content */}
+      <div className="mx-auto max-w-7xl px-8 py-10">
+        {activeTab === 'color' && <ColorPanel showToast={showToast} />}
+        {activeTab === 'chart' && <ChartPanel />}
+        {activeTab === 'font'  && <FontPanel  showToast={showToast} />}
+        {activeTab === 'icon'  && <IconPanel  showToast={showToast} />}
+      </div>
+
+      {/* Footer */}
+      <footer className="site-footer">
+        <div className="mx-auto max-w-7xl px-8 py-10">
+          <div className="flex items-start justify-between gap-8">
+            <div className="flex flex-col gap-6">
+              <div className="flex items-center gap-4">
+                    <a href="https://www.youtube.com/@BIMATRIXKR" target="_blank" rel="noopener noreferrer"
+                       className="flex items-center justify-center w-9 h-9 rounded-full border border-white/15 bg-white/5 hover:bg-white/15 transition">
+                      <svg viewBox="-1 -1 26 26" aria-hidden="true" focusable="false" fill="rgba(255,255,255,0.65)" width="20">
+                        <path d="M 23.498 6.186 a 3.016 3.016 0 0 0 -2.122 -2.136 C 19.505 3.545 12 3.545 12 3.545 s -7.505 0 -9.377 0.505 A 3.017 3.017 0 0 0 0.502 6.186 C 0 8.07 0 12 0 12 s 0 3.93 0.502 5.814 a 3.016 3.016 0 0 0 2.122 2.136 c 1.871 0.505 9.376 0.505 9.376 0.505 s 7.505 0 9.377 -0.505 a 3.015 3.015 0 0 0 2.122 -2.136 C 24 15.93 24 12 24 12 s 0 -3.93 -0.502 -5.814 Z M 9.545 15.568 V 8.432 L 15.818 12 l -6.273 3.568 Z"></path>
+                      </svg>
+                    </a>
+                    <a href="https://www.facebook.com/bimatrixkorea" target="_blank" rel="noopener noreferrer"
+                       className="flex items-center justify-center w-9 h-9 rounded-full border border-white/15 bg-white/5 hover:bg-white/15 transition">
+                      <svg viewBox="2 2 22 22" aria-hidden="true" focusable="false" fill="rgba(255,255,255,0.65)" width="23">
+                        <path d="M13.6 21v-7.1h2.4l.4-3h-2.8V9c0-.87.24-1.47 1.5-1.47H16.5V4.85C16.2 4.81 15.4 4.75 14.47 4.75c-1.95 0-3.28 1.19-3.28 3.38v2.77H9v3h2.19V21h2.41Z"></path>
+                      </svg>
+                    </a>
+                    <a href="https://blog.naver.com/bi_matrix" target="_blank" rel="noopener noreferrer"
+                       className="flex items-center justify-center w-9 h-9 rounded-full border border-white/15 bg-white/5 hover:bg-white/15 transition">
+                      <svg viewBox="0 0 106.4 86" width="20" height="20" aria-hidden="true" fill="rgba(255,255,255,0.65)">
+                        <path d="M59.5,34c-2.3,0-4.2,1.9-4.2,4.2s1.9,4.2,4.2,4.2,4.2-1.9,4.2-4.2-1.9-4.2-4.2-4.2Z"/>
+                        <path d="M84.6,34c-2.3,0-4.2,1.9-4.2,4.2s1.9,4.2,4.2,4.2,4.2-1.9,4.2-4.2-1.9-4.2-4.2-4.2Z"/>
+                        <path d="M89.6,0H16.8C7.5,0,0,7.3,0,16.2v38.5c0,9,7.5,16.2,16.8,16.2h25.1l8.6,13.4s0,.2.3.4c.5.8,1.4,1.4,2.5,1.4s2-.6,2.5-1.4c.2-.2.3-.4.3-.4l8.6-13.4h25.1c9.3,0,16.8-7.3,16.8-16.2V16.2C106.4,7.3,98.9,0,89.6,0h0ZM23.6,48.1c-3.9,0-5.5-2.8-5.5-2.8v2.1h-6.6v-27.1h6.5v10.3c2.6-2.6,5.5-2.6,5.5-2.6,8.8,0,9.2,9.9,9.2,9.9,0,9.8-9.2,10.1-9.2,10.1h0ZM44.2,29.9v17.5h-6.3v-16.1c0-5.5-3-5.4-3-5.4v-6.3c9.5,0,9.2,10.2,9.2,10.2ZM70.5,38.2c0,9.9-11,9.9-11,9.9-11.1,0-10.8-9.9-10.8-9.9,0-10,10.8-10.1,10.8-10.1,11.4,0,11,10.1,11,10.1ZM94.8,47.2c0,10.3-9.5,10.2-9.5,10.2h-2.5v-5.8h1.6c4.6,0,4.2-4.8,4.2-4.8v-1.5c-2,2.6-5.7,2.5-5.7,2.5-9.1,0-9-9.7-9-9.7,0-10.4,9.2-10,9.2-10,3.6,0,5.5,2.5,5.5,2.5v-1.8h6.3v18.4h0Z"/>
+                        <path d="M22.2,34c-2.3,0-4.2,1.9-4.2,4.2s1.9,4.2,4.2,4.2,4.2-1.9,4.2-4.2-1.9-4.2-4.2-4.2Z"/>
+                      </svg>
+                    </a>
+              </div>
+                  <div className="flex items-center gap-6 text-sm text-white/50">
+                    <a href="https://www.bimatrix.co.kr/privacy/" target="_blank" className="hover:text-white/80 transition">
+                      개인정보처리방침</a>
+                    <span className="text-white/20">|</span>
+                    <a href="https://www.bimatrix.co.kr/pr/newsletter/subscription/" target="_blank" className="hover:text-white/80 transition">
+                      뉴스레터 구독</a>
+                    <span className="text-white/20">|</span>
+                    <a href="https://www.bimatrix.co.kr/support/contact/" target="_blank" className="hover:text-white/80 transition">
+                      문의하기</a>
+                  </div>
+            </div>
+            <div className="relative flex-shrink-0">
+              <button onClick={() => setFamilySiteOpen(!familySiteOpen)}
+                className="flex items-center gap-2 rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 text-sm text-white/70 hover:bg-white/10 transition min-w-[160px] justify-between">
+                <span>Family Site</span>
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
+                     className={`family-site-chevron ${familySiteOpen ? 'open' : ''}`}>
+                  <path d="M3 4.5L6 7.5L9 4.5" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
+                  {familySiteOpen && (
+                    <div className="family-site-dropdown absolute right-0 bottom-full mb-1 w-48 rounded-lg border border-white/15 overflow-hidden z-10">
+                      {[
+                        {label: "비아이매트릭스 홈페이지", href: "https://www.bimatrix.co.kr/"},
+                        {label: "AUD플랫폼 아카데미", href: "https://audp.bimatrix.co.kr/"},
+                        {label: "AUD플랫폼 데모", href: "http://aud.bimatrix.co.kr/extention/sso/SimpleSSO4.jsp"},
+                        {label: "고객지원 사이트", href: "https://cs.bimatrix.co.kr/"},
+                      ].map((item) => (
+                        <a key={item.label} href={item.href} target="_blank"
+                           className="block px-4 py-2.5 text-sm text-white/60 hover:bg-white/10 hover:text-white/90 transition">
+                          {item.label}
+                        </a>
+                      ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+        <div className="footer-bottom">
+          <div className="mx-auto max-w-7xl px-8 py-6 flex items-end justify-between gap-8">
+            <div className="flex flex-col gap-1.5 text-xs text-white/35 leading-relaxed">
+                  <p className="text-white/50 font-medium text-sm">(주)비아이매트릭스</p>
+                  <p>서울시 강남구 선릉로 433, 세방빌딩 신관 17층(역삼동) &nbsp;|&nbsp; 대표이사: 배영근</p>
+                  <p>Tel: 02-561-4475 &nbsp;|&nbsp; Fax: 02-561-4479</p>
+                  <p className="mt-1">© BI MATRIX CO., LTD. ALL RIGHTS RESERVED.</p>
+            </div>
+            <div className="flex-shrink-0">
+              <img src="images/img_logo_footer.svg" alt="AXIS" className="footer-logo" />
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      {/* Toast */}
+      {toast && <div className="toast">{toast}</div>}
+
+    </div>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<ResourcesPage />);
+</script>
+</body>
+</html>
