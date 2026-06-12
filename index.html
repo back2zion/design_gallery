@@ -436,8 +436,9 @@
                     <path d="M14 14L18 18" stroke={ics} strokeWidth="1.8" strokeLinecap="round"/>
                   </svg>
                   <input
-                    placeholder="검색"
+                    placeholder="레퍼런스 검색"
                     className="bg-transparent text-sm outline-none placeholder:text-white/35 text-white w-full"
+                    onKeyDown={(e) => { const q = e.currentTarget.value.trim(); if (e.key === 'Enter' && q) window.location.href = 'gallery.html?q=' + encodeURIComponent(q); }}
                   />
                 </div>
                 {/* Dark mode */}

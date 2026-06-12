@@ -1063,7 +1063,7 @@ function ResourcesPage() {
                 <circle cx="9" cy="9" r="6.5" stroke={ics} strokeWidth="1.8"/>
                 <path d="M14 14L18 18" stroke={ics} strokeWidth="1.8" strokeLinecap="round"/>
               </svg>
-              <input placeholder="검색" className="bg-transparent text-sm outline-none placeholder:text-white/35 text-white w-full" />
+              <input placeholder="레퍼런스 검색" className="bg-transparent text-sm outline-none placeholder:text-white/35 text-white w-full" onKeyDown={(e) => { const q = e.currentTarget.value.trim(); if (e.key === 'Enter' && q) window.location.href = 'gallery.html?q=' + encodeURIComponent(q); }} />
             </div>
             <button onClick={toggleTheme} className="w-9 h-9 flex items-center justify-center rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition" title={theme==='dark'?'라이트 모드로 전환':'다크 모드로 전환'} style={{display:'none'}}>
               {theme==='dark'
