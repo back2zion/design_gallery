@@ -10,6 +10,8 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
   <link rel="stylesheet" href="styles.css" />
   <script>try{var t=localStorage.getItem('axis-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
 </head>
@@ -17,7 +19,7 @@
   <div id="root"></div>
 
   <script type="text/babel">
-    const INDUSTRY_FILTERS = ['전체', '공공·금융', '제조·유통', '의료·제약', '서비스·기타', '에너지•인프라', '관리•지원'];
+    const INDUSTRY_FILTERS = ['전체', '공공·금융', '제조·유통', '의료·제약', '서비스·기타', '에너지·인프라', '관리·지원'];
     const SCREEN_FILTERS   = ['전체', 'EPA', 'Dashboard', 'UI/UX', 'Reporting', 'BI/OLAP'];
 
     const PURPOSE_FILTERS = ['전체', '경영 현황 파악', '실적 모니터링', '운영 관제', '업무 처리', '데이터 분석', '보고서 조회'];
@@ -25,30 +27,32 @@
     const TONE_FILTERS    = ['전체', '클린', '엔터프라이즈', '하이테크', '공공/신뢰', '데이터 중심', '다크모드', '라이트모드'];
 
     const TEMPLATE_META = [
-      { title: 'Q-Energy 재무 실적 및 성과 보고',  industry: '에너지•인프라',  screenType: 'Dashboard', purpose: '실적 모니터링', layout: 'KPI 요약형',         tone: '클린' },
-      { title: '공영홈쇼핑 전사 대시보드', industry: '제조·유통',  screenType: 'Dashboard',  purpose: '업무 처리',      layout: 'KPI 요약형',    tone: '하이테크' },
-      { title: '독성과학연구소 성과 및 인력 현황', industry: '공공•금융', screenType: 'Dashboard', purpose: '운영 관제',      layout: 'KPI 요약형',      tone: '공공/신뢰' },
-      { title: 'DY 글로벌 손익 실적 보고', industry: '공공•금융',  screenType: 'Dashboard', purpose: '업무 처리',      layout: '테이블 중심형',      tone: '공공/신뢰' },
+      { title: 'Q-Energy 재무 실적 및 성과 보고',  titleEn: 'Q-Energy Financial Results & Performance Report', titleJa: 'Q-Energy 財務実績・成果報告', industry: '에너지·인프라',  screenType: 'Dashboard', purpose: '실적 모니터링', layout: 'KPI 요약형',         tone: '클린' },
+      { title: '공영홈쇼핑 전사 대시보드', titleEn: 'Gongyoung Home Shopping Enterprise Dashboard', titleJa: 'コンヨンホームショッピング全社ダッシュボード', industry: '제조·유통',  screenType: 'Dashboard',  purpose: '업무 처리',      layout: 'KPI 요약형',    tone: '하이테크' },
+      { title: '독성과학연구소 성과 및 인력 현황', titleEn: 'Toxicology Research Institute Performance & Workforce Status', titleJa: '毒性科学研究所 成果・人材状況', industry: '공공·금융', screenType: 'Dashboard', purpose: '운영 관제',      layout: 'KPI 요약형',      tone: '공공/신뢰' },
+      { title: 'DY 글로벌 손익 실적 보고', titleEn: 'DY Global Profit & Loss Report', titleJa: 'DYグローバル損益実績報告', industry: '공공·금융',  screenType: 'Dashboard', purpose: '업무 처리',      layout: '테이블 중심형',      tone: '공공/신뢰' },
 
-      { title: '롯데글로벌로지스 운영 대시보드', industry: '제조·유통',  screenType: 'Dashboard', purpose: '경영 현황 파악',  layout: 'KPI 요약형',        tone: '하이테크' },
-      { title: '출장 비용 및 현황 모니터링', industry: '관리•지원', screenType: 'Dashboard', purpose: '실적 모니터링',  layout: '지도/관제형',        tone: '클린' },
-      { title: '성신양회 경영요약정보', industry: '제조•유통',  screenType: 'Dashboard', purpose: '경영 현황 파악',  layout: 'KPI 요약형',        tone: '클린' },
-      { title: '전사 실적별 성과 요약 서비스', industry: '제조•유통',  screenType: 'Dashboard', purpose: '보고서 조회',   layout: '차트 중심형',    tone: '클린' },
+      { title: '롯데글로벌로지스 운영 대시보드', titleEn: 'Lotte Global Logistics Operations Dashboard', titleJa: 'ロッテグローバルロジス運営ダッシュボード', industry: '제조·유통',  screenType: 'Dashboard', purpose: '경영 현황 파악',  layout: 'KPI 요약형',        tone: '하이테크' },
+      { title: '출장 비용 및 현황 모니터링', titleEn: 'Business Trip Expense & Status Monitoring', titleJa: '出張費用・状況モニタリング', industry: '관리·지원', screenType: 'Dashboard', purpose: '실적 모니터링',  layout: '지도/관제형',        tone: '클린' },
+      { title: '성신양회 경영요약정보', titleEn: 'Sungshin Cement Management Summary', titleJa: 'ソンシンセメント経営要約情報', industry: '제조·유통',  screenType: 'Dashboard', purpose: '경영 현황 파악',  layout: 'KPI 요약형',        tone: '클린' },
+      { title: '전사 실적별 성과 요약 서비스', titleEn: 'Enterprise Performance Summary Service', titleJa: '全社実績別成果要約サービス', industry: '제조·유통',  screenType: 'Dashboard', purpose: '보고서 조회',   layout: '차트 중심형',    tone: '클린' },
 
-      { title: '일성IS 영업 실적 종합 대시보드', industry: '제조·유통',  screenType: 'Dashboard', purpose: '경영 현황 파악',  layout: 'KPI 요약형',        tone: '하이테크' },
-      { title: '월별 주요 경영 성과 지표', industry: '제조·유통', screenType: 'Dashboard', purpose: '실적 모니터링',  layout: 'KPI 요약형',        tone: '클린' },
-      { title: '종합 공사비 및 현장별 실적 현황', industry: '제조•유통',  screenType: 'Reporting', purpose: '데이터 분석',  layout: '테이블 중심형',        tone: '데이터 중심' },
-      { title: '연간 누적 실적 현황', industry: '공공•금융',  screenType: 'Dashboard', purpose: '보고서 조회',   layout: '카드 리스트형',    tone: '공공/신뢰' },
+      { title: '일성IS 영업 실적 종합 대시보드', titleEn: 'Ilsung IS Sales Performance Dashboard', titleJa: 'イルソンIS営業実績総合ダッシュボード', industry: '제조·유통',  screenType: 'Dashboard', purpose: '경영 현황 파악',  layout: 'KPI 요약형',        tone: '하이테크' },
+      { title: '월별 주요 경영 성과 지표', titleEn: 'Monthly Key Management Performance Indicators', titleJa: '月別主要経営成果指標', industry: '제조·유통', screenType: 'Dashboard', purpose: '실적 모니터링',  layout: 'KPI 요약형',        tone: '클린' },
+      { title: '종합 공사비 및 현장별 실적 현황', titleEn: 'Total Construction Cost & Site Performance Status', titleJa: '総合工事費・現場別実績状況', industry: '제조·유통',  screenType: 'Reporting', purpose: '데이터 분석',  layout: '테이블 중심형',        tone: '데이터 중심' },
+      { title: '연간 누적 실적 현황', titleEn: 'Annual Cumulative Performance Status', titleJa: '年間累積実績状況', industry: '공공·금융',  screenType: 'Dashboard', purpose: '보고서 조회',   layout: '카드 리스트형',    tone: '공공/신뢰' },
 
-      { title: '실리콘 매출계획 및 실적 현황', industry: '제조·유통',  screenType: 'Dashboard', purpose: '경영 현황 파악',  layout: 'KPI 요약형',        tone: '하이테크' },
-      { title: 'LAWA Scanning Overview', industry: '서비스•기타', screenType: 'Dashboard', purpose: '실적 모니터링',  layout: '지도/관제형',        tone: '클린' },
-      { title: 'LX인터내셔널 주요 지표 월별 현황', industry: '제조•유통',  screenType: 'Dashboard', purpose: '실적 모니터링',  layout: 'KPI 요약형',        tone: '엔터프라이즈' },
-      { title: '전사 실적별 성과 요약 서비스', industry: '제조·유통',  screenType: 'Dashboard', purpose: '실적 모니터링',   layout: '프로세스 단계형',    tone: '하이테크' },
+      { title: '실리콘 매출계획 및 실적 현황', titleEn: 'Silicone Sales Plan & Performance Status', titleJa: 'シリコン売上計画・実績状況', industry: '제조·유통',  screenType: 'Dashboard', purpose: '경영 현황 파악',  layout: 'KPI 요약형',        tone: '하이테크' },
+      { title: 'LAWA Scanning Overview', titleEn: 'LAWA Scanning Overview', titleJa: 'LAWA Scanning Overview', industry: '서비스·기타', screenType: 'Dashboard', purpose: '실적 모니터링',  layout: '지도/관제형',        tone: '클린' },
+      { title: 'LX인터내셔널 주요 지표 월별 현황', titleEn: 'LX International Monthly Key Indicators', titleJa: 'LXインターナショナル主要指標月別状況', industry: '제조·유통',  screenType: 'Dashboard', purpose: '실적 모니터링',  layout: 'KPI 요약형',        tone: '엔터프라이즈' },
+      { title: '전사 실적별 성과 요약 서비스', titleEn: 'Enterprise Performance Summary Service', titleJa: '全社実績別成果要約サービス', industry: '제조·유통',  screenType: 'Dashboard', purpose: '실적 모니터링',   layout: '프로세스 단계형',    tone: '하이테크' },
     ];
 
     const RAW_DATA = TEMPLATE_META.map((meta, idx) => ({
       id: idx + 1,
       title: meta.title,
+      titleEn: meta.titleEn,
+      titleJa: meta.titleJa,
       industry: meta.industry,
       screenType: meta.screenType,
       purpose: meta.purpose,
@@ -73,22 +77,160 @@
       'BI/OLAP':   'badge-scr-bi',
     };
 
-    function GalleryCard({ item }) {
+    const FILTER_LABELS_EN = {
+      '전체': 'All',
+      '공공·금융': 'Public & Finance', '제조·유통': 'Manufacturing & Retail', '의료·제약': 'Healthcare & Pharma',
+      '서비스·기타': 'Services & Others', '에너지·인프라': 'Energy & Infrastructure', '관리·지원': 'Management & Support',
+      '경영 현황 파악': 'Business Overview', '실적 모니터링': 'Performance Monitoring', '운영 관제': 'Operations Control',
+      '업무 처리': 'Task Processing', '데이터 분석': 'Data Analysis', '보고서 조회': 'Report Viewing',
+      'KPI 요약형': 'KPI Summary', '좌측 필터형': 'Left Filter', '상단 필터형': 'Top Filter', '카드 리스트형': 'Card List',
+      '차트 중심형': 'Chart-Focused', '테이블 중심형': 'Table-Focused', '지도/관제형': 'Map & Control',
+      '마스터-디테일형': 'Master-Detail', '프로세스 단계형': 'Process Steps',
+      '클린': 'Clean', '엔터프라이즈': 'Enterprise', '하이테크': 'High-Tech', '공공/신뢰': 'Public & Trust',
+      '데이터 중심': 'Data-Driven', '다크모드': 'Dark Mode', '라이트모드': 'Light Mode',
+    };
+
+    const FILTER_LABELS_JA = {
+      '전체': 'すべて',
+      '공공·금융': '公共・金融', '제조·유통': '製造・流通', '의료·제약': '医療・製薬',
+      '서비스·기타': 'サービス・その他', '에너지·인프라': 'エネルギー・インフラ', '관리·지원': '管理・サポート',
+      '경영 현황 파악': '経営状況の把握', '실적 모니터링': '実績モニタリング', '운영 관제': '運営管制',
+      '업무 처리': '業務処理', '데이터 분석': 'データ分析', '보고서 조회': 'レポート照会',
+      'KPI 요약형': 'KPI要約型', '좌측 필터형': '左フィルター型', '상단 필터형': '上部フィルター型', '카드 리스트형': 'カードリスト型',
+      '차트 중심형': 'チャート中心型', '테이블 중심형': 'テーブル中心型', '지도/관제형': '地図・管制型',
+      '마스터-디테일형': 'マスター・ディテール型', '프로세스 단계형': 'プロセス段階型',
+      '클린': 'クリーン', '엔터프라이즈': 'エンタープライズ', '하이테크': 'ハイテク', '공공/신뢰': '公共・信頼',
+      '데이터 중심': 'データ中心', '다크모드': 'ダークモード', '라이트모드': 'ライトモード',
+    };
+
+    const I18N = {
+      ko: {
+        pageTitle: '레퍼런스 갤러리 | AXIS Design Gallery',
+        navGallery: '레퍼런스 갤러리',
+        navResources: '디자인 리소스',
+        navArchive: '고객사 사이트',
+        searchPlaceholder: '검색',
+        searchAria: '레퍼런스 검색',
+        clearSearch: '검색어 지우기',
+        themeToLight: '라이트 모드로 전환',
+        themeToDark: '다크 모드로 전환',
+        pageHeaderLabel: 'Reference Gallery',
+        pageHeaderTitle: '레퍼런스 갤러리',
+        filterIndustry: '산업군',
+        filterScreen: '화면 유형',
+        filterPurpose: '활용 목적',
+        filterLayout: '레이아웃 구조',
+        filterTone: '디자인톤',
+        reset: '초기화',
+        resultCount: (n) => <>총 <strong>{n}개</strong>의 레퍼런스</>,
+        loadMore: (n) => `더보기 (${n}개 남음)`,
+        noResults: '해당 조건의 레퍼런스가 없습니다.',
+        footerPrivacy: '개인정보처리방침',
+        footerNewsletter: '뉴스레터 구독',
+        footerContact: '문의하기',
+        familySites: [
+          { label: '비아이매트릭스 홈페이지', href: 'https://www.bimatrix.co.kr/' },
+          { label: 'AUD플랫폼 아카데미', href: 'https://audp.bimatrix.co.kr/' },
+          { label: 'AUD플랫폼 데모', href: 'http://aud.bimatrix.co.kr/extention/sso/SimpleSSO4.jsp' },
+          { label: '고객지원 사이트', href: 'https://cs.bimatrix.co.kr/' },
+        ],
+        company: '(주)비아이매트릭스',
+        address: '서울시 강남구 선릉로 433, 세방빌딩 신관 17층(역삼동)',
+        ceo: '대표이사: 배영근',
+        labels: {},
+      },
+      en: {
+        pageTitle: 'Reference Gallery | AXIS Design Gallery',
+        navGallery: 'Reference Gallery',
+        navResources: 'Design Resources',
+        navArchive: 'Client Sites',
+        searchPlaceholder: 'Search',
+        searchAria: 'Search references',
+        clearSearch: 'Clear search',
+        themeToLight: 'Switch to light mode',
+        themeToDark: 'Switch to dark mode',
+        pageHeaderLabel: 'Reference Gallery',
+        pageHeaderTitle: 'Reference Gallery',
+        filterIndustry: 'Industry',
+        filterScreen: 'Screen Type',
+        filterPurpose: 'Purpose',
+        filterLayout: 'Layout',
+        filterTone: 'Design Tone',
+        reset: 'Reset',
+        resultCount: (n) => <><strong>{n}</strong> references in total</>,
+        loadMore: (n) => `Load More (${n} remaining)`,
+        noResults: 'No references match the selected filters.',
+        footerPrivacy: 'Privacy Policy',
+        footerNewsletter: 'Newsletter',
+        footerContact: 'Contact Us',
+        familySites: [
+          { label: 'BI MATRIX Website', href: 'https://www.bimatrix.co.kr/' },
+          { label: 'AUD Platform Academy', href: 'https://audp.bimatrix.co.kr/' },
+          { label: 'AUD Platform Demo', href: 'http://aud.bimatrix.co.kr/extention/sso/SimpleSSO4.jsp' },
+          { label: 'Customer Support', href: 'https://cs.bimatrix.co.kr/' },
+        ],
+        company: 'BI MATRIX CO., LTD.',
+        address: '17F, Sebang Building New Wing, 433 Seolleung-ro, Gangnam-gu, Seoul',
+        ceo: 'CEO: Younggeun Bae',
+        labels: FILTER_LABELS_EN,
+      },
+      ja: {
+        pageTitle: 'リファレンスギャラリー | AXIS Design Gallery',
+        navGallery: 'リファレンスギャラリー',
+        navResources: 'デザインリソース',
+        navArchive: '顧客サイト',
+        searchPlaceholder: '検索',
+        searchAria: 'リファレンス検索',
+        clearSearch: '検索語をクリア',
+        themeToLight: 'ライトモードに切替',
+        themeToDark: 'ダークモードに切替',
+        pageHeaderLabel: 'Reference Gallery',
+        pageHeaderTitle: 'リファレンスギャラリー',
+        filterIndustry: '業種',
+        filterScreen: '画面タイプ',
+        filterPurpose: '活用目的',
+        filterLayout: 'レイアウト構造',
+        filterTone: 'デザイントーン',
+        reset: 'リセット',
+        resultCount: (n) => <>全<strong>{n}件</strong>のリファレンス</>,
+        loadMore: (n) => `もっと見る (残り${n}件)`,
+        noResults: '条件に一致するリファレンスがありません。',
+        footerPrivacy: '個人情報処理方針',
+        footerNewsletter: 'ニュースレター購読',
+        footerContact: 'お問い合わせ',
+        familySites: [
+          { label: 'BI MATRIXホームページ', href: 'https://www.bimatrix.co.kr/' },
+          { label: 'AUDプラットフォームアカデミー', href: 'https://audp.bimatrix.co.kr/' },
+          { label: 'AUDプラットフォームデモ', href: 'http://aud.bimatrix.co.kr/extention/sso/SimpleSSO4.jsp' },
+          { label: 'カスタマーサポート', href: 'https://cs.bimatrix.co.kr/' },
+        ],
+        company: '(株)BI MATRIX',
+        address: 'ソウル市江南区宣陵路433、世邦ビル新館17階(駅三洞)',
+        ceo: '代表取締役: ペ・ヨングン',
+        labels: FILTER_LABELS_JA,
+      },
+    };
+
+    function GalleryCard({ item, lang }) {
+      const labels = (I18N[lang] || I18N.ko).labels;
+      const displayTitle = lang === 'en' ? (item.titleEn || item.title)
+        : lang === 'ja' ? (item.titleJa || item.title)
+        : item.title;
       return (
         <div className="gallery-card">
           <div className="gallery-card-thumb">
             <img
               src={item.image}
-              alt={item.title}
+              alt={displayTitle}
               onError={(e) => { e.currentTarget.style.display = 'none'; }}
             />
           </div>
           <div className="p-5">
             <div style={{display:'flex', gap:'6px', marginBottom:'12px', flexWrap:'wrap'}}>
-              <span className={`gallery-badge-field ${INDUSTRY_CLS[item.industry] || ''}`}>{item.industry}</span>
-              <span className={`gallery-badge ${SCREEN_CLS[item.screenType] || ''}`}>{item.screenType}</span>
+              <span className={`gallery-badge-field ${INDUSTRY_CLS[item.industry] || ''}`}>{labels[item.industry] || item.industry}</span>
+              <span className={`gallery-badge ${SCREEN_CLS[item.screenType] || ''}`}>{labels[item.screenType] || item.screenType}</span>
             </div>
-            <h3 className="text-base font-semibold leading-snug">{item.title}</h3>
+            <h3 className="text-base font-semibold leading-snug">{displayTitle}</h3>
           </div>
         </div>
       );
@@ -105,7 +247,8 @@
       );
     }
 
-    function FilterDropdown({ label, value, options, open, onToggle, onSelect }) {
+    function FilterDropdown({ label, value, options, open, onToggle, onSelect, format }) {
+      const fmt = format || ((v) => v);
       const ref = React.useRef(null);
       const [focusIdx, setFocusIdx] = React.useState(0);
 
@@ -133,7 +276,7 @@
             aria-expanded={open}
           >
             <span>{label}</span>
-            <span>{value} ▾</span>
+            <span>{fmt(value)} ▾</span>
           </button>
           {open && (
             <div className="filter-dropdown-menu" role="listbox">
@@ -147,7 +290,7 @@
                   onMouseEnter={() => setFocusIdx(idx)}
                   onClick={() => onSelect(option)}
                 >
-                  {option}
+                  {fmt(option)}
                 </button>
               ))}
             </div>
@@ -158,6 +301,13 @@
 
     function GalleryPage() {
       const [familySiteOpen, setFamilySiteOpen] = React.useState(false);
+      const [lang, setLang] = React.useState(() => { try{return localStorage.getItem('axis-lang')||'ko';}catch(e){return 'ko';} });
+      const [langOpen, setLangOpen] = React.useState(false);
+      React.useEffect(() => { document.documentElement.lang = lang; }, [lang]);
+      const changeLang = (l) => { setLang(l); setLangOpen(false); try{localStorage.setItem('axis-lang', l);}catch(e){} };
+      const t = I18N[lang];
+      React.useEffect(() => { document.title = t.pageTitle; }, [lang]);
+      const fl = (value) => t.labels[value] || value;
       const [theme, setTheme] = React.useState(() => { try{return localStorage.getItem('axis-theme')||'dark';}catch(e){return 'dark';} });
       React.useEffect(() => { document.documentElement.setAttribute('data-theme', theme); }, [theme]);
       const toggleTheme = () => { const n=theme==='dark'?'light':'dark'; setTheme(n); try{localStorage.setItem('axis-theme',n);}catch(e){} };
@@ -180,8 +330,8 @@
         const byPurpose  = selectedPurpose  === '전체' || item.purpose === selectedPurpose;
         const byLayout   = selectedLayout   === '전체' || item.layout === selectedLayout;
         const byTone     = selectedTone     === '전체' || item.tone === selectedTone;
-        const bySearch   = !query || [item.title, item.industry, item.screenType, item.purpose, item.layout, item.tone]
-          .some(value => value.toLowerCase().includes(query));
+        const bySearch   = !query || [item.title, item.titleEn, item.titleJa, item.industry, item.screenType, item.purpose, item.layout, item.tone]
+          .some(value => (value || '').toLowerCase().includes(query));
         return byIndustry && byScreen && byPurpose && byLayout && byTone && bySearch;
       });
 
@@ -207,9 +357,9 @@
               </div>
 
               <nav className="hidden gap-10 font-medium text-white/80 md:flex h-full items-stretch">
-                <a href="gallery.html"       className="gnb-link active transition hover:text-white">레퍼런스 갤러리</a>
-                <a href="resources.html" className="gnb-link transition hover:text-white">디자인 리소스</a>
-                <a href="archive.html" className="gnb-link transition hover:text-white">고객사 사이트</a>
+                <a href="gallery.html"       className="gnb-link active transition hover:text-white">{t.navGallery}</a>
+                <a href="resources.html" className="gnb-link transition hover:text-white">{t.navResources}</a>
+                <a href="archive.html" className="gnb-link transition hover:text-white">{t.navArchive}</a>
               </nav>
 
               <div className="flex items-center gap-2 justify-self-end">
@@ -219,31 +369,49 @@
                     <path d="M14 14L18 18" stroke={ics} strokeWidth="1.8" strokeLinecap="round"/>
                   </svg>
                   <input
-                    placeholder="검색"
+                    placeholder={t.searchPlaceholder}
                     className="bg-transparent text-sm outline-none placeholder:text-white/35 text-white w-full"
                     value={searchQuery}
                     onChange={(e) => { setSearchQuery(e.target.value); setVisibleCount(PAGE_SIZE); }}
                     onKeyDown={(e) => { if (e.key === 'Escape') setSearchQuery(''); }}
                   />
                 </div>
-                <button onClick={toggleTheme} className="w-9 h-9 flex items-center justify-center rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition" title={theme==='dark'?'라이트 모드로 전환':'다크 모드로 전환'} style={{display:'none'}}>
+                <button onClick={toggleTheme} className="w-9 h-9 flex items-center justify-center rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition" title={theme==='dark'?t.themeToLight:t.themeToDark} style={{display:'none'}}>
                   {theme==='dark'
                     ? <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke={ic} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
                     : <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke={ic} strokeWidth="1.8"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke={ic} strokeWidth="1.8" strokeLinecap="round"/></svg>
                   }
                 </button>
-                <button className="flex items-center gap-1.5 h-9 px-3 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition text-sm text-white/75 font-medium">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                    <circle cx="12" cy="12" r="9" stroke={icm} strokeWidth="1.8"/>
-                    <path d="M12 3C12 3 9 7 9 12C9 17 12 21 12 21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
-                    <path d="M12 3C12 3 15 7 15 12C15 17 12 21 12 21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
-                    <path d="M3 12H21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
-                  </svg>
-                  KR
-                  <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
-                    <path d="M3 4.5L6 7.5L9 4.5" stroke={icm} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </button>
+                <div className="relative">
+                  <button
+                    onClick={() => setLangOpen(!langOpen)}
+                    className="flex items-center gap-1.5 h-9 px-3 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition text-sm text-white/75 font-medium"
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                      <circle cx="12" cy="12" r="9" stroke={icm} strokeWidth="1.8"/>
+                      <path d="M12 3C12 3 9 7 9 12C9 17 12 21 12 21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
+                      <path d="M12 3C12 3 15 7 15 12C15 17 12 21 12 21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
+                      <path d="M3 12H21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
+                    </svg>
+                    {lang==='ko'?'KR':lang==='en'?'EN':'JA'}
+                    <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
+                      <path d="M3 4.5L6 7.5L9 4.5" stroke={icm} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </button>
+                  {langOpen && (
+                    <div className="family-site-dropdown absolute right-0 top-full mt-1 w-36 rounded-lg border border-white/15 overflow-hidden z-50">
+                      {[['ko','한국어'],['en','English'],['ja','日本語']].map(([code, label]) => (
+                        <button
+                          key={code}
+                          className="block w-full text-left px-4 py-2.5 text-sm text-white/60 hover:bg-white/10 hover:text-white/90 transition"
+                          onClick={() => changeLang(code)}
+                        >
+                          {label}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </header>
@@ -251,8 +419,8 @@
           {/* Page Header */}
           <div className="page-header">
             <div className="mx-auto max-w-7xl px-8">
-              <p className="page-header-label">Reference Gallery</p>
-              <h1 className="page-header-title">레퍼런스 갤러리</h1>
+              <p className="page-header-label">{t.pageHeaderLabel}</p>
+              <h1 className="page-header-title">{t.pageHeaderTitle}</h1>
             </div>
           </div>
 
@@ -268,15 +436,15 @@
                   <input
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="검색"
-                    aria-label="레퍼런스 검색"
+                    placeholder={t.searchPlaceholder}
+                    aria-label={t.searchAria}
                     onKeyDown={(e) => { if (e.key === 'Escape') setSearchQuery(''); }}
                   />
                   {searchQuery && (
                     <button
                       type="button"
                       className="filter-search-clear"
-                      aria-label="검색어 지우기"
+                      aria-label={t.clearSearch}
                       onClick={() => setSearchQuery('')}
                     >
                       ×
@@ -285,41 +453,46 @@
                 </div>
 
                 <FilterDropdown
-                  label="산업군"
+                  label={t.filterIndustry}
                   value={selectedIndustry}
                   options={INDUSTRY_FILTERS}
+                  format={fl}
                   open={openFilter === 'industry'}
                   onToggle={() => setOpenFilter(openFilter === 'industry' ? null : 'industry')}
                   onSelect={(value) => { setSelectedIndustry(value); setOpenFilter(null); setVisibleCount(PAGE_SIZE); }}
                 />
                 <FilterDropdown
-                  label="화면 유형"
+                  label={t.filterScreen}
                   value={selectedScreen}
                   options={SCREEN_FILTERS}
+                  format={fl}
                   open={openFilter === 'screen'}
                   onToggle={() => setOpenFilter(openFilter === 'screen' ? null : 'screen')}
                   onSelect={(value) => { setSelectedScreen(value); setOpenFilter(null); setVisibleCount(PAGE_SIZE); }}
                 />
                 <FilterDropdown
-                  label="활용 목적"
+                  label={t.filterPurpose}
                   value={selectedPurpose}
                   options={PURPOSE_FILTERS}
+                  format={fl}
                   open={openFilter === 'purpose'}
                   onToggle={() => setOpenFilter(openFilter === 'purpose' ? null : 'purpose')}
                   onSelect={(value) => { setSelectedPurpose(value); setOpenFilter(null); setVisibleCount(PAGE_SIZE); }}
                 />
                 <FilterDropdown
-                  label="레이아웃 구조"
+                  label={t.filterLayout}
                   value={selectedLayout}
                   options={LAYOUT_FILTERS}
+                  format={fl}
                   open={openFilter === 'layout'}
                   onToggle={() => setOpenFilter(openFilter === 'layout' ? null : 'layout')}
                   onSelect={(value) => { setSelectedLayout(value); setOpenFilter(null); setVisibleCount(PAGE_SIZE); }}
                 />
                 <FilterDropdown
-                  label="디자인톤"
+                  label={t.filterTone}
                   value={selectedTone}
                   options={TONE_FILTERS}
+                  format={fl}
                   open={openFilter === 'tone'}
                   onToggle={() => setOpenFilter(openFilter === 'tone' ? null : 'tone')}
                   onSelect={(value) => { setSelectedTone(value); setOpenFilter(null); setVisibleCount(PAGE_SIZE); }}
@@ -339,34 +512,34 @@
                     setVisibleCount(PAGE_SIZE);
                   }}
                 >
-                  초기화
+                  {t.reset}
                 </button>
               </div>
 
               <div className="filter-tag-row">
                 {selectedIndustry !== '전체' && (
                   <button type="button" className="filter-tag" onClick={() => setSelectedIndustry('전체')}>
-                    {selectedIndustry} ×
+                    {fl(selectedIndustry)} ×
                   </button>
                 )}
                 {selectedScreen !== '전체' && (
                   <button type="button" className="filter-tag" onClick={() => setSelectedScreen('전체')}>
-                    {selectedScreen} ×
+                    {fl(selectedScreen)} ×
                   </button>
                 )}
                 {selectedPurpose !== '전체' && (
                   <button type="button" className="filter-tag" onClick={() => setSelectedPurpose('전체')}>
-                    {selectedPurpose} ×
+                    {fl(selectedPurpose)} ×
                   </button>
                 )}
                 {selectedLayout !== '전체' && (
                   <button type="button" className="filter-tag" onClick={() => setSelectedLayout('전체')}>
-                    {selectedLayout} ×
+                    {fl(selectedLayout)} ×
                   </button>
                 )}
                 {selectedTone !== '전체' && (
                   <button type="button" className="filter-tag" onClick={() => setSelectedTone('전체')}>
-                    {selectedTone} ×
+                    {fl(selectedTone)} ×
                   </button>
                 )}
               </div>
@@ -375,7 +548,7 @@
             {/* Main */}
             <main className="gallery-main">
               <p className="result-count">
-                총 <strong>{filtered.length}개</strong>의 레퍼런스
+                {t.resultCount(filtered.length)}
               </p>
 
               {filtered.length === 0 ? (
@@ -384,13 +557,13 @@
                     <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="1.5"/>
                     <path d="M16.5 16.5L21 21" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
                   </svg>
-                  <p className="text-sm">해당 조건의 레퍼런스가 없습니다.</p>
+                  <p className="text-sm">{t.noResults}</p>
                 </div>
               ) : (
                 <>
                   <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                     {visible.map(item => (
-                      <GalleryCard key={item.id} item={item} />
+                      <GalleryCard key={item.id} item={item} lang={lang} />
                     ))}
                   </div>
 
@@ -399,7 +572,7 @@
                       className="load-more-btn"
                       onClick={() => setVisibleCount(v => v + PAGE_SIZE)}
                     >
-                      더보기 ({filtered.length - visibleCount}개 남음)
+                      {t.loadMore(filtered.length - visibleCount)}
                     </button>
                   )}
                 </>
@@ -437,13 +610,13 @@
                   </div>
                   <div className="flex items-center gap-6 text-sm text-white/50">
                     <a href="https://www.bimatrix.co.kr/privacy/" target="_blank" className="hover:text-white/80 transition">
-                      개인정보처리방침</a>
+                      {t.footerPrivacy}</a>
                     <span className="text-white/20">|</span>
                     <a href="https://www.bimatrix.co.kr/pr/newsletter/subscription/" target="_blank" className="hover:text-white/80 transition">
-                      뉴스레터 구독</a>
+                      {t.footerNewsletter}</a>
                     <span className="text-white/20">|</span>
-                    <a href="https://www.bimatrix.co.kr/support/contact/" target="_blank" className="hover:text-white/80 transition">
-                      문의하기</a>
+                    <a href="mailto:hhpark1425@bimatrix.co.kr" target="_blank" className="hover:text-white/80 transition">
+                      {t.footerContact}</a>
                   </div>
                 </div>
 
@@ -460,12 +633,7 @@
                   </button>
                   {familySiteOpen && (
                     <div className="family-site-dropdown absolute right-0 bottom-full mb-1 w-48 rounded-lg border border-white/15 overflow-hidden z-10">
-                      {[
-                        {label: "비아이매트릭스 홈페이지", href: "https://www.bimatrix.co.kr/"},
-                        {label: "AUD플랫폼 아카데미", href: "https://audp.bimatrix.co.kr/"},
-                        {label: "AUD플랫폼 데모", href: "http://aud.bimatrix.co.kr/extention/sso/SimpleSSO4.jsp"},
-                        {label: "고객지원 사이트", href: "https://cs.bimatrix.co.kr/"},
-                      ].map((item) => (
+                      {t.familySites.map((item) => (
                         <a key={item.label} href={item.href} target="_blank"
                            className="block px-4 py-2.5 text-sm text-white/60 hover:bg-white/10 hover:text-white/90 transition">
                           {item.label}
@@ -480,8 +648,8 @@
             <div className="footer-bottom">
               <div className="mx-auto max-w-7xl px-8 py-6 flex items-end justify-between gap-8">
                 <div className="flex flex-col gap-1.5 text-xs text-white/35 leading-relaxed">
-                  <p className="text-white/50 font-medium text-sm">(주)비아이매트릭스</p>
-                  <p>서울시 강남구 선릉로 433, 세방빌딩 신관 17층(역삼동) &nbsp;|&nbsp; 대표이사: 배영근</p>
+                  <p className="text-white/50 font-medium text-sm">{t.company}</p>
+                  <p>{t.address} &nbsp;|&nbsp; {t.ceo}</p>
                   <p>Tel: 02-561-4475 &nbsp;|&nbsp; Fax: 02-561-4479</p>
                   <p className="mt-1">© BI MATRIX CO., LTD. ALL RIGHTS RESERVED.</p>
                 </div>

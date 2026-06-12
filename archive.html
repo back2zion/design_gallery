@@ -10,6 +10,8 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
   <link rel="stylesheet" href="styles.css" />
   <script>try{var t=localStorage.getItem('axis-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
 </head>
@@ -31,10 +33,122 @@
       'BI/OLAP':   'badge-scr-bi',
     };
 
+    const I18N = {
+      ko: {
+        pageTitle: '프로젝트 아카이브 | AXIS Design Gallery',
+        navGallery: '레퍼런스 갤러리',
+        navResources: '디자인 리소스',
+        navClients: '고객사 사이트',
+        searchPlaceholder: '레퍼런스 검색',
+        themeToLight: '라이트 모드로 전환',
+        themeToDark: '다크 모드로 전환',
+        pageHeading: '프로젝트 자료 아카이브',
+        pageSub: '실무 프로젝트 포트폴리오 및 사례 모음',
+        metaClient: '고객사',
+        metaProject: '프로젝트명',
+        metaIndustry: '산업',
+        metaScreenType: '화면 유형',
+        metaLayout: '레이아웃',
+        metaPurpose: '사용 목적',
+        metaDescription: '설명',
+        ariaPrev: '이전 프로젝트',
+        ariaNext: '다음 프로젝트',
+        ariaClose: '팝업 닫기',
+        footerPrivacy: '개인정보처리방침',
+        footerNewsletter: '뉴스레터 구독',
+        footerContact: '문의하기',
+        familySites: ['비아이매트릭스 홈페이지', 'AUD플랫폼 아카데미', 'AUD플랫폼 데모', '고객지원 사이트'],
+        companyName: '(주)비아이매트릭스',
+        addressLine: '서울시 강남구 선릉로 433, 세방빌딩 신관 17층(역삼동)',
+        ceoLine: '대표이사: 배영근',
+        labels: {},
+      },
+      en: {
+        pageTitle: 'Project Archive | AXIS Design Gallery',
+        navGallery: 'Reference Gallery',
+        navResources: 'Design Resources',
+        navClients: 'Client Sites',
+        searchPlaceholder: 'Search references',
+        themeToLight: 'Switch to light mode',
+        themeToDark: 'Switch to dark mode',
+        pageHeading: 'Project Archive',
+        pageSub: 'A collection of real-world project portfolios and case studies',
+        metaClient: 'Client',
+        metaProject: 'Project',
+        metaIndustry: 'Industry',
+        metaScreenType: 'Screen Type',
+        metaLayout: 'Layout',
+        metaPurpose: 'Use Case',
+        metaDescription: 'Description',
+        ariaPrev: 'Previous project',
+        ariaNext: 'Next project',
+        ariaClose: 'Close popup',
+        footerPrivacy: 'Privacy Policy',
+        footerNewsletter: 'Newsletter',
+        footerContact: 'Contact Us',
+        familySites: ['BI MATRIX Website', 'AUD Platform Academy', 'AUD Platform Demo', 'Customer Support'],
+        companyName: 'BI MATRIX CO., LTD.',
+        addressLine: '17F, Sebang Building New Wing, 433 Seolleung-ro, Gangnam-gu, Seoul',
+        ceoLine: 'CEO: Younggeun Bae',
+        labels: {
+          '공공·금융': 'Public & Finance',
+          '제조·유통': 'Manufacturing & Retail',
+          '의료·제약': 'Healthcare & Pharma',
+          '서비스·기타': 'Services & Others',
+        },
+      },
+      ja: {
+        pageTitle: 'プロジェクトアーカイブ | AXIS Design Gallery',
+        navGallery: 'リファレンスギャラリー',
+        navResources: 'デザインリソース',
+        navClients: '顧客サイト',
+        searchPlaceholder: 'リファレンス検索',
+        themeToLight: 'ライトモードに切替',
+        themeToDark: 'ダークモードに切替',
+        pageHeading: 'プロジェクト資料アーカイブ',
+        pageSub: '実務プロジェクトのポートフォリオおよび事例集',
+        metaClient: '顧客企業',
+        metaProject: 'プロジェクト名',
+        metaIndustry: '産業',
+        metaScreenType: '画面タイプ',
+        metaLayout: 'レイアウト',
+        metaPurpose: '使用目的',
+        metaDescription: '説明',
+        ariaPrev: '前のプロジェクト',
+        ariaNext: '次のプロジェクト',
+        ariaClose: 'ポップアップを閉じる',
+        footerPrivacy: '個人情報処理方針',
+        footerNewsletter: 'ニュースレター購読',
+        footerContact: 'お問い合わせ',
+        familySites: ['BI MATRIXホームページ', 'AUDプラットフォームアカデミー', 'AUDプラットフォームデモ', 'カスタマーサポート'],
+        companyName: '(株)BI MATRIX',
+        addressLine: 'ソウル市江南区宣陵路433、世邦ビル新館17階(駅三洞)',
+        ceoLine: '代表取締役: ペ・ヨングン',
+        labels: {
+          '공공·금융': '公共・金融',
+          '제조·유통': '製造・流通',
+          '의료·제약': '医療・製薬',
+          '서비스·기타': 'サービス・その他',
+        },
+      },
+    };
+
     function ArchivePage() {
       const [theme, setTheme] = React.useState(() => { try{return localStorage.getItem('axis-theme')||'dark';}catch(e){return 'dark';} });
       React.useEffect(() => { document.documentElement.setAttribute('data-theme', theme); }, [theme]);
       const toggleTheme = () => { const n=theme==='dark'?'light':'dark'; setTheme(n); try{localStorage.setItem('axis-theme',n);}catch(e){} };
+
+      const [lang, setLang] = React.useState(() => { try{return localStorage.getItem('axis-lang')||'ko';}catch(e){return 'ko';} });
+      const [langOpen, setLangOpen] = React.useState(false);
+      React.useEffect(() => { document.documentElement.lang = lang; }, [lang]);
+      const changeLang = (l) => { setLang(l); setLangOpen(false); try{localStorage.setItem('axis-lang', l);}catch(e){} };
+      const t = I18N[lang];
+      React.useEffect(() => { document.title = t.pageTitle; }, [lang]);
+      const L = (item, field) => {
+        if (lang === 'ko') return item[field];
+        if (lang === 'en') return item[field + 'En'] || item[field];
+        return item[field + 'Ja'] || item[field + 'En'] || item[field];
+      };
       const ic  = theme==='dark' ? 'rgba(255,255,255,0.75)' : 'rgba(9,30,66,0.55)';
       const ics = theme==='dark' ? 'rgba(255,255,255,0.4)'  : 'rgba(9,30,66,0.3)';
       const icm = theme==='dark' ? 'rgba(255,255,255,0.6)'  : 'rgba(9,30,66,0.45)';
@@ -45,22 +159,22 @@
       const [familySiteOpen, setFamilySiteOpen] = React.useState(false);
 
       const archiveItems = [
-        { id: 1, logo:'images/logos/logo-1.png',  back:'images/archive/1.png',  color:'#1A3320', accent:'#4CAF50', client:'신한은행', projectName:'경영성과 리포트', title:'은행 경영성과 대시보드', screenType:'Dashboard', industry:'공공·금융'},
-        { id: 2, logo:'images/logos/logo-2.png',  back:'images/archive/2.png',  color:'#0A1F33', accent:'#4FC3F7', client:'현대자동차', projectName:'제조 공정 모니터링', title:'생산 라인 운영 현황', screenType:'EPA', industry:'제조·유통'},
-        { id: 3, logo:'images/logos/logo-3.png',  back:'images/archive/3.png',  color:'#15175A', accent:'#7986CB', client:'LG CNS', projectName:'서비스 이슈 분석', title:'서비스 운영 분석 대시보드', screenType:'Dashboard', industry:'서비스·기타' },
-        { id: 4, logo:'images/logos/logo-4.png',  back:'images/archive/4.png',  color:'#0B2A3A', accent:'#26C6DA', client:'SK텔레콤', projectName:'통신망 성능 리포트', title:'네트워크 KPI 리포트', screenType:'Dashboard', industry:'서비스·기타'},
-        { id: 5, logo:'images/logos/logo-5.png',  back:'images/archive/5.png',  color:'#142840', accent:'#42A5F5', client:'롯데쇼핑', projectName:'물류 실적 분석', title:'전사 운송 실적 대시보드', screenType:'Dashboard', industry:'제조·유통'},
-        { id: 6, logo:'images/logos/logo-6.png',  back:'images/archive/6.png',  color:'#162416', accent:'#81C784', client:'아워홈', projectName:'교대별 팀 성과', title:'교대별 생산성 대시보드', screenType:'Dashboard', industry:'서비스·기타'},
-        { id: 7, logo:'images/logos/logo-7.png',  back:'images/archive/7.png',  color:'#2E1545', accent:'#BA68C8', client:'신세계인터내셔날', projectName:'고객지표 통합대시보드', title:'고객 관리 실적 대시보드', screenType:'Dashboard', industry:'제조·유통'},
-        { id: 8, logo:'images/logos/logo-8.png',  back:'images/archive/8.png',  color:'#3B1212', accent:'#EF9A9A', client:'하나은행', projectName:'교육통계서비스', title:'학습 현황 통계 화면', screenType:'Dashboard', industry:'공공·금융'},
-        { id: 9, logo:'images/logos/logo-9.png',  back:'images/archive/9.png',  color:'#1A1A10', accent:'#DCE775', client:'KT', projectName:'인프라 상태 모니터링', title:'통신 인프라 운영 대시보드', screenType:'Dashboard', industry:'공공·금융', layoutType:'상태 모니터링', suitableFor:'장비 운영 점검'},
-        { id: 10, logo:'images/logos/logo-10.png', back:'images/archive/10.png', color:'#101820', accent:'#80CBC4', client:'GS칼텍스', projectName:'에너지 관리 시스템', title:'에너지 실적 트래킹 화면', screenType:'Dashboard', industry:'제조·유통', layoutType:'KPI Summary', suitableFor:'에너지 비용 분석', description:'에너지 사용량과 비용 효율을 모니터링하는 실무형 대시보드입니다.' },
-        { id: 11, logo:'images/logos/logo-11.png', back:'images/archive/11.png', color:'#201A10', accent:'#FFCC80', client:'CJ대한통운', projectName:'배송 운영 관리', title:'물류 배송 현황 대시보드', screenType:'Dashboard', industry:'제조·유통', layoutType:'운영현황형', suitableFor:'배송 성과 점검', description:'물류 흐름과 배송 성과를 한눈에 보여주는 운영 화면입니다.' },
-        { id: 12, logo:'images/logos/logo-12.png', back:'images/archive/12.png', color:'#1A1020', accent:'#CE93D8', client:'현대카드', projectName:'고객 행동 분석', title:'마케팅 인사이트 대시보드', screenType:'Reporting', industry:'공공·금융', layoutType:'리포트형', suitableFor:'캠페인 성과 분석', description:'고객 행동 지표와 캠페인 성과를 통합해서 보여주는 인사이트 화면입니다.' },
-        { id: 13, logo:'images/logos/logo-13.png', back:'images/archive/13.png', color:'#101A1A', accent:'#80DEEA', client:'네이버', projectName:'서비스 트래픽 리포트', title:'실시간 트래픽 모니터링', screenType:'EPA', industry:'서비스·기타', layoutType:'모니터링형', suitableFor:'트래픽 분석', description:'트래픽 변화와 응답 지표를 빠르게 확인할 수 있는 모니터링 화면입니다.' },
-        { id: 14, logo:'images/logos/logo-14.png', back:'images/archive/14.png', color:'#1A1018', accent:'#F48FB1', client:'카카오뱅크', projectName:'디지털 앱 분석', title:'앱 이용자 행동 대시보드', screenType:'Dashboard', industry:'공공·금융', layoutType:'분석형', suitableFor:'전환 흐름 분석', description:'사용자 행동과 전환 지표를 중심으로 한 디지털 분석 화면입니다.' },
-        { id: 15, logo:'images/logos/logo-15.png', back:'images/archive/15.png', color:'#1A1A1A', accent:'#FFAB91', client:'SK하이닉스', projectName:'생산성 보고서', title:'반도체 생산성 대시보드', screenType:'Reporting', industry:'제조·유통', layoutType:'리포트형', suitableFor:'생산 효율 분석', description:'생산 안정성과 실적을 시각화한 반도체 현장 보고 화면입니다.' },
-        { id: 16, logo:'images/logos/logo-16.png', back:'images/archive/16.png', color:'#0D1A2A', accent:'#90CAF9', client:'삼성전자', projectName:'고객 만족 분석', title:'고객 경험 리포트', screenType:'Dashboard', industry:'서비스·기타', layoutType:'KPI Summary', suitableFor:'CS 지표 점검', description:'고객 만족도와 서비스 평점을 한눈에 점검할 수 있는 리포트 화면입니다.' },
+        { id: 1, logo:'images/logos/logo-1.png',  back:'images/archive/1.png',  color:'#1A3320', accent:'#4CAF50', client:'신한은행', clientEn:'Shinhan Bank', projectName:'경영성과 리포트', projectNameEn:'Business Performance Report', projectNameJa:'経営成果レポート', title:'은행 경영성과 대시보드', titleEn:'Bank Performance Dashboard', titleJa:'銀行経営成果ダッシュボード', screenType:'Dashboard', industry:'공공·금융'},
+        { id: 2, logo:'images/logos/logo-2.png',  back:'images/archive/2.png',  color:'#0A1F33', accent:'#4FC3F7', client:'현대자동차', clientEn:'Hyundai Motor', projectName:'제조 공정 모니터링', projectNameEn:'Manufacturing Process Monitoring', projectNameJa:'製造工程モニタリング', title:'생산 라인 운영 현황', titleEn:'Production Line Operations Status', titleJa:'生産ライン稼働状況', screenType:'EPA', industry:'제조·유통'},
+        { id: 3, logo:'images/logos/logo-3.png',  back:'images/archive/3.png',  color:'#15175A', accent:'#7986CB', client:'LG CNS', projectName:'서비스 이슈 분석', projectNameEn:'Service Issue Analysis', projectNameJa:'サービス課題分析', title:'서비스 운영 분석 대시보드', titleEn:'Service Operations Analytics Dashboard', titleJa:'サービス運用分析ダッシュボード', screenType:'Dashboard', industry:'서비스·기타' },
+        { id: 4, logo:'images/logos/logo-4.png',  back:'images/archive/4.png',  color:'#0B2A3A', accent:'#26C6DA', client:'SK텔레콤', clientEn:'SK Telecom', projectName:'통신망 성능 리포트', projectNameEn:'Network Performance Report', projectNameJa:'通信網性能レポート', title:'네트워크 KPI 리포트', titleEn:'Network KPI Report', titleJa:'ネットワークKPIレポート', screenType:'Dashboard', industry:'서비스·기타'},
+        { id: 5, logo:'images/logos/logo-5.png',  back:'images/archive/5.png',  color:'#142840', accent:'#42A5F5', client:'롯데쇼핑', clientEn:'Lotte Shopping', projectName:'물류 실적 분석', projectNameEn:'Logistics Performance Analysis', projectNameJa:'物流実績分析', title:'전사 운송 실적 대시보드', titleEn:'Company-wide Transport Performance Dashboard', titleJa:'全社輸送実績ダッシュボード', screenType:'Dashboard', industry:'제조·유통'},
+        { id: 6, logo:'images/logos/logo-6.png',  back:'images/archive/6.png',  color:'#162416', accent:'#81C784', client:'아워홈', clientEn:'Ourhome', projectName:'교대별 팀 성과', projectNameEn:'Shift Team Performance', projectNameJa:'シフト別チーム成果', title:'교대별 생산성 대시보드', titleEn:'Shift Productivity Dashboard', titleJa:'シフト別生産性ダッシュボード', screenType:'Dashboard', industry:'서비스·기타'},
+        { id: 7, logo:'images/logos/logo-7.png',  back:'images/archive/7.png',  color:'#2E1545', accent:'#BA68C8', client:'신세계인터내셔날', clientEn:'Shinsegae International', projectName:'고객지표 통합대시보드', projectNameEn:'Integrated Customer Metrics Dashboard', projectNameJa:'顧客指標統合ダッシュボード', title:'고객 관리 실적 대시보드', titleEn:'Customer Management Performance Dashboard', titleJa:'顧客管理実績ダッシュボード', screenType:'Dashboard', industry:'제조·유통'},
+        { id: 8, logo:'images/logos/logo-8.png',  back:'images/archive/8.png',  color:'#3B1212', accent:'#EF9A9A', client:'하나은행', clientEn:'Hana Bank', projectName:'교육통계서비스', projectNameEn:'Education Statistics Service', projectNameJa:'教育統計サービス', title:'학습 현황 통계 화면', titleEn:'Learning Status Statistics Screen', titleJa:'学習状況統計画面', screenType:'Dashboard', industry:'공공·금융'},
+        { id: 9, logo:'images/logos/logo-9.png',  back:'images/archive/9.png',  color:'#1A1A10', accent:'#DCE775', client:'KT', projectName:'인프라 상태 모니터링', projectNameEn:'Infrastructure Status Monitoring', projectNameJa:'インフラ状態モニタリング', title:'통신 인프라 운영 대시보드', titleEn:'Telecom Infrastructure Operations Dashboard', titleJa:'通信インフラ運用ダッシュボード', screenType:'Dashboard', industry:'공공·금융', layoutType:'상태 모니터링', layoutTypeEn:'Status Monitoring', layoutTypeJa:'状態モニタリング', suitableFor:'장비 운영 점검', suitableForEn:'Equipment Operations Check', suitableForJa:'設備運用点検'},
+        { id: 10, logo:'images/logos/logo-10.png', back:'images/archive/10.png', color:'#101820', accent:'#80CBC4', client:'GS칼텍스', clientEn:'GS Caltex', projectName:'에너지 관리 시스템', projectNameEn:'Energy Management System', projectNameJa:'エネルギー管理システム', title:'에너지 실적 트래킹 화면', titleEn:'Energy Performance Tracking Screen', titleJa:'エネルギー実績トラッキング画面', screenType:'Dashboard', industry:'제조·유통', layoutType:'KPI Summary', suitableFor:'에너지 비용 분석', suitableForEn:'Energy Cost Analysis', suitableForJa:'エネルギーコスト分析', description:'에너지 사용량과 비용 효율을 모니터링하는 실무형 대시보드입니다.', descriptionEn:'A practical dashboard for monitoring energy usage and cost efficiency.', descriptionJa:'エネルギー使用量とコスト効率をモニタリングする実務型ダッシュボードです。' },
+        { id: 11, logo:'images/logos/logo-11.png', back:'images/archive/11.png', color:'#201A10', accent:'#FFCC80', client:'CJ대한통운', clientEn:'CJ Logistics', projectName:'배송 운영 관리', projectNameEn:'Delivery Operations Management', projectNameJa:'配送運用管理', title:'물류 배송 현황 대시보드', titleEn:'Logistics Delivery Status Dashboard', titleJa:'物流配送状況ダッシュボード', screenType:'Dashboard', industry:'제조·유통', layoutType:'운영현황형', layoutTypeEn:'Operations Status', layoutTypeJa:'運用状況型', suitableFor:'배송 성과 점검', suitableForEn:'Delivery Performance Review', suitableForJa:'配送成果点検', description:'물류 흐름과 배송 성과를 한눈에 보여주는 운영 화면입니다.', descriptionEn:'An operations screen that shows logistics flow and delivery performance at a glance.', descriptionJa:'物流の流れと配送成果を一目で確認できる運用画面です。' },
+        { id: 12, logo:'images/logos/logo-12.png', back:'images/archive/12.png', color:'#1A1020', accent:'#CE93D8', client:'현대카드', clientEn:'Hyundai Card', projectName:'고객 행동 분석', projectNameEn:'Customer Behavior Analysis', projectNameJa:'顧客行動分析', title:'마케팅 인사이트 대시보드', titleEn:'Marketing Insights Dashboard', titleJa:'マーケティングインサイトダッシュボード', screenType:'Reporting', industry:'공공·금융', layoutType:'리포트형', layoutTypeEn:'Report', layoutTypeJa:'レポート型', suitableFor:'캠페인 성과 분석', suitableForEn:'Campaign Performance Analysis', suitableForJa:'キャンペーン成果分析', description:'고객 행동 지표와 캠페인 성과를 통합해서 보여주는 인사이트 화면입니다.', descriptionEn:'An insight screen that combines customer behavior metrics with campaign performance.', descriptionJa:'顧客行動指標とキャンペーン成果を統合して示すインサイト画面です。' },
+        { id: 13, logo:'images/logos/logo-13.png', back:'images/archive/13.png', color:'#101A1A', accent:'#80DEEA', client:'네이버', clientEn:'NAVER', projectName:'서비스 트래픽 리포트', projectNameEn:'Service Traffic Report', projectNameJa:'サービストラフィックレポート', title:'실시간 트래픽 모니터링', titleEn:'Real-time Traffic Monitoring', titleJa:'リアルタイムトラフィックモニタリング', screenType:'EPA', industry:'서비스·기타', layoutType:'모니터링형', layoutTypeEn:'Monitoring', layoutTypeJa:'モニタリング型', suitableFor:'트래픽 분석', suitableForEn:'Traffic Analysis', suitableForJa:'トラフィック分析', description:'트래픽 변화와 응답 지표를 빠르게 확인할 수 있는 모니터링 화면입니다.', descriptionEn:'A monitoring screen for quickly checking traffic changes and response metrics.', descriptionJa:'トラフィックの変化と応答指標を素早く確認できるモニタリング画面です。' },
+        { id: 14, logo:'images/logos/logo-14.png', back:'images/archive/14.png', color:'#1A1018', accent:'#F48FB1', client:'카카오뱅크', clientEn:'KakaoBank', projectName:'디지털 앱 분석', projectNameEn:'Digital App Analytics', projectNameJa:'デジタルアプリ分析', title:'앱 이용자 행동 대시보드', titleEn:'App User Behavior Dashboard', titleJa:'アプリ利用者行動ダッシュボード', screenType:'Dashboard', industry:'공공·금융', layoutType:'분석형', layoutTypeEn:'Analytics', layoutTypeJa:'分析型', suitableFor:'전환 흐름 분석', suitableForEn:'Conversion Flow Analysis', suitableForJa:'コンバージョンフロー分析', description:'사용자 행동과 전환 지표를 중심으로 한 디지털 분석 화면입니다.', descriptionEn:'A digital analytics screen focused on user behavior and conversion metrics.', descriptionJa:'ユーザー行動とコンバージョン指標を中心としたデジタル分析画面です。' },
+        { id: 15, logo:'images/logos/logo-15.png', back:'images/archive/15.png', color:'#1A1A1A', accent:'#FFAB91', client:'SK하이닉스', clientEn:'SK hynix', projectName:'생산성 보고서', projectNameEn:'Productivity Report', projectNameJa:'生産性報告書', title:'반도체 생산성 대시보드', titleEn:'Semiconductor Productivity Dashboard', titleJa:'半導体生産性ダッシュボード', screenType:'Reporting', industry:'제조·유통', layoutType:'리포트형', layoutTypeEn:'Report', layoutTypeJa:'レポート型', suitableFor:'생산 효율 분석', suitableForEn:'Production Efficiency Analysis', suitableForJa:'生産効率分析', description:'생산 안정성과 실적을 시각화한 반도체 현장 보고 화면입니다.', descriptionEn:'A semiconductor shop-floor report screen visualizing production stability and results.', descriptionJa:'生産の安定性と実績を可視化した半導体現場の報告画面です。' },
+        { id: 16, logo:'images/logos/logo-16.png', back:'images/archive/16.png', color:'#0D1A2A', accent:'#90CAF9', client:'삼성전자', clientEn:'Samsung Electronics', projectName:'고객 만족 분석', projectNameEn:'Customer Satisfaction Analysis', projectNameJa:'顧客満足分析', title:'고객 경험 리포트', titleEn:'Customer Experience Report', titleJa:'顧客体験レポート', screenType:'Dashboard', industry:'서비스·기타', layoutType:'KPI Summary', suitableFor:'CS 지표 점검', suitableForEn:'CS Metrics Review', suitableForJa:'CS指標点検', description:'고객 만족도와 서비스 평점을 한눈에 점검할 수 있는 리포트 화면입니다.', descriptionEn:'A report screen for reviewing customer satisfaction and service ratings at a glance.', descriptionJa:'顧客満足度とサービス評価を一目で点検できるレポート画面です。' },
       ];
 
       const selectedArchive = selectedArchiveIndex !== null ? archiveItems[selectedArchiveIndex] : null;
@@ -83,9 +197,9 @@
                   </a>
                 </div>
                 <nav className="hidden gap-10 font-medium text-white/80 md:flex h-full items-stretch">
-                  <a href="gallery.html"    className="gnb-link transition hover:text-white">레퍼런스 갤러리</a>
-                  <a href="resources.html"  className="gnb-link transition hover:text-white">디자인 리소스</a>
-                  <a href="archive.html" className="gnb-link active transition hover:text-white">고객사 사이트</a>
+                  <a href="gallery.html"    className="gnb-link transition hover:text-white">{t.navGallery}</a>
+                  <a href="resources.html"  className="gnb-link transition hover:text-white">{t.navResources}</a>
+                  <a href="archive.html" className="gnb-link active transition hover:text-white">{t.navClients}</a>
                 </nav>
                 <div className="flex items-center gap-2 justify-self-end">
                   <div className="flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 w-52 focus-within:border-white/30 transition">
@@ -93,26 +207,37 @@
                       <circle cx="9" cy="9" r="6.5" stroke={ics} strokeWidth="1.8"/>
                       <path d="M14 14L18 18" stroke={ics} strokeWidth="1.8" strokeLinecap="round"/>
                     </svg>
-                    <input placeholder="레퍼런스 검색" className="bg-transparent text-sm outline-none placeholder:text-white/35 text-white w-full" onKeyDown={(e) => { const q = e.currentTarget.value.trim(); if (e.key === 'Enter' && q) window.location.href = 'gallery.html?q=' + encodeURIComponent(q); }} />
+                    <input placeholder={t.searchPlaceholder} className="bg-transparent text-sm outline-none placeholder:text-white/35 text-white w-full" onKeyDown={(e) => { const q = e.currentTarget.value.trim(); if (e.key === 'Enter' && q) window.location.href = 'gallery.html?q=' + encodeURIComponent(q); }} />
                   </div>
-                  <button onClick={toggleTheme} className="w-9 h-9 flex items-center justify-center rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition" title={theme==='dark'?'라이트 모드로 전환':'다크 모드로 전환'} style={{display:'none'}}>
+                  <button onClick={toggleTheme} className="w-9 h-9 flex items-center justify-center rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition" title={theme==='dark'?t.themeToLight:t.themeToDark} style={{display:'none'}}>
                     {theme==='dark'
                       ? <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke={ic} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
                       : <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke={ic} strokeWidth="1.8"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke={ic} strokeWidth="1.8" strokeLinecap="round"/></svg>
                     }
                   </button>
-                  <button className="flex items-center gap-1.5 h-9 px-3 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition text-sm text-white/75 font-medium">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <circle cx="12" cy="12" r="9" stroke={icm} strokeWidth="1.8"/>
-                      <path d="M12 3C12 3 9 7 9 12C9 17 12 21 12 21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
-                      <path d="M12 3C12 3 15 7 15 12C15 17 12 21 12 21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
-                      <path d="M3 12H21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
-                    </svg>
-                    KR
-                    <svg width="10" height="10" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M3 4.5L6 7.5L9 4.5" stroke={icm} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </button>
+                  <div className="relative">
+                    <button onClick={() => setLangOpen(!langOpen)} className="flex items-center gap-1.5 h-9 px-3 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition text-sm text-white/75 font-medium">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="9" stroke={icm} strokeWidth="1.8"/>
+                        <path d="M12 3C12 3 9 7 9 12C9 17 12 21 12 21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
+                        <path d="M12 3C12 3 15 7 15 12C15 17 12 21 12 21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
+                        <path d="M3 12H21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
+                      </svg>
+                      {lang==='ko'?'KR':lang==='en'?'EN':'JA'}
+                      <svg width="10" height="10" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 4.5L6 7.5L9 4.5" stroke={icm} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </button>
+                    {langOpen && (
+                      <div className="family-site-dropdown absolute right-0 top-full mt-1 w-36 rounded-lg border border-white/15 overflow-hidden z-50">
+                        {[['ko','한국어'],['en','English'],['ja','日本語']].map(([code, label]) => (
+                          <button key={code} className="block w-full text-left px-4 py-2.5 text-sm text-white/60 hover:bg-white/10 hover:text-white/90 transition" onClick={() => changeLang(code)}>
+                            {label}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </header>
@@ -122,8 +247,8 @@
               <div className="mb-8 flex items-end justify-between">
                 <div>
                   <p className="page-header-label">Project Archive</p>
-                  <h1 className="mt-2 text-2xl sm:text-3xl font-bold">프로젝트 자료 아카이브</h1>
-                  <p style={{marginTop:'8px', fontSize:'14px', color:theme==='dark'?'rgba(255,255,255,0.4)':'rgba(9,30,66,0.45)'}}>실무 프로젝트 포트폴리오 및 사례 모음</p>
+                  <h1 className="mt-2 text-2xl sm:text-3xl font-bold">{t.pageHeading}</h1>
+                  <p style={{marginTop:'8px', fontSize:'14px', color:theme==='dark'?'rgba(255,255,255,0.4)':'rgba(9,30,66,0.45)'}}>{t.pageSub}</p>
                 </div>
               </div>
 
@@ -161,16 +286,16 @@
                     }}>
                       <img
                         src={item.logo}
-                        alt={item.client}
+                        alt={L(item, 'client')}
                         style={{maxWidth:'60%', maxHeight:'60%', objectFit:'contain'}}
                         onError={e => { e.currentTarget.style.display='none'; }}
                       />
                     </div>
                     <div style={{padding:'14px 16px'}}>
-                      <div style={{fontSize:'11px', fontWeight:'600', color:theme==='dark'?'rgba(255,255,255,0.5)':'rgba(9,30,66,0.5)', marginBottom:'4px', textTransform:'uppercase', letterSpacing:'0.04em'}}>{item.client}</div>
-                      <h3 style={{fontSize:'13px', fontWeight:'600', color:theme==='dark'?'rgba(255,255,255,0.9)':'#172B4D', lineHeight:'1.4', marginBottom:'8px'}}>{item.title}</h3>
+                      <div style={{fontSize:'11px', fontWeight:'600', color:theme==='dark'?'rgba(255,255,255,0.5)':'rgba(9,30,66,0.5)', marginBottom:'4px', textTransform:'uppercase', letterSpacing:'0.04em'}}>{L(item, 'client')}</div>
+                      <h3 style={{fontSize:'13px', fontWeight:'600', color:theme==='dark'?'rgba(255,255,255,0.9)':'#172B4D', lineHeight:'1.4', marginBottom:'8px'}}>{L(item, 'title')}</h3>
                       <div style={{display:'flex', gap:'6px', flexWrap:'wrap'}}>
-                        <span className={`gallery-badge ${INDUSTRY_CLS[item.industry] || ''}`} style={{fontSize:'9px'}}>{item.industry}</span>
+                        <span className={`gallery-badge ${INDUSTRY_CLS[item.industry] || ''}`} style={{fontSize:'9px'}}>{t.labels[item.industry] || item.industry}</span>
                         <span className={`gallery-badge ${SCREEN_CLS[item.screenType] || ''}`} style={{fontSize:'9px'}}>{item.screenType}</span>
                       </div>
                     </div>
@@ -184,37 +309,37 @@
               <div className="archive-popup-overlay" onClick={(e) => { if (e.target === e.currentTarget) setSelectedArchiveIndex(null); }}>
                 <div className="archive-popup" role="dialog" aria-modal="true" aria-labelledby="archive-popup-title">
                   <div className="archive-popup-controls">
-                    <button type="button" className="archive-popup-action" onClick={() => moveArchiveIndex(-1)} aria-label="이전 프로젝트">
+                    <button type="button" className="archive-popup-action" onClick={() => moveArchiveIndex(-1)} aria-label={t.ariaPrev}>
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </button>
-                    <button type="button" className="archive-popup-action" onClick={() => moveArchiveIndex(1)} aria-label="다음 프로젝트">
+                    <button type="button" className="archive-popup-action" onClick={() => moveArchiveIndex(1)} aria-label={t.ariaNext}>
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </button>
-                    <button type="button" className="archive-popup-action archive-popup-close" onClick={() => setSelectedArchiveIndex(null)} aria-label="팝업 닫기">
+                    <button type="button" className="archive-popup-action archive-popup-close" onClick={() => setSelectedArchiveIndex(null)} aria-label={t.ariaClose}>
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
                       </svg>
                     </button>
                   </div>
                   <div className="archive-popup-left">
-                    <img src={selectedArchive.back} alt={selectedArchive.title} />
+                    <img src={selectedArchive.back} alt={L(selectedArchive, 'title')} />
                   </div>
                   <div className="archive-popup-right">
                     <div className="archive-popup-content">
                       <div>
-                        <h3 id="archive-popup-title" className="archive-popup-title">{selectedArchive.title}</h3>
+                        <h3 id="archive-popup-title" className="archive-popup-title">{L(selectedArchive, 'title')}</h3>
                         <div className="archive-popup-meta">
-                          <div className="archive-popup-meta-item"><strong>고객사</strong><span>{selectedArchive.client}</span></div>
-                          <div className="archive-popup-meta-item"><strong>프로젝트명</strong><span>{selectedArchive.projectName}</span></div>
-                          <div className="archive-popup-meta-item"><strong>산업</strong><span>{selectedArchive.industry}</span></div>
-                          <div className="archive-popup-meta-item"><strong>화면 유형</strong><span>{selectedArchive.screenType}</span></div>
-                          {selectedArchive.layoutType && <div className="archive-popup-meta-item"><strong>레이아웃</strong><span>{selectedArchive.layoutType}</span></div>}
-                          {selectedArchive.suitableFor && <div className="archive-popup-meta-item"><strong>사용 목적</strong><span>{selectedArchive.suitableFor}</span></div>}
-                          {selectedArchive.description && <div className="archive-popup-meta-item"><strong>설명</strong><span>{selectedArchive.description}</span></div>}
+                          <div className="archive-popup-meta-item"><strong>{t.metaClient}</strong><span>{L(selectedArchive, 'client')}</span></div>
+                          <div className="archive-popup-meta-item"><strong>{t.metaProject}</strong><span>{L(selectedArchive, 'projectName')}</span></div>
+                          <div className="archive-popup-meta-item"><strong>{t.metaIndustry}</strong><span>{t.labels[selectedArchive.industry] || selectedArchive.industry}</span></div>
+                          <div className="archive-popup-meta-item"><strong>{t.metaScreenType}</strong><span>{selectedArchive.screenType}</span></div>
+                          {selectedArchive.layoutType && <div className="archive-popup-meta-item"><strong>{t.metaLayout}</strong><span>{L(selectedArchive, 'layoutType')}</span></div>}
+                          {selectedArchive.suitableFor && <div className="archive-popup-meta-item"><strong>{t.metaPurpose}</strong><span>{L(selectedArchive, 'suitableFor')}</span></div>}
+                          {selectedArchive.description && <div className="archive-popup-meta-item"><strong>{t.metaDescription}</strong><span>{L(selectedArchive, 'description')}</span></div>}
                         </div>
                       </div>
                     </div>
@@ -253,13 +378,13 @@
               </div>
                   <div className="flex items-center gap-6 text-sm text-white/50">
                     <a href="https://www.bimatrix.co.kr/privacy/" target="_blank" className="hover:text-white/80 transition">
-                      개인정보처리방침</a>
+                      {t.footerPrivacy}</a>
                     <span className="text-white/20">|</span>
                     <a href="https://www.bimatrix.co.kr/pr/newsletter/subscription/" target="_blank" className="hover:text-white/80 transition">
-                      뉴스레터 구독</a>
+                      {t.footerNewsletter}</a>
                     <span className="text-white/20">|</span>
-                    <a href="https://www.bimatrix.co.kr/support/contact/" target="_blank" className="hover:text-white/80 transition">
-                      문의하기</a>
+                    <a href="mailto:hhpark1425@bimatrix.co.kr" target="_blank" className="hover:text-white/80 transition">
+                      {t.footerContact}</a>
                   </div>
             </div>
             <div className="relative flex-shrink-0">
@@ -274,12 +399,12 @@
                   {familySiteOpen && (
                     <div className="family-site-dropdown absolute right-0 bottom-full mb-1 w-48 rounded-lg border border-white/15 overflow-hidden z-10">
                       {[
-                        {label: "비아이매트릭스 홈페이지", href: "https://www.bimatrix.co.kr/"},
-                        {label: "AUD플랫폼 아카데미", href: "https://audp.bimatrix.co.kr/"},
-                        {label: "AUD플랫폼 데모", href: "http://aud.bimatrix.co.kr/extention/sso/SimpleSSO4.jsp"},
-                        {label: "고객지원 사이트", href: "https://cs.bimatrix.co.kr/"},
+                        {label: t.familySites[0], href: "https://www.bimatrix.co.kr/"},
+                        {label: t.familySites[1], href: "https://audp.bimatrix.co.kr/"},
+                        {label: t.familySites[2], href: "http://aud.bimatrix.co.kr/extention/sso/SimpleSSO4.jsp"},
+                        {label: t.familySites[3], href: "https://cs.bimatrix.co.kr/"},
                       ].map((item) => (
-                        <a key={item.label} href={item.href} target="_blank"
+                        <a key={item.href} href={item.href} target="_blank"
                            className="block px-4 py-2.5 text-sm text-white/60 hover:bg-white/10 hover:text-white/90 transition">
                           {item.label}
                         </a>
@@ -292,8 +417,8 @@
         <div className="footer-bottom">
           <div className="mx-auto max-w-7xl px-8 py-6 flex items-end justify-between gap-8">
             <div className="flex flex-col gap-1.5 text-xs text-white/35 leading-relaxed">
-                  <p className="text-white/50 font-medium text-sm">(주)비아이매트릭스</p>
-                  <p>서울시 강남구 선릉로 433, 세방빌딩 신관 17층(역삼동) &nbsp;|&nbsp; 대표이사: 배영근</p>
+                  <p className="text-white/50 font-medium text-sm">{t.companyName}</p>
+                  <p>{t.addressLine} &nbsp;|&nbsp; {t.ceoLine}</p>
                   <p>Tel: 02-561-4475 &nbsp;|&nbsp; Fax: 02-561-4479</p>
                   <p className="mt-1">© BI MATRIX CO., LTD. ALL RIGHTS RESERVED.</p>
             </div>

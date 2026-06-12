@@ -10,6 +10,8 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
   <link rel="stylesheet" href="styles.css" />
   <script>try{var t=localStorage.getItem('axis-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
 </head>
@@ -304,97 +306,231 @@ const CHART_PURPOSES = ['전체', '비교', '추세', '구성비', '분포'];
 const CHART_GUIDES = [
   {
     id: 1, name: 'Bar Chart', purpose: '비교',
-    definition: '범주 간 값을 가로/세로 막대로 비교하는 가장 기본적인 차트',
+    definition: {
+      ko: '범주 간 값을 가로/세로 막대로 비교하는 가장 기본적인 차트',
+      en: 'The most fundamental chart, comparing values across categories with horizontal/vertical bars',
+      ja: 'カテゴリ間の値を横/縦の棒で比較する最も基本的なチャート',
+    },
     anatomy: [
-      { label: 'X축 (범주)', color: '#7D60FF' }, { label: 'Y축 (수치)', color: '#2B67FF' },
-      { label: '데이터 막대', color: '#63E4B9' }, { label: '범례', color: '#9CA3AF' }, { label: '툴팁', color: '#F59E0B' },
+      { label: { ko: 'X축 (범주)', en: 'X-Axis (Category)', ja: 'X軸（カテゴリ）' }, color: '#7D60FF' },
+      { label: { ko: 'Y축 (수치)', en: 'Y-Axis (Value)', ja: 'Y軸（数値）' }, color: '#2B67FF' },
+      { label: { ko: '데이터 막대', en: 'Data Bars', ja: 'データバー' }, color: '#63E4B9' },
+      { label: { ko: '범례', en: 'Legend', ja: '凡例' }, color: '#9CA3AF' },
+      { label: { ko: '툴팁', en: 'Tooltip', ja: 'ツールチップ' }, color: '#F59E0B' },
     ],
-    do: '소수의 범주(7개 이하) 간 값을 직접 비교할 때',
-    dont: '시간 흐름에 따른 연속 데이터 표현 (→ Line Chart 사용)',
+    do: {
+      ko: '소수의 범주(7개 이하) 간 값을 직접 비교할 때',
+      en: 'Direct comparison of values across a small number of categories (7 or fewer)',
+      ja: '少数のカテゴリ（7個以下）間の値を直接比較する場合',
+    },
+    dont: {
+      ko: '시간 흐름에 따른 연속 데이터 표현 (→ Line Chart 사용)',
+      en: 'Continuous data over time (→ use Line Chart)',
+      ja: '時間の流れに沿った連続データの表現（→ Line Chartを使用）',
+    },
   },
   {
     id: 2, name: 'Stacked Bar Chart', purpose: '비교',
-    definition: '각 막대를 구성 요소로 분할해 전체 합계와 내부 구성비를 동시에 표현',
+    definition: {
+      ko: '각 막대를 구성 요소로 분할해 전체 합계와 내부 구성비를 동시에 표현',
+      en: 'Splits each bar into segments to show the total and its internal composition at once',
+      ja: '各バーを構成要素に分割し、全体の合計と内部構成比を同時に表現',
+    },
     anatomy: [
-      { label: 'X축 (범주)', color: '#7D60FF' }, { label: 'Y축 (누적 합계)', color: '#2B67FF' },
-      { label: '세그먼트 (색상)', color: '#63E4B9' }, { label: '범례', color: '#9CA3AF' },
+      { label: { ko: 'X축 (범주)', en: 'X-Axis (Category)', ja: 'X軸（カテゴリ）' }, color: '#7D60FF' },
+      { label: { ko: 'Y축 (누적 합계)', en: 'Y-Axis (Cumulative Total)', ja: 'Y軸（累積合計）' }, color: '#2B67FF' },
+      { label: { ko: '세그먼트 (색상)', en: 'Segments (Color)', ja: 'セグメント（色）' }, color: '#63E4B9' },
+      { label: { ko: '범례', en: 'Legend', ja: '凡例' }, color: '#9CA3AF' },
     ],
-    do: '항목별 합계 비교 + 내부 구성을 함께 보여줄 때',
-    dont: '개별 세그먼트 값의 정밀 비교 (→ Grouped Bar 사용)',
+    do: {
+      ko: '항목별 합계 비교 + 내부 구성을 함께 보여줄 때',
+      en: 'Comparing totals per item while also showing internal composition',
+      ja: '項目別の合計比較と内部構成を同時に見せる場合',
+    },
+    dont: {
+      ko: '개별 세그먼트 값의 정밀 비교 (→ Grouped Bar 사용)',
+      en: 'Precise comparison of individual segment values (→ use Grouped Bar)',
+      ja: '個別セグメント値の精密な比較（→ Grouped Barを使用）',
+    },
   },
   {
     id: 3, name: 'Line Chart', purpose: '추세',
-    definition: '시간 축을 따라 연속 데이터의 변화 추세를 선으로 표현',
+    definition: {
+      ko: '시간 축을 따라 연속 데이터의 변화 추세를 선으로 표현',
+      en: 'Shows trends of continuous data along a time axis with lines',
+      ja: '時間軸に沿って連続データの変化トレンドを線で表現',
+    },
     anatomy: [
-      { label: 'X축 (시간)', color: '#7D60FF' }, { label: 'Y축 (수치)', color: '#2B67FF' },
-      { label: '데이터 포인트', color: '#63E4B9' }, { label: '연결선', color: '#9CA3AF' }, { label: '범례', color: '#F59E0B' },
+      { label: { ko: 'X축 (시간)', en: 'X-Axis (Time)', ja: 'X軸（時間）' }, color: '#7D60FF' },
+      { label: { ko: 'Y축 (수치)', en: 'Y-Axis (Value)', ja: 'Y軸（数値）' }, color: '#2B67FF' },
+      { label: { ko: '데이터 포인트', en: 'Data Points', ja: 'データポイント' }, color: '#63E4B9' },
+      { label: { ko: '연결선', en: 'Connecting Line', ja: '接続線' }, color: '#9CA3AF' },
+      { label: { ko: '범례', en: 'Legend', ja: '凡例' }, color: '#F59E0B' },
     ],
-    do: '시간에 따른 추세, 패턴, 이상값 탐지',
-    dont: '범주 간 단순 비교 (→ Bar Chart 사용)',
+    do: {
+      ko: '시간에 따른 추세, 패턴, 이상값 탐지',
+      en: 'Detecting trends, patterns, and outliers over time',
+      ja: '時間に伴うトレンド、パターン、異常値の検出',
+    },
+    dont: {
+      ko: '범주 간 단순 비교 (→ Bar Chart 사용)',
+      en: 'Simple comparison across categories (→ use Bar Chart)',
+      ja: 'カテゴリ間の単純比較（→ Bar Chartを使用）',
+    },
   },
   {
     id: 4, name: 'Area Chart', purpose: '추세',
-    definition: '선 아래 영역을 채워 누적량이나 볼륨 변화를 강조하는 차트',
+    definition: {
+      ko: '선 아래 영역을 채워 누적량이나 볼륨 변화를 강조하는 차트',
+      en: 'Fills the area under the line to emphasize cumulative amounts or volume changes',
+      ja: '線の下の領域を塗りつぶし、累積量やボリュームの変化を強調するチャート',
+    },
     anatomy: [
-      { label: 'X축 (시간)', color: '#7D60FF' }, { label: 'Y축 (수치)', color: '#2B67FF' },
-      { label: '채움 영역', color: '#63E4B9' }, { label: '경계선', color: '#9CA3AF' },
+      { label: { ko: 'X축 (시간)', en: 'X-Axis (Time)', ja: 'X軸（時間）' }, color: '#7D60FF' },
+      { label: { ko: 'Y축 (수치)', en: 'Y-Axis (Value)', ja: 'Y軸（数値）' }, color: '#2B67FF' },
+      { label: { ko: '채움 영역', en: 'Filled Area', ja: '塗りつぶし領域' }, color: '#63E4B9' },
+      { label: { ko: '경계선', en: 'Boundary Line', ja: '境界線' }, color: '#9CA3AF' },
     ],
-    do: '전체 볼륨의 증감, 누적 추세를 표현할 때',
-    dont: '여러 시리즈가 겹쳐 가독성이 떨어지는 경우 (→ Line Chart 사용)',
+    do: {
+      ko: '전체 볼륨의 증감, 누적 추세를 표현할 때',
+      en: 'Showing growth/decline of total volume and cumulative trends',
+      ja: '全体ボリュームの増減、累積トレンドを表現する場合',
+    },
+    dont: {
+      ko: '여러 시리즈가 겹쳐 가독성이 떨어지는 경우 (→ Line Chart 사용)',
+      en: 'When overlapping series hurt readability (→ use Line Chart)',
+      ja: '複数の系列が重なって可読性が落ちる場合（→ Line Chartを使用）',
+    },
   },
   {
     id: 5, name: 'Pie / Donut Chart', purpose: '구성비',
-    definition: '전체 대비 각 항목의 비율을 원형 슬라이스로 표현',
+    definition: {
+      ko: '전체 대비 각 항목의 비율을 원형 슬라이스로 표현',
+      en: "Shows each item's share of the whole as circular slices",
+      ja: '全体に対する各項目の比率を円形のスライスで表現',
+    },
     anatomy: [
-      { label: '슬라이스 (비율)', color: '#7D60FF' }, { label: '라벨/퍼센트', color: '#2B67FF' },
-      { label: '범례', color: '#63E4B9' }, { label: '중앙 KPI (Donut)', color: '#9CA3AF' },
+      { label: { ko: '슬라이스 (비율)', en: 'Slices (Proportion)', ja: 'スライス（比率）' }, color: '#7D60FF' },
+      { label: { ko: '라벨/퍼센트', en: 'Labels/Percent', ja: 'ラベル/パーセント' }, color: '#2B67FF' },
+      { label: { ko: '범례', en: 'Legend', ja: '凡例' }, color: '#63E4B9' },
+      { label: { ko: '중앙 KPI (Donut)', en: 'Center KPI (Donut)', ja: '中央KPI（Donut）' }, color: '#9CA3AF' },
     ],
-    do: '5개 이하 항목의 구성 비율을 직관적으로 표현',
-    dont: '항목이 많거나 비율 차이가 작을 때 (→ Bar Chart 사용)',
+    do: {
+      ko: '5개 이하 항목의 구성 비율을 직관적으로 표현',
+      en: 'Intuitive display of composition with 5 or fewer items',
+      ja: '5個以下の項目の構成比率を直感的に表現',
+    },
+    dont: {
+      ko: '항목이 많거나 비율 차이가 작을 때 (→ Bar Chart 사용)',
+      en: 'Many items or small differences in proportion (→ use Bar Chart)',
+      ja: '項目が多い、または比率差が小さい場合（→ Bar Chartを使用）',
+    },
   },
   {
     id: 6, name: 'Treemap', purpose: '구성비',
-    definition: '계층 구조 데이터를 면적 비례 사각형으로 표현하는 차트',
+    definition: {
+      ko: '계층 구조 데이터를 면적 비례 사각형으로 표현하는 차트',
+      en: 'Represents hierarchical data as rectangles sized proportionally to value',
+      ja: '階層構造データを面積比例の四角形で表現するチャート',
+    },
     anatomy: [
-      { label: '노드 사각형 (면적=값)', color: '#7D60FF' }, { label: '그룹 색상', color: '#2B67FF' },
-      { label: '라벨', color: '#63E4B9' }, { label: '계층 구분선', color: '#9CA3AF' },
+      { label: { ko: '노드 사각형 (면적=값)', en: 'Node Rectangles (Area = Value)', ja: 'ノード四角形（面積=値）' }, color: '#7D60FF' },
+      { label: { ko: '그룹 색상', en: 'Group Color', ja: 'グループ色' }, color: '#2B67FF' },
+      { label: { ko: '라벨', en: 'Labels', ja: 'ラベル' }, color: '#63E4B9' },
+      { label: { ko: '계층 구분선', en: 'Hierarchy Dividers', ja: '階層区切り線' }, color: '#9CA3AF' },
     ],
-    do: '다수 항목의 상대적 크기와 계층 구조를 동시에 표현',
-    dont: '정확한 수치 비교가 필요한 경우 (→ Bar Chart 사용)',
+    do: {
+      ko: '다수 항목의 상대적 크기와 계층 구조를 동시에 표현',
+      en: 'Showing relative size and hierarchy of many items at once',
+      ja: '多数項目の相対的な大きさと階層構造を同時に表現',
+    },
+    dont: {
+      ko: '정확한 수치 비교가 필요한 경우 (→ Bar Chart 사용)',
+      en: 'When precise numeric comparison is needed (→ use Bar Chart)',
+      ja: '正確な数値比較が必要な場合（→ Bar Chartを使用）',
+    },
   },
   {
     id: 7, name: 'Scatter Plot', purpose: '분포',
-    definition: '두 변수 간 상관관계와 데이터 분포를 점으로 표현',
+    definition: {
+      ko: '두 변수 간 상관관계와 데이터 분포를 점으로 표현',
+      en: 'Shows the correlation and distribution between two variables as points',
+      ja: '2変数間の相関関係とデータ分布を点で表現',
+    },
     anatomy: [
-      { label: 'X축 (변수 A)', color: '#7D60FF' }, { label: 'Y축 (변수 B)', color: '#2B67FF' },
-      { label: '데이터 포인트', color: '#63E4B9' }, { label: '회귀선 (옵션)', color: '#9CA3AF' }, { label: '색상 인코딩', color: '#F59E0B' },
+      { label: { ko: 'X축 (변수 A)', en: 'X-Axis (Variable A)', ja: 'X軸（変数A）' }, color: '#7D60FF' },
+      { label: { ko: 'Y축 (변수 B)', en: 'Y-Axis (Variable B)', ja: 'Y軸（変数B）' }, color: '#2B67FF' },
+      { label: { ko: '데이터 포인트', en: 'Data Points', ja: 'データポイント' }, color: '#63E4B9' },
+      { label: { ko: '회귀선 (옵션)', en: 'Regression Line (Optional)', ja: '回帰線（オプション）' }, color: '#9CA3AF' },
+      { label: { ko: '색상 인코딩', en: 'Color Encoding', ja: '色エンコーディング' }, color: '#F59E0B' },
     ],
-    do: '두 변수 간 상관관계, 클러스터, 이상값 탐지',
-    dont: '시계열 추세 표현 (→ Line Chart 사용)',
+    do: {
+      ko: '두 변수 간 상관관계, 클러스터, 이상값 탐지',
+      en: 'Correlation between two variables, clusters, outlier detection',
+      ja: '2変数間の相関、クラスター、異常値の検出',
+    },
+    dont: {
+      ko: '시계열 추세 표현 (→ Line Chart 사용)',
+      en: 'Time-series trends (→ use Line Chart)',
+      ja: '時系列トレンドの表現（→ Line Chartを使用）',
+    },
   },
   {
     id: 8, name: 'Histogram', purpose: '분포',
-    definition: '연속형 데이터를 구간(bin)으로 나눠 빈도 분포를 막대로 표현',
+    definition: {
+      ko: '연속형 데이터를 구간(bin)으로 나눠 빈도 분포를 막대로 표현',
+      en: 'Divides continuous data into bins and shows the frequency distribution with bars',
+      ja: '連続データを区間（bin）に分けて頻度分布を棒で表現',
+    },
     anatomy: [
-      { label: 'X축 (구간/Bin)', color: '#7D60FF' }, { label: 'Y축 (빈도/밀도)', color: '#2B67FF' },
-      { label: '막대 (연속형, 간격 없음)', color: '#63E4B9' },
+      { label: { ko: 'X축 (구간/Bin)', en: 'X-Axis (Bins)', ja: 'X軸（区間/Bin）' }, color: '#7D60FF' },
+      { label: { ko: 'Y축 (빈도/밀도)', en: 'Y-Axis (Frequency/Density)', ja: 'Y軸（頻度/密度）' }, color: '#2B67FF' },
+      { label: { ko: '막대 (연속형, 간격 없음)', en: 'Bars (Continuous, No Gaps)', ja: 'バー（連続型、間隔なし）' }, color: '#63E4B9' },
     ],
-    do: '데이터 분포 형태(정규, 편향 등) 파악',
-    dont: '범주형 데이터 비교 (→ Bar Chart 사용, 막대 사이 간격 있음)',
+    do: {
+      ko: '데이터 분포 형태(정규, 편향 등) 파악',
+      en: 'Understanding distribution shape (normal, skewed, etc.)',
+      ja: 'データ分布の形（正規、偏りなど）の把握',
+    },
+    dont: {
+      ko: '범주형 데이터 비교 (→ Bar Chart 사용, 막대 사이 간격 있음)',
+      en: 'Comparing categorical data (→ use Bar Chart, with gaps between bars)',
+      ja: 'カテゴリデータの比較（→ Bar Chartを使用、棒の間に間隔あり）',
+    },
   },
 ];
 
 const FONT_SPECS = [
-  { role: 'Display',  tag: 'display', size: '56px', weight: '700', lh: '1.1',  ls: '-0.03em', usage: '히어로, 랜딩 타이틀',   sample: 'AXIS Design' },
-  { role: 'H1',       tag: 'h1',      size: '40px', weight: '700', lh: '1.2',  ls: '-0.02em', usage: '페이지 메인 제목',       sample: '디자인 갤러리' },
-  { role: 'H2',       tag: 'h2',      size: '32px', weight: '600', lh: '1.25', ls: '-0.02em', usage: '섹션 제목',             sample: '레퍼런스 갤러리' },
-  { role: 'H3',       tag: 'h3',      size: '24px', weight: '600', lh: '1.3',  ls: '-0.01em', usage: '서브섹션 제목',         sample: '산업별 템플릿' },
-  { role: 'H4',       tag: 'h4',      size: '20px', weight: '600', lh: '1.4',  ls: '0',       usage: '카드 타이틀',           sample: '공공기관 대시보드' },
-  { role: 'Body L',   tag: 'p',       size: '18px', weight: '400', lh: '1.6',  ls: '0',       usage: '본문 대형',             sample: '실무에 바로 활용 가능한 디자인' },
-  { role: 'Body M',   tag: 'p',       size: '16px', weight: '400', lh: '1.6',  ls: '0',       usage: '본문 기본',             sample: '실무에 바로 활용 가능한 디자인' },
-  { role: 'Body S',   tag: 'p',       size: '14px', weight: '400', lh: '1.5',  ls: '0',       usage: '보조 텍스트',           sample: '실무에 바로 활용 가능한 디자인' },
-  { role: 'Caption',  tag: 'span',    size: '12px', weight: '400', lh: '1.4',  ls: '0.01em',  usage: '캡션, 날짜, 메타정보',   sample: '2025년 05월 07일' },
-  { role: 'Label',    tag: 'label',   size: '11px', weight: '600', lh: '1.4',  ls: '0.07em',  usage: '태그, 뱃지, 필터버튼',   sample: 'TEMPLATE CURATION' },
+  { role: 'Display',  tag: 'display', size: '56px', weight: '700', lh: '1.1',  ls: '-0.03em',
+    usage: { ko: '히어로, 랜딩 타이틀', en: 'Hero, landing titles', ja: 'ヒーロー、ランディングタイトル' },
+    sample: 'AXIS Design' },
+  { role: 'H1',       tag: 'h1',      size: '40px', weight: '700', lh: '1.2',  ls: '-0.02em',
+    usage: { ko: '페이지 메인 제목', en: 'Page main titles', ja: 'ページメインタイトル' },
+    sample: { ko: '디자인 갤러리', en: 'Design Gallery', ja: 'デザインギャラリー' } },
+  { role: 'H2',       tag: 'h2',      size: '32px', weight: '600', lh: '1.25', ls: '-0.02em',
+    usage: { ko: '섹션 제목', en: 'Section titles', ja: 'セクションタイトル' },
+    sample: { ko: '레퍼런스 갤러리', en: 'Reference Gallery', ja: 'リファレンスギャラリー' } },
+  { role: 'H3',       tag: 'h3',      size: '24px', weight: '600', lh: '1.3',  ls: '-0.01em',
+    usage: { ko: '서브섹션 제목', en: 'Subsection titles', ja: 'サブセクションタイトル' },
+    sample: { ko: '산업별 템플릿', en: 'Industry Templates', ja: '業種別テンプレート' } },
+  { role: 'H4',       tag: 'h4',      size: '20px', weight: '600', lh: '1.4',  ls: '0',
+    usage: { ko: '카드 타이틀', en: 'Card titles', ja: 'カードタイトル' },
+    sample: { ko: '공공기관 대시보드', en: 'Public Sector Dashboard', ja: '公共機関ダッシュボード' } },
+  { role: 'Body L',   tag: 'p',       size: '18px', weight: '400', lh: '1.6',  ls: '0',
+    usage: { ko: '본문 대형', en: 'Body large', ja: '本文（大）' },
+    sample: { ko: '실무에 바로 활용 가능한 디자인', en: 'Designs ready for real-world use', ja: '実務にすぐ活用できるデザイン' } },
+  { role: 'Body M',   tag: 'p',       size: '16px', weight: '400', lh: '1.6',  ls: '0',
+    usage: { ko: '본문 기본', en: 'Body default', ja: '本文（標準）' },
+    sample: { ko: '실무에 바로 활용 가능한 디자인', en: 'Designs ready for real-world use', ja: '実務にすぐ活用できるデザイン' } },
+  { role: 'Body S',   tag: 'p',       size: '14px', weight: '400', lh: '1.5',  ls: '0',
+    usage: { ko: '보조 텍스트', en: 'Secondary text', ja: '補助テキスト' },
+    sample: { ko: '실무에 바로 활용 가능한 디자인', en: 'Designs ready for real-world use', ja: '実務にすぐ活用できるデザイン' } },
+  { role: 'Caption',  tag: 'span',    size: '12px', weight: '400', lh: '1.4',  ls: '0.01em',
+    usage: { ko: '캡션, 날짜, 메타정보', en: 'Captions, dates, metadata', ja: 'キャプション、日付、メタ情報' },
+    sample: { ko: '2025년 05월 07일', en: 'May 7, 2025', ja: '2025年05月07日' } },
+  { role: 'Label',    tag: 'label',   size: '11px', weight: '600', lh: '1.4',  ls: '0.07em',
+    usage: { ko: '태그, 뱃지, 필터버튼', en: 'Tags, badges, filter buttons', ja: 'タグ、バッジ、フィルターボタン' },
+    sample: 'TEMPLATE CURATION' },
 ];
 
 const ICON_CATEGORIES = ['전체', 'Action', 'Alert', 'Navigation', 'Data', 'Interface'];
@@ -448,6 +584,118 @@ const ICONS = [
 ];
 
 /* ═══════════════════════════════════════════════════════════════════
+   I18N
+═══════════════════════════════════════════════════════════════════ */
+
+const I18N = {
+  ko: {
+    pageTitle: '디자인 리소스 | AXIS Design Gallery',
+    navGallery: '레퍼런스 갤러리', navResources: '디자인 리소스', navArchive: '고객사 사이트',
+    searchPlaceholder: '레퍼런스 검색',
+    themeToLight: '라이트 모드로 전환', themeToDark: '다크 모드로 전환',
+    langLabel: '언어 선택',
+    pageHeading: '디자인 리소스',
+    all: '전체',
+    clientCats: { '엔터프라이즈': '엔터프라이즈', '디자인': '디자인', 'AI': 'AI', '인프라': '인프라', '핀테크': '핀테크', '개발자도구': '개발자도구' },
+    purposes: { '비교': '비교', '추세': '추세', '구성비': '구성비', '분포': '분포' },
+    semDesc: { Primary: '주요 액션, CTA 버튼', Success: '성공, 완료 상태', Warning: '경고, 주의 상태', Error: '오류, 위험 상태', Info: '정보, 안내 메시지' },
+    themeCount: (n) => <>총 <strong>{n}개</strong>의 테마</>,
+    chartCount: (n) => <>총 <strong>{n}개</strong>의 차트 가이드</>,
+    iconCount: (n) => <>총 <strong>{n}개</strong>의 아이콘</>,
+    clickToCopy: '클릭하여 복사',
+    swatchHint: '스와치를 클릭하면 HEX 값이 클립보드에 복사됩니다.',
+    hexCopied: (hex) => `✓  ${hex}  복사됨`,
+    dataPurposeTitle: '데이터 표현 목적',
+    anatomyLabel: 'Anatomy — 구성 요소',
+    copyLinkBtn: '웹폰트 link 태그 복사',
+    downloadFontBtn: '로컬 폰트 패키지 다운로드',
+    linkCopiedToast: '✓  웹폰트 link 태그 복사됨',
+    fontPreparingToast: '⬇  폰트 패키지 준비 중...',
+    iconSearchPlaceholder: '아이콘 검색...',
+    noResults: '검색 결과가 없습니다.',
+    svgCopyBtn: 'SVG 복사', pngDownloadBtn: 'PNG 다운로드',
+    svgCopiedToast: '✓  SVG 코드 복사됨',
+    pngPreparingToast: '⬇  PNG 다운로드 준비 중...',
+    footerPrivacy: '개인정보처리방침', footerNewsletter: '뉴스레터 구독', footerContact: '문의하기',
+    familySites: ['비아이매트릭스 홈페이지', 'AUD플랫폼 아카데미', 'AUD플랫폼 데모', '고객지원 사이트'],
+    company: '(주)비아이매트릭스',
+    address: '서울시 강남구 선릉로 433, 세방빌딩 신관 17층(역삼동)',
+    ceo: '대표이사: 배영근',
+  },
+  en: {
+    pageTitle: 'Design Resources | AXIS Design Gallery',
+    navGallery: 'Reference Gallery', navResources: 'Design Resources', navArchive: 'Client Sites',
+    searchPlaceholder: 'Search references',
+    themeToLight: 'Switch to light mode', themeToDark: 'Switch to dark mode',
+    langLabel: 'Select language',
+    pageHeading: 'Design Resources',
+    all: 'All',
+    clientCats: { '엔터프라이즈': 'Enterprise', '디자인': 'Design', 'AI': 'AI', '인프라': 'Infrastructure', '핀테크': 'Fintech', '개발자도구': 'Dev Tools' },
+    purposes: { '비교': 'Comparison', '추세': 'Trend', '구성비': 'Composition', '분포': 'Distribution' },
+    semDesc: { Primary: 'Primary actions, CTA buttons', Success: 'Success, completed states', Warning: 'Warning, caution states', Error: 'Errors, danger states', Info: 'Information, guidance messages' },
+    themeCount: (n) => <><strong>{n}</strong> themes</>,
+    chartCount: (n) => <><strong>{n}</strong> chart guides</>,
+    iconCount: (n) => <><strong>{n}</strong> icons</>,
+    clickToCopy: 'Click to copy',
+    swatchHint: 'Click a swatch to copy its HEX value to the clipboard.',
+    hexCopied: (hex) => `✓  ${hex}  copied`,
+    dataPurposeTitle: 'Data Purpose',
+    anatomyLabel: 'Anatomy — Components',
+    copyLinkBtn: 'Copy webfont link tag',
+    downloadFontBtn: 'Download local font package',
+    linkCopiedToast: '✓  Webfont link tag copied',
+    fontPreparingToast: '⬇  Preparing font package...',
+    iconSearchPlaceholder: 'Search icons...',
+    noResults: 'No results found.',
+    svgCopyBtn: 'Copy SVG', pngDownloadBtn: 'Download PNG',
+    svgCopiedToast: '✓  SVG code copied',
+    pngPreparingToast: '⬇  Preparing PNG download...',
+    footerPrivacy: 'Privacy Policy', footerNewsletter: 'Newsletter', footerContact: 'Contact Us',
+    familySites: ['BI MATRIX Website', 'AUD Platform Academy', 'AUD Platform Demo', 'Customer Support'],
+    company: 'BI MATRIX CO., LTD.',
+    address: '17F, Sebang Building New Wing, 433 Seolleung-ro, Gangnam-gu, Seoul',
+    ceo: 'CEO: Younggeun Bae',
+  },
+  ja: {
+    pageTitle: 'デザインリソース | AXIS Design Gallery',
+    navGallery: 'リファレンスギャラリー', navResources: 'デザインリソース', navArchive: '顧客サイト',
+    searchPlaceholder: 'リファレンス検索',
+    themeToLight: 'ライトモードに切り替え', themeToDark: 'ダークモードに切り替え',
+    langLabel: '言語選択',
+    pageHeading: 'デザインリソース',
+    all: 'すべて',
+    clientCats: { '엔터프라이즈': 'エンタープライズ', '디자인': 'デザイン', 'AI': 'AI', '인프라': 'インフラ', '핀테크': 'フィンテック', '개발자도구': '開発者ツール' },
+    purposes: { '비교': '比較', '추세': 'トレンド', '구성비': '構成比', '분포': '分布' },
+    semDesc: { Primary: '主要アクション、CTAボタン', Success: '成功・完了状態', Warning: '警告・注意状態', Error: 'エラー・危険状態', Info: '情報・案内メッセージ' },
+    themeCount: (n) => <>全<strong>{n}件</strong>のテーマ</>,
+    chartCount: (n) => <>全<strong>{n}件</strong>のチャートガイド</>,
+    iconCount: (n) => <>全<strong>{n}件</strong>のアイコン</>,
+    clickToCopy: 'クリックしてコピー',
+    swatchHint: 'スウォッチをクリックするとHEX値がクリップボードにコピーされます。',
+    hexCopied: (hex) => `✓  ${hex}  コピーしました`,
+    dataPurposeTitle: 'データ表現の目的',
+    anatomyLabel: 'Anatomy — 構成要素',
+    copyLinkBtn: 'Webフォントlinkタグをコピー',
+    downloadFontBtn: 'ローカルフォントパッケージをダウンロード',
+    linkCopiedToast: '✓  Webフォントlinkタグをコピーしました',
+    fontPreparingToast: '⬇  フォントパッケージを準備中...',
+    iconSearchPlaceholder: 'アイコン検索...',
+    noResults: '検索結果がありません。',
+    svgCopyBtn: 'SVGコピー', pngDownloadBtn: 'PNGダウンロード',
+    svgCopiedToast: '✓  SVGコードをコピーしました',
+    pngPreparingToast: '⬇  PNGダウンロードを準備中...',
+    footerPrivacy: '個人情報処理方針', footerNewsletter: 'ニュースレター購読', footerContact: 'お問い合わせ',
+    familySites: ['BI MATRIXホームページ', 'AUDプラットフォームアカデミー', 'AUDプラットフォームデモ', 'カスタマーサポート'],
+    company: '(株)BI MATRIX',
+    address: 'ソウル市江南区宣陵路433、世邦ビル新館17階(駅三洞)',
+    ceo: '代表取締役: ペ・ヨングン',
+  },
+};
+
+/* Pick a localized value: {ko,en,ja} object → string for current lang, otherwise passthrough */
+const L = (v, lang) => (v && typeof v === 'object' && !Array.isArray(v)) ? (v[lang] !== undefined ? v[lang] : v.ko) : v;
+
+/* ═══════════════════════════════════════════════════════════════════
    COMPONENTS
 ═══════════════════════════════════════════════════════════════════ */
 
@@ -461,22 +709,23 @@ function IconSvg({ paths, size = 20 }) {
 }
 
 /* ── Color Panel ─────────────────────────────────────────── */
-function ColorPanel({ showToast }) {
+function ColorPanel({ showToast, lang }) {
+  const t = I18N[lang];
   const [themeFilter, setThemeFilter] = React.useState('all');
   const [clientFilter, setClientFilter] = React.useState('전체');
   const [selectedId, setSelectedId] = React.useState(null);
 
-  const filtered = COLOR_THEMES.filter(t => {
-    if (themeFilter !== 'all' && t.theme !== themeFilter) return false;
-    if (clientFilter !== '전체' && t.clientCat !== clientFilter) return false;
+  const filtered = COLOR_THEMES.filter(th => {
+    if (themeFilter !== 'all' && th.theme !== themeFilter) return false;
+    if (clientFilter !== '전체' && th.clientCat !== clientFilter) return false;
     return true;
   });
 
-  const selectedTheme = selectedId ? COLOR_THEMES.find(t => t.id === selectedId) : null;
+  const selectedTheme = selectedId ? COLOR_THEMES.find(th => th.id === selectedId) : null;
 
   const copy = (hex) => {
     navigator.clipboard.writeText(hex).catch(() => {});
-    showToast(`✓  ${hex}  복사됨`);
+    showToast(t.hexCopied(hex));
   };
 
   const handleCardClick = (id) => {
@@ -497,7 +746,7 @@ function ColorPanel({ showToast }) {
             <button key={val}
               className={`filter-btn ${themeFilter === val ? 'active' : ''}`}
               onClick={() => handleFilterChange(setThemeFilter, val)}>
-              {label}
+              {val === 'all' ? t.all : label}
             </button>
           ))}
         </nav>
@@ -507,7 +756,7 @@ function ColorPanel({ showToast }) {
             <button key={c}
               className={`filter-btn ${clientFilter === c ? 'active' : ''}`}
               onClick={() => handleFilterChange(setClientFilter, c)}>
-              {c}
+              {c === '전체' ? t.all : (t.clientCats[c] || c)}
             </button>
           ))}
         </nav>
@@ -521,26 +770,26 @@ function ColorPanel({ showToast }) {
       </aside>
 
       <main className="gallery-main">
-        <p className="result-count">총 <strong>{filtered.length}개</strong>의 테마</p>
+        <p className="result-count">{t.themeCount(filtered.length)}</p>
 
         <div className="theme-card-grid">
-          {filtered.map(t => (
-            <div key={t.id}
-              className={`theme-card ${selectedId === t.id ? 'selected' : ''}`}
-              onClick={() => handleCardClick(t.id)}>
+          {filtered.map(th => (
+            <div key={th.id}
+              className={`theme-card ${selectedId === th.id ? 'selected' : ''}`}
+              onClick={() => handleCardClick(th.id)}>
               <div className="theme-card-strip">
-                {t.brand.map(c => (
+                {th.brand.map(c => (
                   <div key={c.name} className="theme-card-strip-seg" style={{ backgroundColor: c.hex }} />
                 ))}
               </div>
               <div className="theme-card-body">
                 <div className="theme-card-badges">
-                  <span className={`theme-badge-pill ${t.theme}`}>
-                    {t.theme === 'cool' ? 'Cool' : 'Warm'}
+                  <span className={`theme-badge-pill ${th.theme}`}>
+                    {th.theme === 'cool' ? 'Cool' : 'Warm'}
                   </span>
-                  <span className="client-cat-pill">{t.clientCat}</span>
+                  <span className="client-cat-pill">{t.clientCats[th.clientCat] || th.clientCat}</span>
                 </div>
-                <div className="theme-card-name">{t.name}</div>
+                <div className="theme-card-name">{th.name}</div>
               </div>
             </div>
           ))}
@@ -558,7 +807,7 @@ function ColorPanel({ showToast }) {
             <p className="color-section-label">Brand Core</p>
             <div className="swatch-grid">
               {selectedTheme.brand.map(c => (
-                <div key={c.name} className="swatch-card" onClick={() => copy(c.hex)} title="클릭하여 복사">
+                <div key={c.name} className="swatch-card" onClick={() => copy(c.hex)} title={t.clickToCopy}>
                   <div className="swatch-color" style={{ backgroundColor: c.hex }} />
                   <div className="swatch-info">
                     <div className="swatch-name">{c.name}</div>
@@ -572,12 +821,12 @@ function ColorPanel({ showToast }) {
             <p className="color-section-label">Semantic Colors</p>
             <div className="swatch-grid">
               {selectedTheme.semantic.map(c => (
-                <div key={c.name} className="swatch-card" onClick={() => copy(c.hex)} title="클릭하여 복사">
+                <div key={c.name} className="swatch-card" onClick={() => copy(c.hex)} title={t.clickToCopy}>
                   <div className="swatch-color" style={{ backgroundColor: c.hex }} />
                   <div className="swatch-info">
                     <div className="swatch-name">{c.name}</div>
                     <div className="swatch-hex">{c.hex}</div>
-                    <div className="swatch-role">{c.desc}</div>
+                    <div className="swatch-role">{t.semDesc[c.name] || c.desc}</div>
                   </div>
                 </div>
               ))}
@@ -592,7 +841,7 @@ function ColorPanel({ showToast }) {
                 </div>
               ))}
             </div>
-            <p className="text-xs mt-2" style={{color:'rgba(255,255,255,0.25)'}}>스와치를 클릭하면 HEX 값이 클립보드에 복사됩니다.</p>
+            <p className="text-xs mt-2" style={{color:'rgba(255,255,255,0.25)'}}>{t.swatchHint}</p>
           </div>
         )}
       </main>
@@ -741,7 +990,8 @@ function ChartPreview({ chartId }) {
 }
 
 /* ── Chart Panel ─────────────────────────────────────────── */
-function ChartPanel() {
+function ChartPanel({ lang }) {
+  const t = I18N[lang];
   const [purpose, setPurpose] = React.useState('전체');
   const filtered = CHART_GUIDES.filter(c => purpose === '전체' || c.purpose === purpose);
 
@@ -749,28 +999,28 @@ function ChartPanel() {
     <div className="gallery-layout">
       <aside className="lnb">
         <nav className="lnb-section">
-          <p className="lnb-section-title">데이터 표현 목적</p>
+          <p className="lnb-section-title">{t.dataPurposeTitle}</p>
           {CHART_PURPOSES.map(p => (
             <button key={p}
               className={`filter-btn ${purpose === p ? 'active' : ''}`}
               onClick={() => setPurpose(p)}>
-              {p}
+              {p === '전체' ? t.all : (t.purposes[p] || p)}
             </button>
           ))}
         </nav>
       </aside>
 
       <main className="gallery-main">
-        <p className="result-count">총 <strong>{filtered.length}개</strong>의 차트 가이드</p>
+        <p className="result-count">{t.chartCount(filtered.length)}</p>
         {filtered.map(chart => (
           <article key={chart.id} className="chart-card">
             <div className="chart-card-header">
               <div>
                 <div style={{display:'flex', alignItems:'center', gap:'10px', marginBottom:'6px'}}>
-                  <span className="chart-purpose-badge">{chart.purpose}</span>
+                  <span className="chart-purpose-badge">{t.purposes[chart.purpose] || chart.purpose}</span>
                   <h3 className="chart-card-title">{chart.name}</h3>
                 </div>
-                <p className="chart-card-definition">{chart.definition}</p>
+                <p className="chart-card-definition">{L(chart.definition, lang)}</p>
               </div>
             </div>
             <div className="chart-card-content">
@@ -779,12 +1029,12 @@ function ChartPanel() {
               </div>
               <div className="chart-card-body">
                 <div>
-                  <p className="chart-inner-label">Anatomy — 구성 요소</p>
+                  <p className="chart-inner-label">{t.anatomyLabel}</p>
                   <div className="anatomy-list">
                     {chart.anatomy.map((a, i) => (
                       <div key={i} className="anatomy-item">
                         <span className="anatomy-dot" style={{ backgroundColor: a.color }} />
-                        {a.label}
+                        {L(a.label, lang)}
                       </div>
                     ))}
                   </div>
@@ -794,11 +1044,11 @@ function ChartPanel() {
                   <div className="do-dont-grid">
                     <div className="do-box">
                       <div className="do-dont-label">✓ Do</div>
-                      <p>{chart.do}</p>
+                      <p>{L(chart.do, lang)}</p>
                     </div>
                     <div className="dont-box">
                       <div className="do-dont-label">✕ Don't</div>
-                      <p>{chart.dont}</p>
+                      <p>{L(chart.dont, lang)}</p>
                     </div>
                   </div>
                 </div>
@@ -812,16 +1062,17 @@ function ChartPanel() {
 }
 
 /* ── Font Panel ──────────────────────────────────────────── */
-function FontPanel({ showToast }) {
+function FontPanel({ showToast, lang }) {
+  const t = I18N[lang];
   const linkTag = `<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />`;
 
   const copyLink = () => {
     navigator.clipboard.writeText(linkTag).catch(() => {});
-    showToast('✓  웹폰트 link 태그 복사됨');
+    showToast(t.linkCopiedToast);
   };
 
   const downloadFont = () => {
-    showToast('⬇  폰트 패키지 준비 중...');
+    showToast(t.fontPreparingToast);
   };
 
   return (
@@ -829,11 +1080,11 @@ function FontPanel({ showToast }) {
       <div className="font-action-bar">
         <button className="resource-btn" onClick={copyLink}>
           <IconSvg paths={['M20 9h-9a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2z','M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1']} size={14} />
-          웹폰트 link 태그 복사
+          {t.copyLinkBtn}
         </button>
         <button className="resource-btn" onClick={downloadFont}>
           <IconSvg paths={['M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4','M7 10l5 5 5-5','M12 15V3']} size={14} />
-          로컬 폰트 패키지 다운로드
+          {t.downloadFontBtn}
         </button>
       </div>
 
@@ -866,14 +1117,14 @@ function FontPanel({ showToast }) {
                   whiteSpace: 'nowrap',
                   textOverflow: 'ellipsis',
                 }}>
-                  {spec.sample}
+                  {L(spec.sample, lang)}
                 </span>
               </td>
               <td><span className="code-val">{spec.size}</span></td>
               <td><span className="code-val">{spec.weight}</span></td>
               <td><span className="code-val">{spec.lh}</span></td>
               <td><span className="code-val">{spec.ls || '0'}</span></td>
-              <td style={{color: 'rgba(255,255,255,0.4)', fontSize: '13px'}}>{spec.usage}</td>
+              <td style={{color: 'rgba(255,255,255,0.4)', fontSize: '13px'}}>{L(spec.usage, lang)}</td>
             </tr>
           ))}
         </tbody>
@@ -883,7 +1134,7 @@ function FontPanel({ showToast }) {
 }
 
 /* ── Icon Panel ──────────────────────────────────────────── */
-function IconModal({ icon, onClose, showToast }) {
+function IconModal({ icon, onClose, showToast, t }) {
   const svgCode = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none"\n  xmlns="http://www.w3.org/2000/svg"\n  stroke="currentColor" stroke-width="1.5"\n  stroke-linecap="round" stroke-linejoin="round">\n${icon.paths.map(d => `  <path d="${d}"/>`).join('\n')}\n</svg>`;
 
   return (
@@ -914,14 +1165,14 @@ function IconModal({ icon, onClose, showToast }) {
 
         <div className="modal-actions">
           <button className="resource-btn" style={{flex:1, justifyContent:'center'}}
-            onClick={() => { navigator.clipboard.writeText(svgCode).catch(()=>{}); showToast('✓  SVG 코드 복사됨'); }}>
+            onClick={() => { navigator.clipboard.writeText(svgCode).catch(()=>{}); showToast(t.svgCopiedToast); }}>
             <IconSvg paths={['M20 9h-9a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2z','M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1']} size={14} />
-            SVG 복사
+            {t.svgCopyBtn}
           </button>
           <button className="resource-btn" style={{flex:1, justifyContent:'center'}}
-            onClick={() => showToast('⬇  PNG 다운로드 준비 중...')}>
+            onClick={() => showToast(t.pngPreparingToast)}>
             <IconSvg paths={['M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4','M7 10l5 5 5-5','M12 15V3']} size={14} />
-            PNG 다운로드
+            {t.pngDownloadBtn}
           </button>
         </div>
       </div>
@@ -929,7 +1180,8 @@ function IconModal({ icon, onClose, showToast }) {
   );
 }
 
-function IconPanel({ showToast }) {
+function IconPanel({ showToast, lang }) {
+  const t = I18N[lang];
   const [query, setQuery]         = React.useState('');
   const [category, setCategory]   = React.useState('전체');
   const [iconSize, setIconSize]   = React.useState(24);
@@ -951,7 +1203,7 @@ function IconPanel({ showToast }) {
             <button key={c}
               className={`filter-btn ${category === c ? 'active' : ''}`}
               onClick={() => setCategory(c)}>
-              {c}
+              {c === '전체' ? t.all : c}
             </button>
           ))}
         </nav>
@@ -962,7 +1214,7 @@ function IconPanel({ showToast }) {
           <div className="icon-search-wrap">
             <IconSvg paths={['M11 17a6 6 0 1 0 0-12 6 6 0 0 0 0 12z','M21 21l-4.35-4.35']} size={15} />
             <input
-              placeholder="아이콘 검색..."
+              placeholder={t.iconSearchPlaceholder}
               value={query}
               onChange={e => setQuery(e.target.value)}
             />
@@ -987,11 +1239,11 @@ function IconPanel({ showToast }) {
           </div>
         </div>
 
-        <p className="result-count">총 <strong>{filtered.length}개</strong>의 아이콘</p>
+        <p className="result-count">{t.iconCount(filtered.length)}</p>
 
         {filtered.length === 0 ? (
           <div style={{textAlign:'center', padding:'64px 0', color:'rgba(255,255,255,0.25)', fontSize:'14px'}}>
-            검색 결과가 없습니다.
+            {t.noResults}
           </div>
         ) : (
           <div className="icon-grid-wrap">
@@ -1007,7 +1259,7 @@ function IconPanel({ showToast }) {
         )}
 
         {selectedIcon && (
-          <IconModal icon={selectedIcon} onClose={() => setSelectedIcon(null)} showToast={showToast} />
+          <IconModal icon={selectedIcon} onClose={() => setSelectedIcon(null)} showToast={showToast} t={t} />
         )}
       </main>
     </div>
@@ -1030,6 +1282,12 @@ function ResourcesPage() {
   const [theme, setTheme] = React.useState(() => { try{return localStorage.getItem('axis-theme')||'dark';}catch(e){return 'dark';} });
   React.useEffect(() => { document.documentElement.setAttribute('data-theme', theme); }, [theme]);
   const toggleTheme = () => { const n=theme==='dark'?'light':'dark'; setTheme(n); try{localStorage.setItem('axis-theme',n);}catch(e){} };
+  const [lang, setLang] = React.useState(() => { try{return localStorage.getItem('axis-lang')||'ko';}catch(e){return 'ko';} });
+  const [langOpen, setLangOpen] = React.useState(false);
+  React.useEffect(() => { document.documentElement.lang = lang; }, [lang]);
+  const changeLang = (l) => { setLang(l); setLangOpen(false); try{localStorage.setItem('axis-lang', l);}catch(e){} };
+  const t = I18N[lang];
+  React.useEffect(() => { document.title = t.pageTitle; }, [lang]);
   const ic  = theme==='dark' ? 'rgba(255,255,255,0.75)' : 'rgba(9,30,66,0.55)';
   const ics = theme==='dark' ? 'rgba(255,255,255,0.4)'  : 'rgba(9,30,66,0.3)';
   const icm = theme==='dark' ? 'rgba(255,255,255,0.6)'  : 'rgba(9,30,66,0.45)';
@@ -1053,9 +1311,9 @@ function ResourcesPage() {
             </a>
           </div>
           <nav className="hidden gap-10 font-medium text-white/80 md:flex h-full items-stretch">
-            <a href="gallery.html"    className="gnb-link transition hover:text-white">레퍼런스 갤러리</a>
-            <a href="resources.html"  className="gnb-link active transition hover:text-white">디자인 리소스</a>
-            <a href="archive.html" className="gnb-link transition hover:text-white">고객사 사이트</a>
+            <a href="gallery.html"    className="gnb-link transition hover:text-white">{t.navGallery}</a>
+            <a href="resources.html"  className="gnb-link active transition hover:text-white">{t.navResources}</a>
+            <a href="archive.html" className="gnb-link transition hover:text-white">{t.navArchive}</a>
           </nav>
           <div className="flex items-center gap-2 justify-self-end">
             <div className="flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 w-52 focus-within:border-white/30 transition">
@@ -1063,26 +1321,40 @@ function ResourcesPage() {
                 <circle cx="9" cy="9" r="6.5" stroke={ics} strokeWidth="1.8"/>
                 <path d="M14 14L18 18" stroke={ics} strokeWidth="1.8" strokeLinecap="round"/>
               </svg>
-              <input placeholder="레퍼런스 검색" className="bg-transparent text-sm outline-none placeholder:text-white/35 text-white w-full" onKeyDown={(e) => { const q = e.currentTarget.value.trim(); if (e.key === 'Enter' && q) window.location.href = 'gallery.html?q=' + encodeURIComponent(q); }} />
+              <input placeholder={t.searchPlaceholder} className="bg-transparent text-sm outline-none placeholder:text-white/35 text-white w-full" onKeyDown={(e) => { const q = e.currentTarget.value.trim(); if (e.key === 'Enter' && q) window.location.href = 'gallery.html?q=' + encodeURIComponent(q); }} />
             </div>
-            <button onClick={toggleTheme} className="w-9 h-9 flex items-center justify-center rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition" title={theme==='dark'?'라이트 모드로 전환':'다크 모드로 전환'} style={{display:'none'}}>
+            <button onClick={toggleTheme} className="w-9 h-9 flex items-center justify-center rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition" title={theme==='dark'?t.themeToLight:t.themeToDark} style={{display:'none'}}>
               {theme==='dark'
                 ? <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke={ic} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 : <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke={ic} strokeWidth="1.8"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke={ic} strokeWidth="1.8" strokeLinecap="round"/></svg>
               }
             </button>
-            <button className="flex items-center gap-1.5 h-9 px-3 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition text-sm text-white/75 font-medium">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="12" r="9" stroke={icm} strokeWidth="1.8"/>
-                <path d="M12 3C12 3 9 7 9 12C9 17 12 21 12 21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
-                <path d="M12 3C12 3 15 7 15 12C15 17 12 21 12 21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
-                <path d="M3 12H21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
-              </svg>
-              KR
-              <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
-                <path d="M3 4.5L6 7.5L9 4.5" stroke={icm} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </button>
+            <div className="relative">
+              <button onClick={() => setLangOpen(!langOpen)} aria-label={t.langLabel}
+                className="flex items-center gap-1.5 h-9 px-3 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition text-sm text-white/75 font-medium">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="12" r="9" stroke={icm} strokeWidth="1.8"/>
+                  <path d="M12 3C12 3 9 7 9 12C9 17 12 21 12 21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
+                  <path d="M12 3C12 3 15 7 15 12C15 17 12 21 12 21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
+                  <path d="M3 12H21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
+                </svg>
+                {lang==='ko'?'KR':lang==='en'?'EN':'JA'}
+                <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
+                  <path d="M3 4.5L6 7.5L9 4.5" stroke={icm} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
+              {langOpen && (
+                <div className="family-site-dropdown absolute right-0 top-full mt-1 w-36 rounded-lg border border-white/15 overflow-hidden z-50">
+                  {[['ko','한국어'],['en','English'],['ja','日本語']].map(([code, label]) => (
+                    <button key={code}
+                      className="block w-full text-left px-4 py-2.5 text-sm text-white/60 hover:bg-white/10 hover:text-white/90 transition"
+                      onClick={() => changeLang(code)}>
+                      {label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </header>
@@ -1091,7 +1363,7 @@ function ResourcesPage() {
       <div className="page-header">
         <div className="mx-auto max-w-7xl px-8">
           <p className="page-header-label">Design Resources</p>
-          <h1 className="page-header-title">디자인 리소스</h1>
+          <h1 className="page-header-title">{t.pageHeading}</h1>
         </div>
       </div>
 
@@ -1112,10 +1384,10 @@ function ResourcesPage() {
 
       {/* Tab Content */}
       <div className="mx-auto max-w-7xl px-8 py-10">
-        {activeTab === 'color' && <ColorPanel showToast={showToast} />}
-        {activeTab === 'chart' && <ChartPanel />}
-        {activeTab === 'font'  && <FontPanel  showToast={showToast} />}
-        {activeTab === 'icon'  && <IconPanel  showToast={showToast} />}
+        {activeTab === 'color' && <ColorPanel showToast={showToast} lang={lang} />}
+        {activeTab === 'chart' && <ChartPanel lang={lang} />}
+        {activeTab === 'font'  && <FontPanel  showToast={showToast} lang={lang} />}
+        {activeTab === 'icon'  && <IconPanel  showToast={showToast} lang={lang} />}
       </div>
 
       {/* Footer */}
@@ -1148,13 +1420,13 @@ function ResourcesPage() {
               </div>
                   <div className="flex items-center gap-6 text-sm text-white/50">
                     <a href="https://www.bimatrix.co.kr/privacy/" target="_blank" className="hover:text-white/80 transition">
-                      개인정보처리방침</a>
+                      {t.footerPrivacy}</a>
                     <span className="text-white/20">|</span>
                     <a href="https://www.bimatrix.co.kr/pr/newsletter/subscription/" target="_blank" className="hover:text-white/80 transition">
-                      뉴스레터 구독</a>
+                      {t.footerNewsletter}</a>
                     <span className="text-white/20">|</span>
-                    <a href="https://www.bimatrix.co.kr/support/contact/" target="_blank" className="hover:text-white/80 transition">
-                      문의하기</a>
+                    <a href="mailto:hhpark1425@bimatrix.co.kr" target="_blank" className="hover:text-white/80 transition">
+                      {t.footerContact}</a>
                   </div>
             </div>
             <div className="relative flex-shrink-0">
@@ -1169,12 +1441,12 @@ function ResourcesPage() {
                   {familySiteOpen && (
                     <div className="family-site-dropdown absolute right-0 bottom-full mb-1 w-48 rounded-lg border border-white/15 overflow-hidden z-10">
                       {[
-                        {label: "비아이매트릭스 홈페이지", href: "https://www.bimatrix.co.kr/"},
-                        {label: "AUD플랫폼 아카데미", href: "https://audp.bimatrix.co.kr/"},
-                        {label: "AUD플랫폼 데모", href: "http://aud.bimatrix.co.kr/extention/sso/SimpleSSO4.jsp"},
-                        {label: "고객지원 사이트", href: "https://cs.bimatrix.co.kr/"},
+                        {label: t.familySites[0], href: "https://www.bimatrix.co.kr/"},
+                        {label: t.familySites[1], href: "https://audp.bimatrix.co.kr/"},
+                        {label: t.familySites[2], href: "http://aud.bimatrix.co.kr/extention/sso/SimpleSSO4.jsp"},
+                        {label: t.familySites[3], href: "https://cs.bimatrix.co.kr/"},
                       ].map((item) => (
-                        <a key={item.label} href={item.href} target="_blank"
+                        <a key={item.href} href={item.href} target="_blank"
                            className="block px-4 py-2.5 text-sm text-white/60 hover:bg-white/10 hover:text-white/90 transition">
                           {item.label}
                         </a>
@@ -1187,8 +1459,8 @@ function ResourcesPage() {
         <div className="footer-bottom">
           <div className="mx-auto max-w-7xl px-8 py-6 flex items-end justify-between gap-8">
             <div className="flex flex-col gap-1.5 text-xs text-white/35 leading-relaxed">
-                  <p className="text-white/50 font-medium text-sm">(주)비아이매트릭스</p>
-                  <p>서울시 강남구 선릉로 433, 세방빌딩 신관 17층(역삼동) &nbsp;|&nbsp; 대표이사: 배영근</p>
+                  <p className="text-white/50 font-medium text-sm">{t.company}</p>
+                  <p>{t.address} &nbsp;|&nbsp; {t.ceo}</p>
                   <p>Tel: 02-561-4475 &nbsp;|&nbsp; Fax: 02-561-4479</p>
                   <p className="mt-1">© BI MATRIX CO., LTD. ALL RIGHTS RESERVED.</p>
             </div>

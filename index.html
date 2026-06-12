@@ -10,6 +10,8 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
   <link rel="stylesheet" href="styles.css" />
   <script>try{var t=localStorage.getItem('axis-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
 </head>
@@ -31,11 +33,108 @@
       'BI/OLAP':   'badge-scr-bi',
     };
 
+    const I18N = {
+      ko: {
+        pageTitle: 'AXIS Design Gallery',
+        navGallery: '레퍼런스 갤러리', navResources: '디자인 리소스', navClients: '고객사 사이트',
+        searchPlaceholder: '레퍼런스 검색',
+        themeToLight: '라이트 모드로 전환', themeToDark: '다크 모드로 전환',
+        heroSubtitle: '레퍼런스가 필요하신가요?', heroTitle: '더 높은 품질을 위한',
+        galleryHeading: '레퍼런스 갤러리',
+        viewAll: '전체 보기 →', viewDetail: '자세히 보기 →',
+        resourcesHeading: '디자인 리소스', resourcesDesc: '색상 · 차트 · 폰트 · 아이콘 실무 가이드',
+        archiveHeading: '프로젝트 자료 아카이브',
+        totalThemes: '총 12개 테마 ·', totalCharts: '총 8개 차트 가이드 ·',
+        fontScale: 'Pretendard 10단계 타입 스케일 ·', totalIcons: '총 40개 아이콘 ·',
+        fontH1: '디자인 갤러리', fontH2: '레퍼런스 갤러리', fontH3: '산업별 템플릿',
+        fontBody: '실무에 바로 활용 가능한 디자인 시스템', fontCaption: '2026년 05월 07일 — 디자인 가이드라인',
+        metaClient: '고객사', metaProject: '프로젝트명',
+        metaIndustry: '산업', metaScreen: '화면 유형', metaLayout: '레이아웃', metaPurpose: '사용 목적',
+        anatomyLabel: 'Anatomy — 구성 요소',
+        ariaPrevProject: '이전 프로젝트', ariaNextProject: '다음 프로젝트',
+        ariaPrevGallery: '이전 갤러리', ariaNextGallery: '다음 갤러리',
+        ariaPrevChart: '이전 차트', ariaNextChart: '다음 차트', ariaClose: '팝업 닫기',
+        industryLabels: { '공공·금융':'공공·금융', '제조·유통':'제조·유통', '의료·제약':'의료·제약', '서비스·기타':'서비스·기타', '에너지·인프라':'에너지·인프라', '관리·지원':'관리·지원' },
+        purposeLabels: { '비교':'비교', '추세':'추세', '구성비':'구성비', '분포':'분포' },
+        catLabels: { '디자인':'디자인', '엔터프라이즈':'엔터프라이즈', '핀테크':'핀테크', '개발자도구':'개발자도구', '인프라':'인프라' },
+        brandNames: { '산림조합중앙회':'산림조합중앙회', '한화건설':'한화건설', '카카오뱅크':'카카오뱅크' },
+        footerPrivacy: '개인정보처리방침', footerNewsletter: '뉴스레터 구독', footerContact: '문의하기',
+        familyHome: '비아이매트릭스 홈페이지', familyAcademy: 'AUD플랫폼 아카데미', familyDemo: 'AUD플랫폼 데모', familySupport: '고객지원 사이트',
+        footerCompany: '(주)비아이매트릭스',
+        footerAddress: '서울시 강남구 선릉로 433, 세방빌딩 신관 17층(역삼동)', footerCeo: '대표이사: 배영근',
+      },
+      en: {
+        pageTitle: 'AXIS Design Gallery',
+        navGallery: 'Reference Gallery', navResources: 'Design Resources', navClients: 'Client Sites',
+        searchPlaceholder: 'Search references',
+        themeToLight: 'Switch to light mode', themeToDark: 'Switch to dark mode',
+        heroSubtitle: 'Need a reference?', heroTitle: 'For Higher Quality',
+        galleryHeading: 'Reference Gallery',
+        viewAll: 'View All →', viewDetail: 'View Details →',
+        resourcesHeading: 'Design Resources', resourcesDesc: 'Practical guides for color, charts, fonts, and icons',
+        archiveHeading: 'Project Archive',
+        totalThemes: '12 themes total ·', totalCharts: '8 chart guides total ·',
+        fontScale: 'Pretendard 10-step type scale ·', totalIcons: '40 icons total ·',
+        fontH1: 'Design Gallery', fontH2: 'Reference Gallery', fontH3: 'Templates by Industry',
+        fontBody: 'A design system ready for real-world use', fontCaption: 'May 7, 2026 — Design Guidelines',
+        metaClient: 'Client', metaProject: 'Project',
+        metaIndustry: 'Industry', metaScreen: 'Screen Type', metaLayout: 'Layout', metaPurpose: 'Use Case',
+        anatomyLabel: 'Anatomy — Components',
+        ariaPrevProject: 'Previous project', ariaNextProject: 'Next project',
+        ariaPrevGallery: 'Previous item', ariaNextGallery: 'Next item',
+        ariaPrevChart: 'Previous chart', ariaNextChart: 'Next chart', ariaClose: 'Close popup',
+        industryLabels: { '공공·금융':'Public & Finance', '제조·유통':'Manufacturing & Retail', '의료·제약':'Healthcare & Pharma', '서비스·기타':'Services & Others', '에너지·인프라':'Energy & Infrastructure', '관리·지원':'Management & Support' },
+        purposeLabels: { '비교':'Comparison', '추세':'Trend', '구성비':'Composition', '분포':'Distribution' },
+        catLabels: { '디자인':'Design', '엔터프라이즈':'Enterprise', '핀테크':'Fintech', '개발자도구':'Developer Tools', '인프라':'Infrastructure' },
+        brandNames: { '산림조합중앙회':'National Forestry Coop.', '한화건설':'Hanwha E&C', '카카오뱅크':'KakaoBank' },
+        footerPrivacy: 'Privacy Policy', footerNewsletter: 'Newsletter', footerContact: 'Contact Us',
+        familyHome: 'BI MATRIX Website', familyAcademy: 'AUD Platform Academy', familyDemo: 'AUD Platform Demo', familySupport: 'Customer Support',
+        footerCompany: 'BI MATRIX CO., LTD.',
+        footerAddress: '17F, Sebang Building New Wing, 433 Seolleung-ro, Gangnam-gu, Seoul', footerCeo: 'CEO: Younggeun Bae',
+      },
+      ja: {
+        pageTitle: 'AXIS Design Gallery',
+        navGallery: 'リファレンスギャラリー', navResources: 'デザインリソース', navClients: '顧客サイト',
+        searchPlaceholder: 'リファレンス検索',
+        themeToLight: 'ライトモードに切替', themeToDark: 'ダークモードに切替',
+        heroSubtitle: 'リファレンスをお探しですか？', heroTitle: 'より高い品質のための',
+        galleryHeading: 'リファレンスギャラリー',
+        viewAll: 'すべて見る →', viewDetail: '詳しく見る →',
+        resourcesHeading: 'デザインリソース', resourcesDesc: '色・チャート・フォント・アイコンの実務ガイド',
+        archiveHeading: 'プロジェクト資料アーカイブ',
+        totalThemes: '全12テーマ ·', totalCharts: '全8チャートガイド ·',
+        fontScale: 'Pretendard 10段階タイプスケール ·', totalIcons: '全40アイコン ·',
+        fontH1: 'デザインギャラリー', fontH2: 'リファレンスギャラリー', fontH3: '業種別テンプレート',
+        fontBody: '実務にすぐ活用できるデザインシステム', fontCaption: '2026年05月07日 — デザインガイドライン',
+        metaClient: '顧客', metaProject: 'プロジェクト名',
+        metaIndustry: '業種', metaScreen: '画面タイプ', metaLayout: 'レイアウト', metaPurpose: '使用目的',
+        anatomyLabel: 'Anatomy — 構成要素',
+        ariaPrevProject: '前のプロジェクト', ariaNextProject: '次のプロジェクト',
+        ariaPrevGallery: '前のアイテム', ariaNextGallery: '次のアイテム',
+        ariaPrevChart: '前のチャート', ariaNextChart: '次のチャート', ariaClose: 'ポップアップを閉じる',
+        industryLabels: { '공공·금융':'公共・金融', '제조·유통':'製造・流通', '의료·제약':'医療・製薬', '서비스·기타':'サービス・その他', '에너지·인프라':'エネルギー・インフラ', '관리·지원':'管理・サポート' },
+        purposeLabels: { '비교':'比較', '추세':'トレンド', '구성비':'構成比', '분포':'分布' },
+        catLabels: { '디자인':'デザイン', '엔터프라이즈':'エンタープライズ', '핀테크':'フィンテック', '개발자도구':'開発者ツール', '인프라':'インフラ' },
+        brandNames: { '산림조합중앙회':'山林組合中央会', '한화건설':'ハンファ建設', '카카오뱅크':'カカオバンク' },
+        footerPrivacy: '個人情報処理方針', footerNewsletter: 'ニュースレター購読', footerContact: 'お問い合わせ',
+        familyHome: 'BI MATRIXホームページ', familyAcademy: 'AUDプラットフォームアカデミー', familyDemo: 'AUDプラットフォームデモ', familySupport: 'カスタマーサポート',
+        footerCompany: '(株)BI MATRIX',
+        footerAddress: 'ソウル市江南区宣陵路433、世邦ビル新館17階(駅三洞)', footerCeo: '代表取締役: ペ・ヨングン',
+      },
+    };
+
     function BxdiMainPagePrototype() {
       const [familySiteOpen, setFamilySiteOpen] = React.useState(false);
       const [theme, setTheme] = React.useState(() => { try{return localStorage.getItem('axis-theme')||'dark';}catch(e){return 'dark';} });
       React.useEffect(() => { document.documentElement.setAttribute('data-theme', theme); }, [theme]);
       const toggleTheme = () => { const n=theme==='dark'?'light':'dark'; setTheme(n); try{localStorage.setItem('axis-theme',n);}catch(e){} };
+      const [lang, setLang] = React.useState(() => { try{return localStorage.getItem('axis-lang')||'ko';}catch(e){return 'ko';} });
+      const [langOpen, setLangOpen] = React.useState(false);
+      React.useEffect(() => { document.documentElement.lang = lang; }, [lang]);
+      const changeLang = (l) => { setLang(l); setLangOpen(false); try{localStorage.setItem('axis-lang', l);}catch(e){} };
+      const t = I18N[lang];
+      React.useEffect(() => { document.title = t.pageTitle; }, [lang]);
+      const L = (v) => (v && typeof v === 'object') ? (v[lang] || v.ko) : v;
       const ic  = theme==='dark' ? 'rgba(255,255,255,0.75)' : 'rgba(9,30,66,0.55)';
       const ics = theme==='dark' ? 'rgba(255,255,255,0.4)'  : 'rgba(9,30,66,0.3)';
       const icm = theme==='dark' ? 'rgba(255,255,255,0.6)'  : 'rgba(9,30,66,0.45)';
@@ -130,266 +229,266 @@
       const chartGuides = [
         {
           id: 1, name: 'Bar Chart', purpose: '비교',
-          definition: '범주 간 값을 가로/세로 막대로 비교하는 가장 기본적인 차트',
+          definition: {ko:'범주 간 값을 가로/세로 막대로 비교하는 가장 기본적인 차트', en:'The most basic chart, comparing values across categories with horizontal/vertical bars', ja:'カテゴリ間の値を横/縦の棒で比較する最も基本的なチャート'},
           anatomy: [
-            { label: 'X축 (범주)', color: '#7D60FF' }, { label: 'Y축 (수치)', color: '#2B67FF' },
-            { label: '데이터 막대', color: '#63E4B9' }, { label: '범례', color: '#9CA3AF' }, { label: '툴팁', color: '#F59E0B' },
+            { label: {ko:'X축 (범주)', en:'X-Axis (Category)', ja:'X軸（カテゴリ）'}, color: '#7D60FF' }, { label: {ko:'Y축 (수치)', en:'Y-Axis (Value)', ja:'Y軸（数値）'}, color: '#2B67FF' },
+            { label: {ko:'데이터 막대', en:'Data Bars', ja:'データバー'}, color: '#63E4B9' }, { label: {ko:'범례', en:'Legend', ja:'凡例'}, color: '#9CA3AF' }, { label: {ko:'툴팁', en:'Tooltip', ja:'ツールチップ'}, color: '#F59E0B' },
           ],
-          do: '소수의 범주(7개 이하) 간 값을 직접 비교할 때',
-          dont: '시간 흐름에 따른 연속 데이터 표현 (→ Line Chart 사용)',
+          do: {ko:'소수의 범주(7개 이하) 간 값을 직접 비교할 때', en:'Directly comparing values across a small number of categories (7 or fewer)', ja:'少数のカテゴリ（7個以下）間の値を直接比較するとき'},
+          dont: {ko:'시간 흐름에 따른 연속 데이터 표현 (→ Line Chart 사용)', en:'Showing continuous data over time (→ use a Line Chart)', ja:'時間の流れに沿った連続データの表現（→ Line Chartを使用）'},
         },
         {
           id: 2, name: 'Stacked Bar Chart', purpose: '비교',
-          definition: '각 막대를 구성 요소로 분할해 전체 합계와 내부 구성비를 동시에 표현',
+          definition: {ko:'각 막대를 구성 요소로 분할해 전체 합계와 내부 구성비를 동시에 표현', en:'Splits each bar into components to show totals and internal composition at once', ja:'各棒を構成要素に分割し、全体合計と内部構成比を同時に表現'},
           anatomy: [
-            { label: 'X축 (범주)', color: '#7D60FF' }, { label: 'Y축 (누적 합계)', color: '#2B67FF' },
-            { label: '세그먼트 (색상)', color: '#63E4B9' }, { label: '범례', color: '#9CA3AF' },
+            { label: {ko:'X축 (범주)', en:'X-Axis (Category)', ja:'X軸（カテゴリ）'}, color: '#7D60FF' }, { label: {ko:'Y축 (누적 합계)', en:'Y-Axis (Cumulative Total)', ja:'Y軸（累積合計）'}, color: '#2B67FF' },
+            { label: {ko:'세그먼트 (색상)', en:'Segments (Color)', ja:'セグメント（色）'}, color: '#63E4B9' }, { label: {ko:'범례', en:'Legend', ja:'凡例'}, color: '#9CA3AF' },
           ],
-          do: '항목별 합계 비교 + 내부 구성을 함께 보여줄 때',
-          dont: '개별 세그먼트 값의 정밀 비교 (→ Grouped Bar 사용)',
+          do: {ko:'항목별 합계 비교 + 내부 구성을 함께 보여줄 때', en:'Comparing totals by item while also showing internal composition', ja:'項目別の合計比較と内部構成を同時に見せるとき'},
+          dont: {ko:'개별 세그먼트 값의 정밀 비교 (→ Grouped Bar 사용)', en:'Precise comparison of individual segment values (→ use a Grouped Bar)', ja:'個別セグメント値の精密な比較（→ Grouped Barを使用）'},
         },
         {
           id: 3, name: 'Line Chart', purpose: '추세',
-          definition: '시간 축을 따라 연속 데이터의 변화 추세를 선으로 표현',
+          definition: {ko:'시간 축을 따라 연속 데이터의 변화 추세를 선으로 표현', en:'Shows trends in continuous data along a time axis as lines', ja:'時間軸に沿って連続データの変化トレンドを線で表現'},
           anatomy: [
-            { label: 'X축 (시간)', color: '#7D60FF' }, { label: 'Y축 (수치)', color: '#2B67FF' },
-            { label: '데이터 포인트', color: '#63E4B9' }, { label: '연결선', color: '#9CA3AF' }, { label: '범례', color: '#F59E0B' },
+            { label: {ko:'X축 (시간)', en:'X-Axis (Time)', ja:'X軸（時間）'}, color: '#7D60FF' }, { label: {ko:'Y축 (수치)', en:'Y-Axis (Value)', ja:'Y軸（数値）'}, color: '#2B67FF' },
+            { label: {ko:'데이터 포인트', en:'Data Points', ja:'データポイント'}, color: '#63E4B9' }, { label: {ko:'연결선', en:'Connecting Line', ja:'接続線'}, color: '#9CA3AF' }, { label: {ko:'범례', en:'Legend', ja:'凡例'}, color: '#F59E0B' },
           ],
-          do: '시간에 따른 추세, 패턴, 이상값 탐지',
-          dont: '범주 간 단순 비교 (→ Bar Chart 사용)',
+          do: {ko:'시간에 따른 추세, 패턴, 이상값 탐지', en:'Detecting trends, patterns, and outliers over time', ja:'時間に伴うトレンド、パターン、外れ値の検出'},
+          dont: {ko:'범주 간 단순 비교 (→ Bar Chart 사용)', en:'Simple comparison across categories (→ use a Bar Chart)', ja:'カテゴリ間の単純比較（→ Bar Chartを使用）'},
         },
         {
           id: 4, name: 'Area Chart', purpose: '추세',
-          definition: '선 아래 영역을 채워 누적량이나 볼륨 변화를 강조하는 차트',
+          definition: {ko:'선 아래 영역을 채워 누적량이나 볼륨 변화를 강조하는 차트', en:'Fills the area under the line to emphasize cumulative amounts or volume changes', ja:'線の下の領域を塗りつぶし、累積量やボリュームの変化を強調するチャート'},
           anatomy: [
-            { label: 'X축 (시간)', color: '#7D60FF' }, { label: 'Y축 (수치)', color: '#2B67FF' },
-            { label: '채움 영역', color: '#63E4B9' }, { label: '경계선', color: '#9CA3AF' },
+            { label: {ko:'X축 (시간)', en:'X-Axis (Time)', ja:'X軸（時間）'}, color: '#7D60FF' }, { label: {ko:'Y축 (수치)', en:'Y-Axis (Value)', ja:'Y軸（数値）'}, color: '#2B67FF' },
+            { label: {ko:'채움 영역', en:'Filled Area', ja:'塗りつぶし領域'}, color: '#63E4B9' }, { label: {ko:'경계선', en:'Boundary Line', ja:'境界線'}, color: '#9CA3AF' },
           ],
-          do: '전체 볼륨의 증감, 누적 추세를 표현할 때',
-          dont: '여러 시리즈가 겹쳐 가독성이 떨어지는 경우 (→ Line Chart 사용)',
+          do: {ko:'전체 볼륨의 증감, 누적 추세를 표현할 때', en:'Showing increases/decreases in total volume and cumulative trends', ja:'全体ボリュームの増減、累積トレンドを表現するとき'},
+          dont: {ko:'여러 시리즈가 겹쳐 가독성이 떨어지는 경우 (→ Line Chart 사용)', en:'When overlapping series hurt readability (→ use a Line Chart)', ja:'複数のシリーズが重なり可読性が落ちる場合（→ Line Chartを使用）'},
         },
         {
           id: 5, name: 'Pie / Donut Chart', purpose: '구성비',
-          definition: '전체 대비 각 항목의 비율을 원형 슬라이스로 표현',
+          definition: {ko:'전체 대비 각 항목의 비율을 원형 슬라이스로 표현', en:"Shows each item's share of the whole as circular slices", ja:'全体に対する各項目の比率を円形スライスで表現'},
           anatomy: [
-            { label: '슬라이스 (비율)', color: '#7D60FF' }, { label: '라벨/퍼센트', color: '#2B67FF' },
-            { label: '범례', color: '#63E4B9' }, { label: '중앙 KPI (Donut)', color: '#9CA3AF' },
+            { label: {ko:'슬라이스 (비율)', en:'Slices (Ratio)', ja:'スライス（比率）'}, color: '#7D60FF' }, { label: {ko:'라벨/퍼센트', en:'Labels/Percent', ja:'ラベル/パーセント'}, color: '#2B67FF' },
+            { label: {ko:'범례', en:'Legend', ja:'凡例'}, color: '#63E4B9' }, { label: {ko:'중앙 KPI (Donut)', en:'Center KPI (Donut)', ja:'中央KPI（Donut）'}, color: '#9CA3AF' },
           ],
-          do: '5개 이하 항목의 구성 비율을 직관적으로 표현',
-          dont: '항목이 많거나 비율 차이가 작을 때 (→ Bar Chart 사용)',
+          do: {ko:'5개 이하 항목의 구성 비율을 직관적으로 표현', en:'Intuitively showing the composition of 5 or fewer items', ja:'5項目以下の構成比率を直感的に表現'},
+          dont: {ko:'항목이 많거나 비율 차이가 작을 때 (→ Bar Chart 사용)', en:'Many items or small differences in share (→ use a Bar Chart)', ja:'項目が多い、または比率差が小さいとき（→ Bar Chartを使用）'},
         },
         {
           id: 6, name: 'Treemap', purpose: '구성비',
-          definition: '계층 구조 데이터를 면적 비례 사각형으로 표현하는 차트',
+          definition: {ko:'계층 구조 데이터를 면적 비례 사각형으로 표현하는 차트', en:'Represents hierarchical data as rectangles sized proportionally by value', ja:'階層構造データを面積比例の四角形で表現するチャート'},
           anatomy: [
-            { label: '노드 사각형 (면적=값)', color: '#7D60FF' }, { label: '그룹 색상', color: '#2B67FF' },
-            { label: '라벨', color: '#63E4B9' }, { label: '계층 구분선', color: '#9CA3AF' },
+            { label: {ko:'노드 사각형 (면적=값)', en:'Node Rectangles (Area = Value)', ja:'ノード四角形（面積=値）'}, color: '#7D60FF' }, { label: {ko:'그룹 색상', en:'Group Colors', ja:'グループ色'}, color: '#2B67FF' },
+            { label: {ko:'라벨', en:'Labels', ja:'ラベル'}, color: '#63E4B9' }, { label: {ko:'계층 구분선', en:'Hierarchy Dividers', ja:'階層区切り線'}, color: '#9CA3AF' },
           ],
-          do: '다수 항목의 상대적 크기와 계층 구조를 동시에 표현',
-          dont: '정확한 수치 비교가 필요한 경우 (→ Bar Chart 사용)',
+          do: {ko:'다수 항목의 상대적 크기와 계층 구조를 동시에 표현', en:'Showing relative size and hierarchy of many items at once', ja:'多数の項目の相対的な大きさと階層構造を同時に表現'},
+          dont: {ko:'정확한 수치 비교가 필요한 경우 (→ Bar Chart 사용)', en:'When precise numeric comparison is needed (→ use a Bar Chart)', ja:'正確な数値比較が必要な場合（→ Bar Chartを使用）'},
         },
         {
           id: 7, name: 'Scatter Plot', purpose: '분포',
-          definition: '두 변수 간 상관관계와 데이터 분포를 점으로 표현',
+          definition: {ko:'두 변수 간 상관관계와 데이터 분포를 점으로 표현', en:'Shows the correlation between two variables and data distribution as points', ja:'2変数間の相関関係とデータ分布を点で表現'},
           anatomy: [
-            { label: 'X축 (변수 A)', color: '#7D60FF' }, { label: 'Y축 (변수 B)', color: '#2B67FF' },
-            { label: '데이터 포인트', color: '#63E4B9' }, { label: '회귀선 (옵션)', color: '#9CA3AF' }, { label: '색상 인코딩', color: '#F59E0B' },
+            { label: {ko:'X축 (변수 A)', en:'X-Axis (Variable A)', ja:'X軸（変数A）'}, color: '#7D60FF' }, { label: {ko:'Y축 (변수 B)', en:'Y-Axis (Variable B)', ja:'Y軸（変数B）'}, color: '#2B67FF' },
+            { label: {ko:'데이터 포인트', en:'Data Points', ja:'データポイント'}, color: '#63E4B9' }, { label: {ko:'회귀선 (옵션)', en:'Regression Line (Optional)', ja:'回帰線（オプション）'}, color: '#9CA3AF' }, { label: {ko:'색상 인코딩', en:'Color Encoding', ja:'色エンコーディング'}, color: '#F59E0B' },
           ],
-          do: '두 변수 간 상관관계, 클러스터, 이상값 탐지',
-          dont: '시계열 추세 표현 (→ Line Chart 사용)',
+          do: {ko:'두 변수 간 상관관계, 클러스터, 이상값 탐지', en:'Detecting correlations, clusters, and outliers between two variables', ja:'2変数間の相関、クラスター、外れ値の検出'},
+          dont: {ko:'시계열 추세 표현 (→ Line Chart 사용)', en:'Showing time-series trends (→ use a Line Chart)', ja:'時系列トレンドの表現（→ Line Chartを使用）'},
         },
         {
           id: 8, name: 'Histogram', purpose: '분포',
-          definition: '연속형 데이터를 구간(bin)으로 나눠 빈도 분포를 막대로 표현',
+          definition: {ko:'연속형 데이터를 구간(bin)으로 나눠 빈도 분포를 막대로 표현', en:'Divides continuous data into bins and shows the frequency distribution as bars', ja:'連続データを区間（bin）に分けて頻度分布を棒で表現'},
           anatomy: [
-            { label: 'X축 (구간/Bin)', color: '#7D60FF' }, { label: 'Y축 (빈도/밀도)', color: '#2B67FF' },
-            { label: '막대 (연속형, 간격 없음)', color: '#63E4B9' },
+            { label: {ko:'X축 (구간/Bin)', en:'X-Axis (Bins)', ja:'X軸（区間/Bin）'}, color: '#7D60FF' }, { label: {ko:'Y축 (빈도/밀도)', en:'Y-Axis (Frequency/Density)', ja:'Y軸（頻度/密度）'}, color: '#2B67FF' },
+            { label: {ko:'막대 (연속형, 간격 없음)', en:'Bars (Continuous, No Gaps)', ja:'棒（連続型、間隔なし）'}, color: '#63E4B9' },
           ],
-          do: '데이터 분포 형태(정규, 편향 등) 파악',
-          dont: '범주형 데이터 비교 (→ Bar Chart 사용, 막대 사이 간격 있음)',
+          do: {ko:'데이터 분포 형태(정규, 편향 등) 파악', en:'Understanding the shape of a distribution (normal, skewed, etc.)', ja:'データ分布の形（正規、偏りなど）の把握'},
+          dont: {ko:'범주형 데이터 비교 (→ Bar Chart 사용, 막대 사이 간격 있음)', en:'Comparing categorical data (→ use a Bar Chart, with gaps between bars)', ja:'カテゴリデータの比較（→ Bar Chartを使用、棒の間に間隔あり）'},
         },
       ];
       const galleryItems = [
         {
           id: 1,
-          title: 'Q-Energy 재무 실적 및 성과 보고',
-          industry: '에너지•인프라',
+          title: {ko:'Q-Energy 재무 실적 및 성과 보고', en:'Q-Energy Financial Results & Performance Report', ja:'Q-Energy 財務実績および成果報告'},
+          industry: '에너지·인프라',
           screenType: 'Dashboard',
           image: 'images/templates/template-1.png',
           layoutType: 'KPI Summary',
           referencePoints: '',
-          suitableFor: '글로벌 에너지 프로젝트 성과 및 권역별 매출 실적 모니터링',
+          suitableFor: {ko:'글로벌 에너지 프로젝트 성과 및 권역별 매출 실적 모니터링', en:'Monitoring global energy project performance and regional sales results', ja:'グローバルエネルギープロジェクトの成果および地域別売上実績のモニタリング'},
         },
         {
           id: 2,
-          title: '공영홈쇼핑 전사 대시보드',
+          title: {ko:'공영홈쇼핑 전사 대시보드', en:'Gongyoung Home Shopping Enterprise Dashboard', ja:'Gongyoung Home Shopping 全社ダッシュボード'},
           industry: '제조·유통',
           screenType: 'Dashboard',
           image: 'images/templates/template-2.png',
           layoutType: 'KPI SUMMARY',
           referencePoints: '',
-          suitableFor: '전사 매출 실적 성과 및 카테고리/고객 서비스(CS) 운영 현황 모니터링',
+          suitableFor: {ko:'전사 매출 실적 성과 및 카테고리/고객 서비스(CS) 운영 현황 모니터링', en:'Monitoring enterprise sales performance and category/customer service (CS) operations', ja:'全社売上実績の成果およびカテゴリー/カスタマーサービス(CS)運営状況のモニタリング'},
         },
         {
           id: 3,
-          title: '독성과학연구소 성과 및 인력 현황',
-          industry: '공공•금융',
+          title: {ko:'독성과학연구소 성과 및 인력 현황', en:'Institute of Toxicology Performance & Workforce Status', ja:'毒性科学研究所 成果および人材状況'},
+          industry: '공공·금융',
           screenType: 'Dashboard',
           image: 'images/templates/template-3.png',
           layoutType: 'KPI SUMMARY',
           referencePoints: '',
-          suitableFor: '연구 성과(수탁고/논문/특허) 달성률 및 부서별 인적 자원 배분 모니터링',
+          suitableFor: {ko:'연구 성과(수탁고/논문/특허) 달성률 및 부서별 인적 자원 배분 모니터링', en:'Monitoring research output (contracts/papers/patents) achievement rates and departmental workforce allocation', ja:'研究成果(受託高/論文/特許)達成率および部署別人材配分のモニタリング'},
         },
         {
           id: 4,
-          title: 'DY 글로벌 손익 실적 보고',
-          industry: '공공•금융',
+          title: {ko:'DY 글로벌 손익 실적 보고', en:'DY Global P&L Performance Report', ja:'DY グローバル損益実績報告'},
+          industry: '공공·금융',
           screenType: 'Dashboard',
           image: 'images/templates/template-4.png',
           layoutType: 'DATA GRID SHEET',
           referencePoints: '',
-          suitableFor: '글로벌 경영 계획 대비 실적 및 외환 효과를 반영한 손익 관리',
+          suitableFor: {ko:'글로벌 경영 계획 대비 실적 및 외환 효과를 반영한 손익 관리', en:'P&L management reflecting global plan-vs-actual results and FX effects', ja:'グローバル経営計画対比実績および為替効果を反映した損益管理'},
         },
         {
           id: 5,
-          title: '롯데글로벌로지스 운영 대시보드',
+          title: {ko:'롯데글로벌로지스 운영 대시보드', en:'Lotte Global Logistics Operations Dashboard', ja:'ロッテグローバルロジス運営ダッシュボード'},
           industry: '제조·유통',
           screenType: 'Dashboard',
           image: 'images/templates/template-5.png',
           layoutType: 'KPI Summary',
           referencePoints: '',
-          suitableFor: '운송 방식별 배차 효율 관리 및 매입 · 매출 운송단가 모니터링',
+          suitableFor: {ko:'운송 방식별 배차 효율 관리 및 매입 · 매출 운송단가 모니터링', en:'Managing dispatch efficiency by transport mode and monitoring purchase/sales freight rates', ja:'輸送方式別の配車効率管理および仕入・売上輸送単価のモニタリング'},
         },
         {
           id: 6,
-          title: '출장 비용 및 현황 모니터링',
-          industry: '관리•지원',
+          title: {ko:'출장 비용 및 현황 모니터링', en:'Business Travel Cost & Status Monitoring', ja:'出張費用および状況モニタリング'},
+          industry: '관리·지원',
           screenType: 'Dashboard',
           image: 'images/templates/template-6.png',
           layoutType: 'GEOGRAPHIC MAP',
           referencePoints: '',
-          suitableFor: '부서/지역별 출장 예산 관리, 현황 모니터링',
+          suitableFor: {ko:'부서/지역별 출장 예산 관리, 현황 모니터링', en:'Managing travel budgets by department/region and monitoring status', ja:'部署/地域別の出張予算管理、状況モニタリング'},
         },
         {
           id: 7,
-          title: '성신양회 경영요약정보',
+          title: {ko:'성신양회 경영요약정보', en:'Sungshin Cement Management Summary', ja:'Sungshin Cement 経営要約情報'},
           industry: '제조·유통',
           screenType: 'Dashboard',
           image: 'images/templates/template-7.png',
           layoutType: 'KPI Summary',
           referencePoints: '',
-          suitableFor: '일일 출하/생산 실적 목표 대비 달성률 및 재고 현황 모니터링',
+          suitableFor: {ko:'일일 출하/생산 실적 목표 대비 달성률 및 재고 현황 모니터링', en:'Monitoring daily shipment/production achievement vs. targets and inventory status', ja:'日次出荷/生産実績の目標対比達成率および在庫状況のモニタリング'},
         },
         {
           id: 8,
-          title: '전사 실적별 성과 요약 서비스',
-          industry: '제조•유통',
+          title: {ko:'전사 실적별 성과 요약 서비스', en:'Enterprise Performance Summary Service', ja:'全社実績別成果サマリーサービス'},
+          industry: '제조·유통',
           screenType: 'Dashboard',
           image: 'images/templates/template-8.png',
           layoutType: 'Sales & Performance',
           referencePoints: '',
-          suitableFor: '전사 실적 및 MD 상품별 매출 모니터링',
+          suitableFor: {ko:'전사 실적 및 MD 상품별 매출 모니터링', en:'Monitoring enterprise results and sales by MD product', ja:'全社実績およびMD商品別売上のモニタリング'},
         },
         {
           id: 9,
-          title: '일성IS 영업 실적 종합 대시보드',
-          industry: '제조•유통',
+          title: {ko:'일성IS 영업 실적 종합 대시보드', en:'Ilsung IS Sales Performance Dashboard', ja:'Ilsung IS 営業実績総合ダッシュボード'},
+          industry: '제조·유통',
           screenType: 'Dashboard',
           image: 'images/templates/template-9.png',
           layoutType: 'KPI SUMMARY',
           referencePoints: '',
-          suitableFor: '제약 영업 활동 지표 및 품목별·팀별 매출 실적 모니터링',
+          suitableFor: {ko:'제약 영업 활동 지표 및 품목별·팀별 매출 실적 모니터링', en:'Monitoring pharmaceutical sales activity metrics and revenue by product and team', ja:'製薬営業活動指標および品目別・チーム別売上実績のモニタリング'},
         },
         {
           id: 10,
-          title: '월별 주요 경영 성과 지표',
-          industry: '제조•유통',
+          title: {ko:'월별 주요 경영 성과 지표', en:'Monthly Key Management Performance Indicators', ja:'月次主要経営成果指標'},
+          industry: '제조·유통',
           screenType: 'Dashboard',
           image: 'images/templates/template-10.png',
           layoutType: 'KPI SUMMARY',
           referencePoints: '',
-          suitableFor: '환경·판매·생산 부문 월별 전사 경영 성과 지표 모니터링',
+          suitableFor: {ko:'환경·판매·생산 부문 월별 전사 경영 성과 지표 모니터링', en:'Monitoring monthly enterprise KPIs across environment, sales, and production', ja:'環境・販売・生産部門の月次全社経営成果指標のモニタリング'},
         },
         {
           id: 11,
-          title: '종합 공사비 및 현장별 실적 현황',
-          industry: '제조•유통',
+          title: {ko:'종합 공사비 및 현장별 실적 현황', en:'Total Construction Cost & Site Performance Status', ja:'総合工事費および現場別実績状況'},
+          industry: '제조·유통',
           screenType: 'Reporting',
           image: 'images/templates/template-11.png',
           layoutType: 'DATA GRID SHEET',
           referencePoints: '',
-          suitableFor: '전사 실적 및 MD 상품별 매출 모니터링',
+          suitableFor: {ko:'전사 실적 및 MD 상품별 매출 모니터링', en:'Monitoring enterprise results and sales by MD product', ja:'全社実績およびMD商品別売上のモニタリング'},
         },
         {
           id: 12,
-          title: '연간 누적 실적 현황',
-          industry: '공공•금융',
+          title: {ko:'연간 누적 실적 현황', en:'Annual Cumulative Performance Status', ja:'年間累積実績状況'},
+          industry: '공공·금융',
           screenType: 'Dashboard',
           image: 'images/templates/template-12.png',
           layoutType: 'FINANCIAL REPORTING',
           referencePoints: '',
-          suitableFor: '제휴사·상품·개인별 보험 영업 실적 및 지표 모니터링',
+          suitableFor: {ko:'제휴사·상품·개인별 보험 영업 실적 및 지표 모니터링', en:'Monitoring insurance sales results and metrics by partner, product, and individual', ja:'提携会社・商品・個人別の保険営業実績および指標のモニタリング'},
         },
         {
           id: 13,
-          title: '실리콘 매출계획 및 실적 현황',
-          industry: '제조•유통',
+          title: {ko:'실리콘 매출계획 및 실적 현황', en:'Silicone Sales Plan & Performance Status', ja:'シリコーン売上計画および実績状況'},
+          industry: '제조·유통',
           screenType: 'Dashboard',
           image: 'images/templates/template-13.png',
           layoutType: 'KPI SUMMARY',
           referencePoints: '',
-          suitableFor: '관계사·사업별 매출 계획 대비 실적 및 거래선 모니터링',
+          suitableFor: {ko:'관계사·사업별 매출 계획 대비 실적 및 거래선 모니터링', en:'Monitoring plan-vs-actual sales by affiliate and business, plus key accounts', ja:'関係会社・事業別の売上計画対比実績および取引先のモニタリング'},
         },
         {
           id: 14,
           title: 'LAWA Scanning Overview',
-          industry: '서비스•기타',
+          industry: '서비스·기타',
           screenType: 'Dashboard',
           image: 'images/templates/template-14.png',
           layoutType: 'GEOGRAPHIC MAP',
           referencePoints: '',
-          suitableFor: '공항 터미널별 실시간 관제 및 지표 모니터링',
+          suitableFor: {ko:'공항 터미널별 실시간 관제 및 지표 모니터링', en:'Real-time control and metrics monitoring by airport terminal', ja:'空港ターミナル別のリアルタイム管制および指標モニタリング'},
         },
         {
           id: 15,
-          title: 'LX인터내셔널 주요 지표 월별 현황',
-          industry: '제조•유통',
+          title: {ko:'LX인터내셔널 주요 지표 월별 현황', en:'LX International Monthly Key Indicators', ja:'LX International 主要指標月次状況'},
+          industry: '제조·유통',
           screenType: 'Dashboard',
           image: 'images/templates/template-15.png',
           layoutType: 'KPI Surmmary',
           referencePoints: '',
-          suitableFor: '경영 성과 지표 및 대외 시장 • 환율 추이 모니터링',
+          suitableFor: {ko:'경영 성과 지표 및 대외 시장 · 환율 추이 모니터링', en:'Monitoring management KPIs and external market/exchange-rate trends', ja:'経営成果指標および対外市場・為替レート推移のモニタリング'},
         },
         {
           id: 16,
-          title: '전사 실적별 성과 요약 서비스',
-          industry: '제조•유통',
+          title: {ko:'전사 실적별 성과 요약 서비스', en:'Enterprise Performance Summary Service', ja:'全社実績別成果サマリーサービス'},
+          industry: '제조·유통',
           screenType: 'Dashboard',
           image: 'images/templates/template-16.png',
           layoutType: 'Sales & Performance',
           referencePoints: '',
-          suitableFor: '전사 실적 및 MD 상품별 매출 모니터링',
+          suitableFor: {ko:'전사 실적 및 MD 상품별 매출 모니터링', en:'Monitoring enterprise results and sales by MD product', ja:'全社実績およびMD商品別売上のモニタリング'},
         },
       ];
 
       const [selectedArchiveIndex, setSelectedArchiveIndex] = React.useState(null);
       const archiveItems = [
-        { id: 1, logo:'images/logos/logo-1.png',  back:'images/archive/1.png',  color:'#1A3320', accent:'#4CAF50', client:'신한은행', projectName:'경영성과 리포트', title:'은행 경영성과 대시보드', screenType:'Dashboard', industry:'공공·금융'},
-        { id: 2, logo:'images/logos/logo-2.png',  back:'images/archive/2.png',  color:'#0A1F33', accent:'#4FC3F7', client:'현대자동차', projectName:'제조 공정 모니터링', title:'생산 라인 운영 현황', screenType:'EPA', industry:'제조·유통'},
-        { id: 3, logo:'images/logos/logo-3.png',  back:'images/archive/3.png',  color:'#15175A', accent:'#7986CB', client:'LG CNS', projectName:'서비스 이슈 분석', title:'서비스 운영 분석 대시보드', screenType:'Dashboard', industry:'서비스·기타' },
-        { id: 4, logo:'images/logos/logo-4.png',  back:'images/archive/4.png',  color:'#0B2A3A', accent:'#26C6DA', client:'SK텔레콤', projectName:'통신망 성능 리포트', title:'네트워크 KPI 리포트', screenType:'Dashboard', industry:'서비스·기타'},
-        { id: 5, logo:'images/logos/logo-5.png',  back:'images/archive/5.png',  color:'#142840', accent:'#42A5F5', client:'롯데쇼핑', projectName:'물류 실적 분석', title:'전사 운송 실적 대시보드', screenType:'Dashboard', industry:'제조·유통'},
-        { id: 6, logo:'images/logos/logo-6.png',  back:'images/archive/6.png',  color:'#162416', accent:'#81C784', client:'아워홈', projectName:'교대별 팀 성과', title:'교대별 생산성 대시보드', screenType:'Dashboard', industry:'서비스·기타'},
-        { id: 7, logo:'images/logos/logo-7.png',  back:'images/archive/7.png',  color:'#2E1545', accent:'#BA68C8', client:'신세계인터내셔날', projectName:'고객지표 통합대시보드', title:'고객 관리 실적 대시보드', screenType:'Dashboard', industry:'제조·유통'},
-        { id: 8, logo:'images/logos/logo-8.png',  back:'images/archive/8.png',  color:'#3B1212', accent:'#EF9A9A', client:'하나은행', projectName:'교육통계서비스', title:'학습 현황 통계 화면', screenType:'Dashboard', industry:'공공·금융'},
-        { id: 9, logo:'images/logos/logo-9.png',  back:'images/archive/9.png',  color:'#1A1A10', accent:'#DCE775', client:'KT', projectName:'인프라 상태 모니터링', title:'통신 인프라 운영 대시보드', screenType:'Dashboard', industry:'공공·금융', layoutType:'상태 모니터링', suitableFor:'장비 운영 점검'},
-        { id: 10, logo:'images/logos/logo-10.png', back:'images/archive/10.png', color:'#101820', accent:'#80CBC4', client:'GS칼텍스', projectName:'에너지 관리 시스템', title:'에너지 실적 트래킹 화면', screenType:'Dashboard', industry:'제조·유통', layoutType:'KPI Summary', suitableFor:'에너지 비용 분석', description:'에너지 사용량과 비용 효율을 모니터링하는 실무형 대시보드입니다.' },
-        { id: 11, logo:'images/logos/logo-11.png', back:'images/archive/11.png', color:'#201A10', accent:'#FFCC80', client:'CJ대한통운', projectName:'배송 운영 관리', title:'물류 배송 현황 대시보드', screenType:'Dashboard', industry:'제조·유통', layoutType:'운영현황형', suitableFor:'배송 성과 점검', description:'물류 흐름과 배송 성과를 한눈에 보여주는 운영 화면입니다.' },
-        { id: 12, logo:'images/logos/logo-12.png', back:'images/archive/12.png', color:'#1A1020', accent:'#CE93D8', client:'현대카드', projectName:'고객 행동 분석', title:'마케팅 인사이트 대시보드', screenType:'Reporting', industry:'공공·금융', layoutType:'리포트형', suitableFor:'캠페인 성과 분석', description:'고객 행동 지표와 캠페인 성과를 통합해서 보여주는 인사이트 화면입니다.' },
-        { id: 13, logo:'images/logos/logo-13.png', back:'images/archive/13.png', color:'#101A1A', accent:'#80DEEA', client:'네이버', projectName:'서비스 트래픽 리포트', title:'실시간 트래픽 모니터링', screenType:'EPA', industry:'서비스·기타', layoutType:'모니터링형', suitableFor:'트래픽 분석', description:'트래픽 변화와 응답 지표를 빠르게 확인할 수 있는 모니터링 화면입니다.' },
-        { id: 14, logo:'images/logos/logo-14.png', back:'images/archive/14.png', color:'#1A1018', accent:'#F48FB1', client:'카카오뱅크', projectName:'디지털 앱 분석', title:'앱 이용자 행동 대시보드', screenType:'Dashboard', industry:'공공·금융', layoutType:'분석형', suitableFor:'전환 흐름 분석', description:'사용자 행동과 전환 지표를 중심으로 한 디지털 분석 화면입니다.' },
-        { id: 15, logo:'images/logos/logo-15.png', back:'images/archive/15.png', color:'#1A1A1A', accent:'#FFAB91', client:'SK하이닉스', projectName:'생산성 보고서', title:'반도체 생산성 대시보드', screenType:'Reporting', industry:'제조·유통', layoutType:'리포트형', suitableFor:'생산 효율 분석', description:'생산 안정성과 실적을 시각화한 반도체 현장 보고 화면입니다.' },
-        { id: 16, logo:'images/logos/logo-16.png', back:'images/archive/16.png', color:'#0D1A2A', accent:'#90CAF9', client:'삼성전자', projectName:'고객 만족 분석', title:'고객 경험 리포트', screenType:'Dashboard', industry:'서비스·기타', layoutType:'KPI Summary', suitableFor:'CS 지표 점검', description:'고객 만족도와 서비스 평점을 한눈에 점검할 수 있는 리포트 화면입니다.' },
+        { id: 1, logo:'images/logos/logo-1.png',  back:'images/archive/1.png',  color:'#1A3320', accent:'#4CAF50', client:{ko:'신한은행', en:'Shinhan Bank', ja:'新韓銀行'}, projectName:{ko:'경영성과 리포트', en:'Management Performance Report', ja:'経営成果レポート'}, title:{ko:'은행 경영성과 대시보드', en:'Bank Management Performance Dashboard', ja:'銀行経営成果ダッシュボード'}, screenType:'Dashboard', industry:'공공·금융'},
+        { id: 2, logo:'images/logos/logo-2.png',  back:'images/archive/2.png',  color:'#0A1F33', accent:'#4FC3F7', client:{ko:'현대자동차', en:'Hyundai Motor', ja:'現代自動車'}, projectName:{ko:'제조 공정 모니터링', en:'Manufacturing Process Monitoring', ja:'製造工程モニタリング'}, title:{ko:'생산 라인 운영 현황', en:'Production Line Operations Status', ja:'生産ライン運営状況'}, screenType:'EPA', industry:'제조·유통'},
+        { id: 3, logo:'images/logos/logo-3.png',  back:'images/archive/3.png',  color:'#15175A', accent:'#7986CB', client:'LG CNS', projectName:{ko:'서비스 이슈 분석', en:'Service Issue Analysis', ja:'サービスイシュー分析'}, title:{ko:'서비스 운영 분석 대시보드', en:'Service Operations Analysis Dashboard', ja:'サービス運営分析ダッシュボード'}, screenType:'Dashboard', industry:'서비스·기타' },
+        { id: 4, logo:'images/logos/logo-4.png',  back:'images/archive/4.png',  color:'#0B2A3A', accent:'#26C6DA', client:{ko:'SK텔레콤', en:'SK Telecom', ja:'SKテレコム'}, projectName:{ko:'통신망 성능 리포트', en:'Network Performance Report', ja:'通信網性能レポート'}, title:{ko:'네트워크 KPI 리포트', en:'Network KPI Report', ja:'ネットワークKPIレポート'}, screenType:'Dashboard', industry:'서비스·기타'},
+        { id: 5, logo:'images/logos/logo-5.png',  back:'images/archive/5.png',  color:'#142840', accent:'#42A5F5', client:{ko:'롯데쇼핑', en:'Lotte Shopping', ja:'ロッテショッピング'}, projectName:{ko:'물류 실적 분석', en:'Logistics Performance Analysis', ja:'物流実績分析'}, title:{ko:'전사 운송 실적 대시보드', en:'Enterprise Transport Performance Dashboard', ja:'全社輸送実績ダッシュボード'}, screenType:'Dashboard', industry:'제조·유통'},
+        { id: 6, logo:'images/logos/logo-6.png',  back:'images/archive/6.png',  color:'#162416', accent:'#81C784', client:{ko:'아워홈', en:'Ourhome', ja:'アワーホーム'}, projectName:{ko:'교대별 팀 성과', en:'Team Performance by Shift', ja:'シフト別チーム成果'}, title:{ko:'교대별 생산성 대시보드', en:'Productivity by Shift Dashboard', ja:'シフト別生産性ダッシュボード'}, screenType:'Dashboard', industry:'서비스·기타'},
+        { id: 7, logo:'images/logos/logo-7.png',  back:'images/archive/7.png',  color:'#2E1545', accent:'#BA68C8', client:{ko:'신세계인터내셔날', en:'Shinsegae International', ja:'新世界インターナショナル'}, projectName:{ko:'고객지표 통합대시보드', en:'Integrated Customer Metrics Dashboard', ja:'顧客指標統合ダッシュボード'}, title:{ko:'고객 관리 실적 대시보드', en:'Customer Management Performance Dashboard', ja:'顧客管理実績ダッシュボード'}, screenType:'Dashboard', industry:'제조·유통'},
+        { id: 8, logo:'images/logos/logo-8.png',  back:'images/archive/8.png',  color:'#3B1212', accent:'#EF9A9A', client:{ko:'하나은행', en:'Hana Bank', ja:'ハナ銀行'}, projectName:{ko:'교육통계서비스', en:'Education Statistics Service', ja:'教育統計サービス'}, title:{ko:'학습 현황 통계 화면', en:'Learning Status Statistics Screen', ja:'学習状況統計画面'}, screenType:'Dashboard', industry:'공공·금융'},
+        { id: 9, logo:'images/logos/logo-9.png',  back:'images/archive/9.png',  color:'#1A1A10', accent:'#DCE775', client:'KT', projectName:{ko:'인프라 상태 모니터링', en:'Infrastructure Status Monitoring', ja:'インフラ状態モニタリング'}, title:{ko:'통신 인프라 운영 대시보드', en:'Telecom Infrastructure Operations Dashboard', ja:'通信インフラ運営ダッシュボード'}, screenType:'Dashboard', industry:'공공·금융', layoutType:'상태 모니터링', suitableFor:'장비 운영 점검'},
+        { id: 10, logo:'images/logos/logo-10.png', back:'images/archive/10.png', color:'#101820', accent:'#80CBC4', client:{ko:'GS칼텍스', en:'GS Caltex', ja:'GSカルテックス'}, projectName:{ko:'에너지 관리 시스템', en:'Energy Management System', ja:'エネルギー管理システム'}, title:{ko:'에너지 실적 트래킹 화면', en:'Energy Performance Tracking Screen', ja:'エネルギー実績トラッキング画面'}, screenType:'Dashboard', industry:'제조·유통', layoutType:'KPI Summary', suitableFor:'에너지 비용 분석', description:'에너지 사용량과 비용 효율을 모니터링하는 실무형 대시보드입니다.' },
+        { id: 11, logo:'images/logos/logo-11.png', back:'images/archive/11.png', color:'#201A10', accent:'#FFCC80', client:{ko:'CJ대한통운', en:'CJ Logistics', ja:'CJ大韓通運'}, projectName:{ko:'배송 운영 관리', en:'Delivery Operations Management', ja:'配送運営管理'}, title:{ko:'물류 배송 현황 대시보드', en:'Logistics Delivery Status Dashboard', ja:'物流配送状況ダッシュボード'}, screenType:'Dashboard', industry:'제조·유통', layoutType:'운영현황형', suitableFor:'배송 성과 점검', description:'물류 흐름과 배송 성과를 한눈에 보여주는 운영 화면입니다.' },
+        { id: 12, logo:'images/logos/logo-12.png', back:'images/archive/12.png', color:'#1A1020', accent:'#CE93D8', client:{ko:'현대카드', en:'Hyundai Card', ja:'現代カード'}, projectName:{ko:'고객 행동 분석', en:'Customer Behavior Analysis', ja:'顧客行動分析'}, title:{ko:'마케팅 인사이트 대시보드', en:'Marketing Insights Dashboard', ja:'マーケティングインサイトダッシュボード'}, screenType:'Reporting', industry:'공공·금융', layoutType:'리포트형', suitableFor:'캠페인 성과 분석', description:'고객 행동 지표와 캠페인 성과를 통합해서 보여주는 인사이트 화면입니다.' },
+        { id: 13, logo:'images/logos/logo-13.png', back:'images/archive/13.png', color:'#101A1A', accent:'#80DEEA', client:{ko:'네이버', en:'NAVER', ja:'NAVER'}, projectName:{ko:'서비스 트래픽 리포트', en:'Service Traffic Report', ja:'サービストラフィックレポート'}, title:{ko:'실시간 트래픽 모니터링', en:'Real-Time Traffic Monitoring', ja:'リアルタイムトラフィックモニタリング'}, screenType:'EPA', industry:'서비스·기타', layoutType:'모니터링형', suitableFor:'트래픽 분석', description:'트래픽 변화와 응답 지표를 빠르게 확인할 수 있는 모니터링 화면입니다.' },
+        { id: 14, logo:'images/logos/logo-14.png', back:'images/archive/14.png', color:'#1A1018', accent:'#F48FB1', client:{ko:'카카오뱅크', en:'KakaoBank', ja:'カカオバンク'}, projectName:{ko:'디지털 앱 분석', en:'Digital App Analytics', ja:'デジタルアプリ分析'}, title:{ko:'앱 이용자 행동 대시보드', en:'App User Behavior Dashboard', ja:'アプリ利用者行動ダッシュボード'}, screenType:'Dashboard', industry:'공공·금융', layoutType:'분석형', suitableFor:'전환 흐름 분석', description:'사용자 행동과 전환 지표를 중심으로 한 디지털 분석 화면입니다.' },
+        { id: 15, logo:'images/logos/logo-15.png', back:'images/archive/15.png', color:'#1A1A1A', accent:'#FFAB91', client:{ko:'SK하이닉스', en:'SK hynix', ja:'SKハイニックス'}, projectName:{ko:'생산성 보고서', en:'Productivity Report', ja:'生産性レポート'}, title:{ko:'반도체 생산성 대시보드', en:'Semiconductor Productivity Dashboard', ja:'半導体生産性ダッシュボード'}, screenType:'Reporting', industry:'제조·유통', layoutType:'리포트형', suitableFor:'생산 효율 분석', description:'생산 안정성과 실적을 시각화한 반도체 현장 보고 화면입니다.' },
+        { id: 16, logo:'images/logos/logo-16.png', back:'images/archive/16.png', color:'#0D1A2A', accent:'#90CAF9', client:{ko:'삼성전자', en:'Samsung Electronics', ja:'サムスン電子'}, projectName:{ko:'고객 만족 분석', en:'Customer Satisfaction Analysis', ja:'顧客満足分析'}, title:{ko:'고객 경험 리포트', en:'Customer Experience Report', ja:'顧客体験レポート'}, screenType:'Dashboard', industry:'서비스·기타', layoutType:'KPI Summary', suitableFor:'CS 지표 점검', description:'고객 만족도와 서비스 평점을 한눈에 점검할 수 있는 리포트 화면입니다.' },
       ];
       const selectedArchive = selectedArchiveIndex !== null ? archiveItems[selectedArchiveIndex] : null;
       const moveArchiveIndex = (direction) => {
@@ -422,9 +521,9 @@
 
               {/* GNB */}
               <nav className="hidden gap-10 font-medium text-white/80 md:flex h-full items-stretch">
-                <a href="gallery.html" className="gnb-link transition hover:text-white">레퍼런스 갤러리</a>
-                <a href="resources.html" className="gnb-link transition hover:text-white">디자인 리소스</a>
-                <a href="archive.html" className="gnb-link transition hover:text-white">고객사 사이트</a>
+                <a href="gallery.html" className="gnb-link transition hover:text-white">{t.navGallery}</a>
+                <a href="resources.html" className="gnb-link transition hover:text-white">{t.navResources}</a>
+                <a href="archive.html" className="gnb-link transition hover:text-white">{t.navClients}</a>
               </nav>
 
               {/* Utility */}
@@ -436,31 +535,42 @@
                     <path d="M14 14L18 18" stroke={ics} strokeWidth="1.8" strokeLinecap="round"/>
                   </svg>
                   <input
-                    placeholder="레퍼런스 검색"
+                    placeholder={t.searchPlaceholder}
                     className="bg-transparent text-sm outline-none placeholder:text-white/35 text-white w-full"
                     onKeyDown={(e) => { const q = e.currentTarget.value.trim(); if (e.key === 'Enter' && q) window.location.href = 'gallery.html?q=' + encodeURIComponent(q); }}
                   />
                 </div>
                 {/* Dark mode */}
-                <button onClick={toggleTheme} className="w-9 h-9 flex items-center justify-center rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition" title={theme==='dark'?'라이트 모드로 전환':'다크 모드로 전환'} style={{display:'none'}}>
+                <button onClick={toggleTheme} className="w-9 h-9 flex items-center justify-center rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition" title={theme==='dark'?t.themeToLight:t.themeToDark} style={{display:'none'}}>
                   {theme==='dark'
                     ? <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke={ic} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
                     : <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke={ic} strokeWidth="1.8"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke={ic} strokeWidth="1.8" strokeLinecap="round"/></svg>
                   }
                 </button>
                 {/* Language */}
-                <button className="flex items-center gap-1.5 h-9 px-3 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition text-sm text-white/75 font-medium">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="12" r="9" stroke={icm} strokeWidth="1.8"/>
-                    <path d="M12 3C12 3 9 7 9 12C9 17 12 21 12 21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
-                    <path d="M12 3C12 3 15 7 15 12C15 17 12 21 12 21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
-                    <path d="M3 12H21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
-                  </svg>
-                  KR
-                  <svg width="10" height="10" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3 4.5L6 7.5L9 4.5" stroke={icm} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </button>
+                <div className="relative">
+                  <button onClick={() => setLangOpen(!langOpen)} className="flex items-center gap-1.5 h-9 px-3 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition text-sm text-white/75 font-medium">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="12" cy="12" r="9" stroke={icm} strokeWidth="1.8"/>
+                      <path d="M12 3C12 3 9 7 9 12C9 17 12 21 12 21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
+                      <path d="M12 3C12 3 15 7 15 12C15 17 12 21 12 21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
+                      <path d="M3 12H21" stroke={icm} strokeWidth="1.8" strokeLinecap="round"/>
+                    </svg>
+                    {lang==='ko'?'KR':lang==='en'?'EN':'JA'}
+                    <svg width="10" height="10" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M3 4.5L6 7.5L9 4.5" stroke={icm} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </button>
+                  {langOpen && (
+                    <div className="family-site-dropdown absolute right-0 top-full mt-1 w-36 rounded-lg border border-white/15 overflow-hidden z-50">
+                      {[['ko','한국어'],['en','English'],['ja','日本語']].map(([code, label]) => (
+                        <button key={code} onClick={() => changeLang(code)} className="block w-full text-left px-4 py-2.5 text-sm text-white/60 hover:bg-white/10 hover:text-white/90 transition">
+                          {label}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </header>
@@ -471,10 +581,10 @@
             <div class="hero-canvas">
 
               <div class="hero-content">
-                <p class="hero-subtitle">레퍼런스가 필요하신가요?</p>
+                <p class="hero-subtitle">{t.heroSubtitle}</p>
 
                 <h1 class="hero-title">
-                  더 높은 품질을 위한
+                  {t.heroTitle}
                 </h1>
 
                 <div class="hero-logo">
@@ -495,10 +605,10 @@
             <div className="mb-6 flex items-end justify-between">
               <div>
                 <p className="page-header-label">Reference Gallery</p>
-                <h2 className="mt-2 text-3xl font-bold">레퍼런스 갤러리</h2>
+                <h2 className="mt-2 text-3xl font-bold">{t.galleryHeading}</h2>
               </div>
               <a href="gallery.html" className="rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm hover:bg-white/10">
-                전체 보기 →
+                {t.viewAll}
               </a>
             </div>
 
@@ -508,25 +618,25 @@
                   <div className="gallery-card-thumb">
                     <img
                       src={item.image.replace('/templates/', '/templates-thumbnail/')}
-                      alt={item.title}
+                      alt={L(item.title)}
                       onError={(e) => { e.currentTarget.style.display = 'none'; }}
                     />
                   </div>
                   <div className="p-5">
                     <div className="gallery-card-badges">
-                      <span className={`gallery-badge-field ${INDUSTRY_CLS[item.industry] || ''}`}>{item.industry}</span>
+                      <span className={`gallery-badge-field ${INDUSTRY_CLS[item.industry] || ''}`}>{t.industryLabels[item.industry] || item.industry}</span>
                       <span className={`gallery-badge ${SCREEN_CLS[item.screenType] || ''}`}>{item.screenType}</span>
                     </div>
                     <div className="gallery-card-layout-subtitle">{item.layoutType}</div>
-                    <h3 className="gallery-card-title">{item.title}</h3>
+                    <h3 className="gallery-card-title">{L(item.title)}</h3>
                     <div className="gallery-card-footer">
                       <div className="gallery-suitable-box">
-                        <p>{item.suitableFor}</p>
+                        <p>{L(item.suitableFor)}</p>
                       </div>
                       <div className="gallery-card-hover-footer">
                         {/* <div className="gallery-card-hover-title">참고 포인트</div>
                         <p>{item.referencePoints}</p> */}
-                        <a href="#" onClick={(e) => { e.preventDefault(); setSelectedGalleryIndex(index); }} className="gallery-card-link">자세히보기 →</a>
+                        <a href="#" onClick={(e) => { e.preventDefault(); setSelectedGalleryIndex(index); }} className="gallery-card-link">{t.viewDetail}</a>
                       </div>
                     </div>
                   </div>
@@ -541,12 +651,12 @@
             <div className="mb-8 flex items-end justify-between">
               <div>
                 <p className="page-header-label">Resources</p>
-                <h2 className="mt-2 text-3xl font-bold" style={{color:theme==='dark'?'#ffffff':'#172B4D'}}>디자인 리소스</h2>
-                <p style={{marginTop:'8px', fontSize:'14px', color:theme==='dark'?'rgba(255,255,255,0.4)':'rgba(9,30,66,0.45)'}}>색상 · 차트 · 폰트 · 아이콘 실무 가이드</p>
+                <h2 className="mt-2 text-3xl font-bold" style={{color:theme==='dark'?'#ffffff':'#172B4D'}}>{t.resourcesHeading}</h2>
+                <p style={{marginTop:'8px', fontSize:'14px', color:theme==='dark'?'rgba(255,255,255,0.4)':'rgba(9,30,66,0.45)'}}>{t.resourcesDesc}</p>
               </div>
               <a href="resources.html"
                 className="rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm hover:bg-white/10 transition">
-                전체 보기 →
+                {t.viewAll}
               </a>
             </div>
 
@@ -580,24 +690,24 @@
               return (
                 <div>
                   <div style={{display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:'14px'}}>
-                    {themes.map((t, i) => (
+                    {themes.map((tm, i) => (
                       <a key={i} href="resources.html" style={{textDecoration:'none', display:'block', borderRadius:'16px', border:`1px solid ${theme==='dark'?'rgba(255,255,255,0.08)':'rgba(9,30,66,0.1)'}`, background:theme==='dark'?'rgba(255,255,255,0.03)':'#FFFFFF', overflow:'hidden', transition:'transform 0.15s, border-color 0.15s'}}
                         onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-3px)';e.currentTarget.style.borderColor=theme==='dark'?'rgba(255,255,255,0.18)':'rgba(9,30,66,0.22)';}}
                         onMouseLeave={e=>{e.currentTarget.style.transform='';e.currentTarget.style.borderColor=theme==='dark'?'rgba(255,255,255,0.08)':'rgba(9,30,66,0.1)';}}>
                         <div style={{height:'58px', display:'flex'}}>
-                          {t.colors.map((c,j) => <div key={j} style={{flex:1, background:c}}/>)}
+                          {tm.colors.map((c,j) => <div key={j} style={{flex:1, background:c}}/>)}
                         </div>
                         <div style={{padding:'10px 12px'}}>
                           <div style={{display:'flex', gap:'5px', marginBottom:'6px', flexWrap:'wrap'}}>
-                            <span style={{fontSize:'9px', fontWeight:'700', letterSpacing:'0.08em', textTransform:'uppercase', padding:'2px 6px', borderRadius:'4px', background:t.theme==='cool'?'rgba(43,103,255,0.18)':'rgba(232,100,28,0.18)', color:t.theme==='cool'?'#7AADFF':'#FFAA7A'}}>{t.theme==='cool'?'Cool':'Warm'}</span>
-                            <span style={{fontSize:'9px', fontWeight:'600', padding:'2px 6px', borderRadius:'4px', background:theme==='dark'?'rgba(255,255,255,0.07)':'rgba(9,30,66,0.07)', color:theme==='dark'?'rgba(255,255,255,0.45)':'rgba(9,30,66,0.5)'}}>{t.cat}</span>
+                            <span style={{fontSize:'9px', fontWeight:'700', letterSpacing:'0.08em', textTransform:'uppercase', padding:'2px 6px', borderRadius:'4px', background:tm.theme==='cool'?'rgba(43,103,255,0.18)':'rgba(232,100,28,0.18)', color:tm.theme==='cool'?'#7AADFF':'#FFAA7A'}}>{tm.theme==='cool'?'Cool':'Warm'}</span>
+                            <span style={{fontSize:'9px', fontWeight:'600', padding:'2px 6px', borderRadius:'4px', background:theme==='dark'?'rgba(255,255,255,0.07)':'rgba(9,30,66,0.07)', color:theme==='dark'?'rgba(255,255,255,0.45)':'rgba(9,30,66,0.5)'}}>{t.catLabels[tm.cat] || tm.cat}</span>
                           </div>
-                          <div style={{fontSize:'12px', fontWeight:'600', color:theme==='dark'?'rgba(255,255,255,0.85)':'#172B4D', overflow:'hidden', whiteSpace:'nowrap', textOverflow:'ellipsis'}}>{t.name}</div>
+                          <div style={{fontSize:'12px', fontWeight:'600', color:theme==='dark'?'rgba(255,255,255,0.85)':'#172B4D', overflow:'hidden', whiteSpace:'nowrap', textOverflow:'ellipsis'}}>{t.brandNames[tm.name] || tm.name}</div>
                         </div>
                       </a>
                     ))}
                   </div>
-                  <p style={{marginTop:'10px', fontSize:'12px', color:'rgba(255,255,255,0.3)', textAlign:'right'}}>총 12개 테마 · <a href="resources.html" style={{color:'rgba(99,228,185,0.6)', textDecoration:'none'}}>전체 보기 →</a></p>
+                  <p style={{marginTop:'10px', fontSize:'12px', color:'rgba(255,255,255,0.3)', textAlign:'right'}}>{t.totalThemes} <a href="resources.html" style={{color:'rgba(99,228,185,0.6)', textDecoration:'none'}}>{t.viewAll}</a></p>
                 </div>
               );
             })()}
@@ -625,13 +735,13 @@
                           {miniChartRenderer(chart.id)}
                         </div>
                         <div style={{padding:'10px 14px'}}>
-                          <span style={{fontSize:'9px', fontWeight:'700', letterSpacing:'0.08em', textTransform:'uppercase', padding:'2px 6px', borderRadius:'4px', background:'rgba(125,96,255,0.15)', color:'#b5a0ff', display:'inline-block', marginBottom:'5px'}}>{chart.purpose}</span>
+                          <span style={{fontSize:'9px', fontWeight:'700', letterSpacing:'0.08em', textTransform:'uppercase', padding:'2px 6px', borderRadius:'4px', background:'rgba(125,96,255,0.15)', color:'#b5a0ff', display:'inline-block', marginBottom:'5px'}}>{t.purposeLabels[chart.purpose] || chart.purpose}</span>
                           <div style={{fontSize:'12px', fontWeight:'600', color:'rgba(255,255,255,0.85)'}}>{chart.name}</div>
                         </div>
                       </div>
                     ))}
                   </div>
-                  <p style={{marginTop:'10px', fontSize:'12px', color:'rgba(255,255,255,0.3)', textAlign:'right'}}>총 8개 차트 가이드 · <a href="resources.html" style={{color:'rgba(99,228,185,0.6)', textDecoration:'none'}}>전체 보기 →</a></p>
+                  <p style={{marginTop:'10px', fontSize:'12px', color:'rgba(255,255,255,0.3)', textAlign:'right'}}>{t.totalCharts} <a href="resources.html" style={{color:'rgba(99,228,185,0.6)', textDecoration:'none'}}>{t.viewAll}</a></p>
                 </div>
               );
             })()}
@@ -640,12 +750,12 @@
             {activeResourceTab === 'Font' && (() => {
               const specs = [
                 {role:'Display', size:'56px', weight:'700', ls:'-0.03em', sample:'AXIS Design Gallery'},
-                {role:'H1',      size:'40px', weight:'700', ls:'-0.02em', sample:'디자인 갤러리'},
-                {role:'H2',      size:'32px', weight:'600', ls:'-0.02em', sample:'레퍼런스 갤러리'},
-                {role:'H3',      size:'24px', weight:'600', ls:'-0.01em', sample:'산업별 템플릿'},
-                {role:'Body L',  size:'18px', weight:'400', ls:'0',       sample:'실무에 바로 활용 가능한 디자인 시스템'},
-                {role:'Body M',  size:'16px', weight:'400', ls:'0',       sample:'실무에 바로 활용 가능한 디자인 시스템'},
-                {role:'Caption', size:'12px', weight:'400', ls:'0.01em',  sample:'2026년 05월 07일 — 디자인 가이드라인'},
+                {role:'H1',      size:'40px', weight:'700', ls:'-0.02em', sample:t.fontH1},
+                {role:'H2',      size:'32px', weight:'600', ls:'-0.02em', sample:t.fontH2},
+                {role:'H3',      size:'24px', weight:'600', ls:'-0.01em', sample:t.fontH3},
+                {role:'Body L',  size:'18px', weight:'400', ls:'0',       sample:t.fontBody},
+                {role:'Body M',  size:'16px', weight:'400', ls:'0',       sample:t.fontBody},
+                {role:'Caption', size:'12px', weight:'400', ls:'0.01em',  sample:t.fontCaption},
                 {role:'Label',   size:'11px', weight:'600', ls:'0.07em',  sample:'TEMPLATE CURATION'},
               ];
               return (
@@ -660,7 +770,7 @@
                       </div>
                     ))}
                   </div>
-                  <p style={{marginTop:'10px', fontSize:'12px', color:'rgba(255,255,255,0.3)', textAlign:'right'}}>Pretendard 10단계 타입 스케일 · <a href="resources.html" style={{color:'rgba(99,228,185,0.6)', textDecoration:'none'}}>전체 보기 →</a></p>
+                  <p style={{marginTop:'10px', fontSize:'12px', color:'rgba(255,255,255,0.3)', textAlign:'right'}}>{t.fontScale} <a href="resources.html" style={{color:'rgba(99,228,185,0.6)', textDecoration:'none'}}>{t.viewAll}</a></p>
                 </div>
               );
             })()}
@@ -699,7 +809,7 @@
                       </a>
                     ))}
                   </div>
-                  <p style={{marginTop:'10px', fontSize:'12px', color:'rgba(255,255,255,0.3)', textAlign:'right'}}>총 40개 아이콘 · <a href="resources.html" style={{color:'rgba(99,228,185,0.6)', textDecoration:'none'}}>전체 보기 →</a></p>
+                  <p style={{marginTop:'10px', fontSize:'12px', color:'rgba(255,255,255,0.3)', textAlign:'right'}}>{t.totalIcons} <a href="resources.html" style={{color:'rgba(99,228,185,0.6)', textDecoration:'none'}}>{t.viewAll}</a></p>
                 </div>
               );
             })()}
@@ -814,12 +924,12 @@
             <p className="page-header-label">Project Archive</p>
             <h2 className="mt-2 text-3xl font-bold" style={{color:nameCl
               }}>
-              프로젝트 자료 아카이브
+              {t.archiveHeading}
             </h2>
           </div>
           <a href="resources.html"
             className="rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm hover:bg-white/10 transition">
-            전체 보기 →
+            {t.viewAll}
           </a>
         </div>
       </div>
@@ -853,33 +963,33 @@
             <div className="archive-popup-overlay" onClick={(e) => { if (e.target === e.currentTarget) setSelectedArchiveIndex(null); }}>
               <div className="archive-popup" role="dialog" aria-modal="true" aria-labelledby="archive-popup-title">
                     <div className="archive-popup-controls">
-                    <button type="button" className="archive-popup-action" onClick={() => moveArchiveIndex(-1)} aria-label="이전 프로젝트">
+                    <button type="button" className="archive-popup-action" onClick={() => moveArchiveIndex(-1)} aria-label={t.ariaPrevProject}>
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </button>
-                    <button type="button" className="archive-popup-action" onClick={() => moveArchiveIndex(1)} aria-label="다음 프로젝트">
+                    <button type="button" className="archive-popup-action" onClick={() => moveArchiveIndex(1)} aria-label={t.ariaNextProject}>
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </button>
-                    <button type="button" className="archive-popup-action archive-popup-close" onClick={() => setSelectedArchiveIndex(null)} aria-label="팝업 닫기">
+                    <button type="button" className="archive-popup-action archive-popup-close" onClick={() => setSelectedArchiveIndex(null)} aria-label={t.ariaClose}>
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
                       </svg>
                     </button>
                   </div>
                   <div className="archive-popup-left">
-                    <img src={selectedArchive.back} alt={selectedArchive.title} />
+                    <img src={selectedArchive.back} alt={L(selectedArchive.title)} />
                   </div>
 
                   <div className="archive-popup-right">
                     <div className="archive-popup-content">
                       <div>
-                        <h3 id="archive-popup-title" className="archive-popup-title">{selectedArchive.title}</h3>
+                        <h3 id="archive-popup-title" className="archive-popup-title">{L(selectedArchive.title)}</h3>
                         <div className="archive-popup-meta">
-                          <div className="archive-popup-meta-item"><strong>고객사</strong><span>{selectedArchive.client}</span></div>
-                          <div className="archive-popup-meta-item"><strong>프로젝트명</strong><span>{selectedArchive.projectName}</span></div>
+                          <div className="archive-popup-meta-item"><strong>{t.metaClient}</strong><span>{L(selectedArchive.client)}</span></div>
+                          <div className="archive-popup-meta-item"><strong>{t.metaProject}</strong><span>{L(selectedArchive.projectName)}</span></div>
                         </div>
                       </div>
                     </div>
@@ -892,36 +1002,36 @@
             <div className="archive-popup-overlay" onClick={(e) => { if (e.target === e.currentTarget) setSelectedGalleryIndex(null); }}>
               <div className="archive-popup" role="dialog" aria-modal="true" aria-labelledby="gallery-popup-title">
                     <div className="archive-popup-controls">
-                    <button type="button" className="archive-popup-action" onClick={() => moveGalleryIndex(-1)} aria-label="이전 갤러리">
+                    <button type="button" className="archive-popup-action" onClick={() => moveGalleryIndex(-1)} aria-label={t.ariaPrevGallery}>
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </button>
-                    <button type="button" className="archive-popup-action" onClick={() => moveGalleryIndex(1)} aria-label="다음 갤러리">
+                    <button type="button" className="archive-popup-action" onClick={() => moveGalleryIndex(1)} aria-label={t.ariaNextGallery}>
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </button>
-                    <button type="button" className="archive-popup-action archive-popup-close" onClick={() => setSelectedGalleryIndex(null)} aria-label="팝업 닫기">
+                    <button type="button" className="archive-popup-action archive-popup-close" onClick={() => setSelectedGalleryIndex(null)} aria-label={t.ariaClose}>
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
                       </svg>
                     </button>
                   </div>
                   <div className="archive-popup-left">
-                    <img src={selectedGallery.image} alt={selectedGallery.title} />
+                    <img src={selectedGallery.image} alt={L(selectedGallery.title)} />
                   </div>
 
                   <div className="archive-popup-right">
                     <div className="archive-popup-content">
                       <div>
-                        <h3 id="gallery-popup-title" className="archive-popup-title">{selectedGallery.title}</h3>
+                        <h3 id="gallery-popup-title" className="archive-popup-title">{L(selectedGallery.title)}</h3>
                         <div className="archive-popup-meta">
-                          <div className="archive-popup-meta-item"><strong>산업</strong><span>{selectedGallery.industry}</span></div>
-                          <div className="archive-popup-meta-item"><strong>화면 유형</strong><span>{selectedGallery.screenType}</span></div>
-                          <div className="archive-popup-meta-item"><strong>레이아웃</strong><span>{selectedGallery.layoutType}</span></div>
+                          <div className="archive-popup-meta-item"><strong>{t.metaIndustry}</strong><span>{t.industryLabels[selectedGallery.industry] || selectedGallery.industry}</span></div>
+                          <div className="archive-popup-meta-item"><strong>{t.metaScreen}</strong><span>{selectedGallery.screenType}</span></div>
+                          <div className="archive-popup-meta-item"><strong>{t.metaLayout}</strong><span>{selectedGallery.layoutType}</span></div>
                           {/* <div className="archive-popup-meta-item"><strong>참고 포인트</strong><span>{selectedGallery.referencePoints}</span></div> */}
-                          <div className="archive-popup-meta-item"><strong>사용 목적</strong><span>{selectedGallery.suitableFor}</span></div>
+                          <div className="archive-popup-meta-item"><strong>{t.metaPurpose}</strong><span>{L(selectedGallery.suitableFor)}</span></div>
                         </div>
                       </div>
                     </div>
@@ -945,17 +1055,17 @@
                 style={{display:'block', maxWidth:'760px', width:'calc(100vw - 48px)', padding:0}}
                 >
                   <div className="archive-popup-controls">
-                    <button type="button" className="archive-popup-action" onClick={() => moveChartIndex(-1)} aria-label="이전 차트">
+                    <button type="button" className="archive-popup-action" onClick={() => moveChartIndex(-1)} aria-label={t.ariaPrevChart}>
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </button>
-                    <button type="button" className="archive-popup-action" onClick={() => moveChartIndex(1)} aria-label="다음 차트">
+                    <button type="button" className="archive-popup-action" onClick={() => moveChartIndex(1)} aria-label={t.ariaNextChart}>
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </button>
-                    <button type="button" className="archive-popup-action archive-popup-close" onClick={() => setSelectedChartIndex(null)} aria-label="팝업 닫기">
+                    <button type="button" className="archive-popup-action archive-popup-close" onClick={() => setSelectedChartIndex(null)} aria-label={t.ariaClose}>
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
                       </svg>
@@ -965,10 +1075,10 @@
                     <div className="chart-card-header" style={{padding:'28px 32px 18px', borderBottom:'1px solid rgba(255,255,255,0.06)'}}>
                       <div>
                         <div style={{display:'flex', alignItems:'center', gap:'10px', marginBottom:'8px', flexWrap:'wrap'}}>
-                          <span className="chart-purpose-badge">{chart.purpose}</span>
+                          <span className="chart-purpose-badge">{t.purposeLabels[chart.purpose] || chart.purpose}</span>
                           <h3 className="chart-card-title" style={{margin:0}}>{chart.name}</h3>
                         </div>
-                        <p className="chart-card-definition" style={{margin:0}}>{chart.definition}</p>
+                        <p className="chart-card-definition" style={{margin:0}}>{L(chart.definition)}</p>
                       </div>
                     </div>
                     <div className="chart-card-content" style={{gridTemplateColumns:'1fr 1fr', minHeight:'420px'}}>
@@ -977,12 +1087,12 @@
                       </div>
                       <div className="chart-card-body" style={{padding:'28px 32px', gap:'24px'}}>
                         <div>
-                          <p className="chart-inner-label">Anatomy — 구성 요소</p>
+                          <p className="chart-inner-label">{t.anatomyLabel}</p>
                           <div className="anatomy-list" style={{marginBottom:'22px'}}>
                             {chart.anatomy.map((a, i) => (
                               <div key={i} className="anatomy-item">
                                 <span className="anatomy-dot" style={{backgroundColor: a.color}} />
-                                {a.label}
+                                {L(a.label)}
                               </div>
                             ))}
                           </div>
@@ -992,11 +1102,11 @@
                           <div className="do-dont-grid">
                             <div className="do-box">
                               <div className="do-dont-label">✓ Do</div>
-                              <p style={{margin:0, fontSize:'13px', color:'rgba(255,255,255,0.75)', lineHeight:'1.6'}}>{chart.do}</p>
+                              <p style={{margin:0, fontSize:'13px', color:'rgba(255,255,255,0.75)', lineHeight:'1.6'}}>{L(chart.do)}</p>
                             </div>
                             <div className="dont-box">
                               <div className="do-dont-label">✕ Don't</div>
-                              <p style={{margin:0, fontSize:'13px', color:'rgba(255,255,255,0.75)', lineHeight:'1.6'}}>{chart.dont}</p>
+                              <p style={{margin:0, fontSize:'13px', color:'rgba(255,255,255,0.75)', lineHeight:'1.6'}}>{L(chart.dont)}</p>
                             </div>
                           </div>
                         </div>
@@ -1047,13 +1157,13 @@
                   {/* Nav Links */}
                   <div className="flex items-center gap-6 text-sm text-white/50">
                     <a href="https://www.bimatrix.co.kr/privacy/" target="_blank" className="hover:text-white/80 transition">
-                      개인정보처리방침</a>
+                      {t.footerPrivacy}</a>
                     <span className="text-white/20">|</span>
                     <a href="https://www.bimatrix.co.kr/pr/newsletter/subscription/" target="_blank" className="hover:text-white/80 transition">
-                      뉴스레터 구독</a>
+                      {t.footerNewsletter}</a>
                     <span className="text-white/20">|</span>
-                    <a href="https://www.bimatrix.co.kr/support/contact/" target="_blank" className="hover:text-white/80 transition">
-                      문의하기</a>
+                    <a href="mailto:hhpark1425@bimatrix.co.kr" target="_blank" className="hover:text-white/80 transition">
+                      {t.footerContact}</a>
                   </div>
                 </div>
 
@@ -1074,10 +1184,10 @@
                   {familySiteOpen && (
                     <div className="family-site-dropdown absolute right-0 bottom-full mb-1 w-48 rounded-lg border border-white/15 overflow-hidden z-10">
                       {[
-                        {label: "비아이매트릭스 홈페이지", href: "https://www.bimatrix.co.kr/"},
-                        {label: "AUD플랫폼 아카데미", href: "https://audp.bimatrix.co.kr/"},
-                        {label: "AUD플랫폼 데모", href: "http://aud.bimatrix.co.kr/extention/sso/SimpleSSO4.jsp"},
-                        {label: "고객지원 사이트", href: "https://cs.bimatrix.co.kr/"},
+                        {label: t.familyHome, href: "https://www.bimatrix.co.kr/"},
+                        {label: t.familyAcademy, href: "https://audp.bimatrix.co.kr/"},
+                        {label: t.familyDemo, href: "http://aud.bimatrix.co.kr/extention/sso/SimpleSSO4.jsp"},
+                        {label: t.familySupport, href: "https://cs.bimatrix.co.kr/"},
                       ].map((item) => (
                         <a key={item.label} href={item.href} target="_blank"
                            className="block px-4 py-2.5 text-sm text-white/60 hover:bg-white/10 hover:text-white/90 transition">
@@ -1095,8 +1205,8 @@
               <div className="mx-auto max-w-7xl px-8 py-6 flex items-end justify-between gap-8">
                 {/* Company Info */}
                 <div className="flex flex-col gap-1.5 text-xs text-white/35 leading-relaxed">
-                  <p className="text-white/50 font-medium text-sm">(주)비아이매트릭스</p>
-                  <p>서울시 강남구 선릉로 433, 세방빌딩 신관 17층(역삼동) &nbsp;|&nbsp; 대표이사: 배영근</p>
+                  <p className="text-white/50 font-medium text-sm">{t.footerCompany}</p>
+                  <p>{t.footerAddress} &nbsp;|&nbsp; {t.footerCeo}</p>
                   <p>Tel: 02-561-4475 &nbsp;|&nbsp; Fax: 02-561-4479</p>
                   <p className="mt-1">© BI MATRIX CO., LTD. ALL RIGHTS RESERVED.</p>
                 </div>
