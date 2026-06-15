@@ -1783,10 +1783,24 @@ body {
   width: min(900px, 100%);
   max-height: 700px;
   gap: 0;
-  overflow: hidden;
+  overflow: visible;
 }
 .gallery-popup .archive-popup-right {
   min-height: 0;
+}
+.gallery-popup .archive-popup-left {
+  border-radius: 28px 28px 0 0;
+}
+.gallery-popup .archive-popup-controls {
+  top: -18px;
+  right: -18px;
+}
+.gallery-popup .archive-popup-close {
+  background: #2C2C2C;
+  border-color: rgba(255, 255, 255, 0.35);
+}
+.gallery-popup .archive-popup-close:hover {
+  background: #3a3a3f;
 }
 .gallery-popup .archive-popup-left {
   min-height: 0;
