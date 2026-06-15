@@ -1781,6 +1781,7 @@ body {
   grid-template-columns: 1fr;
   grid-template-rows: auto auto;
   width: min(900px, 100%);
+  max-height: 700px;
   gap: 0;
   overflow-y: auto;
 }
@@ -1790,13 +1791,16 @@ body {
 }
 .gallery-popup .archive-popup-left img {
   width: 100%;
-  max-height: 66vh;
+  max-height: 470px;
   object-fit: contain;
 }
 .gallery-popup .archive-popup-content {
   justify-content: flex-start;
   height: auto;
   padding: 26px 32px 30px;
+}
+.gallery-popup .archive-popup-meta-item.layout-meta span {
+  color: #6855DC;
 }
 
 @media (max-width: 980px) {
