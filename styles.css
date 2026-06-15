@@ -1816,11 +1816,6 @@ body {
   background: #616065;
   border-radius: 8px;
 }
-.gallery-popup .archive-popup-controls {
-  position: fixed;
-  top: 24px;
-  right: 28px;
-}
 
 @media (max-width: 980px) {
   .archive-popup {
