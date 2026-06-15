@@ -1802,6 +1802,20 @@ body {
 .gallery-popup .archive-popup-meta-item.layout-meta span {
   color: #6855DC;
 }
+.gallery-popup {
+  scrollbar-width: thin;
+  scrollbar-color: #616065 #2C2C2C;
+}
+.gallery-popup::-webkit-scrollbar {
+  width: 10px;
+}
+.gallery-popup::-webkit-scrollbar-track {
+  background: #2C2C2C;
+}
+.gallery-popup::-webkit-scrollbar-thumb {
+  background: #616065;
+  border-radius: 8px;
+}
 
 @media (max-width: 980px) {
   .archive-popup {
