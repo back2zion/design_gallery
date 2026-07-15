@@ -1058,25 +1058,30 @@ function FontPanel({ showToast, lang }) {
     'fonts/downloads/webfont.zip',
   ];
 
+  const USAGE_TITLE = { ko: '화면 타이틀 / 대시보드명', en: 'Screen title / Dashboard name', ja: '画面タイトル / ダッシュボード名' };
+  const USAGE_SUBTITLE = { ko: '섹션 제목 / 카드 그룹명', en: 'Section title / Card group name', ja: 'セクションタイトル / カードグループ名' };
+  const USAGE_HEADER = { ko: '그리드 헤더 / 테이블 컬럼명 / 필터 라벨', en: 'Grid header / Table column name / Filter label', ja: 'グリッドヘッダー / テーブル列名 / フィルターラベル' };
+  const USAGE_BODY = { ko: '본문 / 데이터 셀 / 일반 라벨', en: 'Body text / Data cell / General label', ja: '本文 / データセル / 一般ラベル' };
+
   const fontGuideSections = [
     {
       name: 'Pretendard',
       family: 'Pretendard, sans-serif',
       rows: [
-        { role: 'Title', usage: '화면 타이틀 / 대시보드명', weight: 'Bold', weightValue: 700, size: '24px', example: 'Pretendard Bold 24px' },
-        { role: 'Sub-title', usage: '섹션 제목 / 카드 그룹명', weight: 'SemiBold', weightValue: 600, size: '18px', example: 'Pretendard SemiBold 18px' },
-        { role: 'Header', usage: '그리드 헤더 / 테이블 컬럼명 / 필터 라벨', weight: 'Medium', weightValue: 500, size: '14px', example: 'Pretendard Medium 14px' },
-        { role: 'Body', usage: '본문 / 데이터 셀 / 일반 라벨', weight: 'Regular', weightValue: 400, size: '13px', example: 'Pretendard Regular 13px' },
+        { role: 'Title', usage: USAGE_TITLE, weight: 'Bold', weightValue: 700, size: '24px', example: 'Pretendard Bold 24px' },
+        { role: 'Sub-title', usage: USAGE_SUBTITLE, weight: 'SemiBold', weightValue: 600, size: '18px', example: 'Pretendard SemiBold 18px' },
+        { role: 'Header', usage: USAGE_HEADER, weight: 'Medium', weightValue: 500, size: '14px', example: 'Pretendard Medium 14px' },
+        { role: 'Body', usage: USAGE_BODY, weight: 'Regular', weightValue: 400, size: '13px', example: 'Pretendard Regular 13px' },
       ],
     },
     {
       name: 'Noto Sans KR',
       family: '"Noto Sans KR", sans-serif',
       rows: [
-        { role: 'Title', usage: '화면 타이틀 / 대시보드명', weight: 'Bold', weightValue: 700, size: '24px', example: 'Noto Sans KR Bold 24px' },
-        { role: 'Sub-title', usage: '섹션 제목 / 카드 그룹명', weight: 'Medium', weightValue: 500, size: '18px', example: 'Noto Sans KR Medium 18px' },
-        { role: 'Header', usage: '그리드 헤더 / 테이블 컬럼명 / 필터 라벨', weight: 'Regular', weightValue: 400, size: '14px', example: 'Noto Sans KR Regular 14px' },
-        { role: 'Body', usage: '본문 / 데이터 셀 / 일반 라벨', weight: 'Regular', weightValue: 400, size: '13px', example: 'Noto Sans KR Regular 13px' },
+        { role: 'Title', usage: USAGE_TITLE, weight: 'Bold', weightValue: 700, size: '24px', example: 'Noto Sans KR Bold 24px' },
+        { role: 'Sub-title', usage: USAGE_SUBTITLE, weight: 'Medium', weightValue: 500, size: '18px', example: 'Noto Sans KR Medium 18px' },
+        { role: 'Header', usage: USAGE_HEADER, weight: 'Regular', weightValue: 400, size: '14px', example: 'Noto Sans KR Regular 14px' },
+        { role: 'Body', usage: USAGE_BODY, weight: 'Regular', weightValue: 400, size: '13px', example: 'Noto Sans KR Regular 13px' },
       ],
     },
   ];
@@ -1126,7 +1131,7 @@ function FontPanel({ showToast, lang }) {
                   {section.rows.map(row => (
                     <tr key={`${section.name}-${row.role}`}>
                       <td><span className="font-role-tag">{row.role}</span></td>
-                      <td className="font-usage-text">{row.usage}</td>
+                      <td className="font-usage-text">{L(row.usage, lang)}</td>
                       <td>{row.weight}</td>
                       <td>{row.size}</td>
                       <td>
