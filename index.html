@@ -60,6 +60,7 @@
         purposeLabels: { '비교':'비교', '추세':'추세', '구성비':'구성비', '분포':'분포' },
         catLabels: { '디자인':'디자인', '엔터프라이즈':'엔터프라이즈', '핀테크':'핀테크', '개발자도구':'개발자도구', '인프라':'인프라' },
         brandNames: { '산림조합중앙회':'산림조합중앙회', '한화건설':'한화건설', '카카오뱅크':'카카오뱅크' },
+        colorPaletteLabel: '색상 팔레트', arrayFormatLabel: '배열 형태', copyBtn: '복사',
         footerPrivacy: '개인정보처리방침', footerNewsletter: '뉴스레터 구독', footerContact: '문의하기',
         familyHome: '비아이매트릭스 홈페이지', familyAcademy: 'AUD플랫폼 아카데미', familyDemo: 'AUD플랫폼 데모', familySupport: '고객지원 사이트',
         footerCompany: '(주)비아이매트릭스',
@@ -90,6 +91,7 @@
         purposeLabels: { '비교':'Comparison', '추세':'Trend', '구성비':'Composition', '분포':'Distribution' },
         catLabels: { '디자인':'Design', '엔터프라이즈':'Enterprise', '핀테크':'Fintech', '개발자도구':'Developer Tools', '인프라':'Infrastructure' },
         brandNames: { '산림조합중앙회':'National Forestry Coop.', '한화건설':'Hanwha E&C', '카카오뱅크':'KakaoBank' },
+        colorPaletteLabel: 'Color Palette', arrayFormatLabel: 'Array Format', copyBtn: 'Copy',
         footerPrivacy: 'Privacy Policy', footerNewsletter: 'Newsletter', footerContact: 'Contact Us',
         familyHome: 'BI MATRIX Website', familyAcademy: 'AUD Platform Academy', familyDemo: 'AUD Platform Demo', familySupport: 'Customer Support',
         footerCompany: 'BI MATRIX CO., LTD.',
@@ -120,6 +122,7 @@
         purposeLabels: { '비교':'比較', '추세':'トレンド', '구성비':'構成比', '분포':'分布' },
         catLabels: { '디자인':'デザイン', '엔터프라이즈':'エンタープライズ', '핀테크':'フィンテック', '개발자도구':'開発者ツール', '인프라':'インフラ' },
         brandNames: { '산림조합중앙회':'山林組合中央会', '한화건설':'ハンファ建設', '카카오뱅크':'カカオバンク' },
+        colorPaletteLabel: 'カラーパレット', arrayFormatLabel: '配列形式', copyBtn: 'コピー',
         footerPrivacy: '個人情報処理方針', footerNewsletter: 'ニュースレター購読', footerContact: 'お問い合わせ',
         familyHome: 'BI MATRIXホームページ', familyAcademy: 'AUDプラットフォームアカデミー', familyDemo: 'AUDプラットフォームデモ', familySupport: 'カスタマーサポート',
         footerCompany: '(株)BI MATRIX',
@@ -914,7 +917,7 @@
                                 {t.brandNames[selectedColorTheme.name] || selectedColorTheme.name}
                               </h3>
                               <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', margin: '4px 0 0 0' }}>
-                                {selectedColorTheme.clientCat} · {selectedColorTheme.theme === 'cool' ? 'Cool' : 'Warm'}
+                                {t.catLabels[selectedColorTheme.clientCat] || selectedColorTheme.clientCat} · {selectedColorTheme.theme === 'cool' ? 'Cool' : 'Warm'}
                               </p>
                             </div>
                             <button onClick={closeTheme} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(255,255,255,0.4)', padding: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center' }} aria-label="Close">
@@ -926,7 +929,7 @@
                           </div>
 
                           <div style={{ marginBottom: 16 }}>
-                            <p style={{ fontSize: 11, fontWeight: 600, color: 'rgba(255,255,255,0.45)', marginBottom: 10, textTransform: 'uppercase', letterSpacing: '0.5px' }}>색상 팔레트</p>
+                            <p style={{ fontSize: 11, fontWeight: 600, color: 'rgba(255,255,255,0.45)', marginBottom: 10, textTransform: 'uppercase', letterSpacing: '0.5px' }}>{t.colorPaletteLabel}</p>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                               {selectedColorTheme.brand.map((c) => (
                                 <div key={c.hex} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px', borderRadius: 8, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
@@ -935,19 +938,19 @@
                                     <div style={{ fontSize: 13, fontWeight: 600, color: '#ffffff' }}>{c.name}</div>
                                     <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', fontFamily: 'monospace' }}>{c.hex}</div>
                                   </div>
-                                  <button className="resource-btn" style={{ padding: '6px 12px', whiteSpace: 'nowrap' }} onClick={() => navigator.clipboard.writeText(c.hex).catch(() => {})}>복사</button>
+                                  <button className="resource-btn" style={{ padding: '6px 12px', whiteSpace: 'nowrap' }} onClick={() => navigator.clipboard.writeText(c.hex).catch(() => {})}>{t.copyBtn}</button>
                                 </div>
                               ))}
                             </div>
                           </div>
 
                           <div>
-                            <p style={{ fontSize: 11, fontWeight: 600, color: 'rgba(255,255,255,0.45)', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.5px' }}>배열 형태</p>
+                            <p style={{ fontSize: 11, fontWeight: 600, color: 'rgba(255,255,255,0.45)', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.5px' }}>{t.arrayFormatLabel}</p>
                             <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
                               <div style={{ flex: 1, background: 'rgba(0,0,0,0.3)', padding: 12, borderRadius: 8, color: 'rgba(255,255,255,0.6)', fontFamily: 'monospace', fontSize: 12, wordBreak: 'break-all', border: '1px solid rgba(255,255,255,0.08)' }}>
                                 {JSON.stringify(selectedColorTheme.brand.map((c) => c.hex))}
                               </div>
-                              <button className="resource-btn" style={{ padding: '8px 12px', whiteSpace: 'nowrap' }} onClick={() => navigator.clipboard.writeText(JSON.stringify(selectedColorTheme.brand.map((c) => c.hex))).catch(() => {})}>복사</button>
+                              <button className="resource-btn" style={{ padding: '8px 12px', whiteSpace: 'nowrap' }} onClick={() => navigator.clipboard.writeText(JSON.stringify(selectedColorTheme.brand.map((c) => c.hex))).catch(() => {})}>{t.copyBtn}</button>
                             </div>
                           </div>
                         </div>

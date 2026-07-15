@@ -635,6 +635,9 @@ const I18N = {
     clientCats: { '엔터프라이즈': '엔터프라이즈', '디자인': '디자인', 'AI': 'AI', '인프라': '인프라', '핀테크': '핀테크', '개발자도구': '개발자도구' },
     purposes: { '비교': '비교', '추세': '추세', '구성비': '구성비', '분포': '분포' },
     semDesc: { Primary: '주요 액션, CTA 버튼', Success: '성공, 완료 상태', Warning: '경고, 주의 상태', Error: '오류, 위험 상태', Info: '정보, 안내 메시지' },
+    colorPaletteLabel: '색상 팔레트', arrayFormatLabel: '배열 형태', recommendedUsageLabel: '권장 사용처',
+    copyBtn: '복사', arrayCopiedToast: '✓  배열 복사됨',
+    recommendedTags: ['매출 차트', 'KPI 대시보드', '비즈니스 분석', '협업 도구 분석'],
     themeCount: (n) => <>총 <strong>{n}개</strong>의 테마</>,
     chartCount: (n) => <>총 <strong>{n}개</strong>의 차트 가이드</>,
     iconCount: (n) => <>총 <strong>{n}개</strong>의 아이콘</>,
@@ -669,6 +672,9 @@ const I18N = {
     clientCats: { '엔터프라이즈': 'Enterprise', '디자인': 'Design', 'AI': 'AI', '인프라': 'Infrastructure', '핀테크': 'Fintech', '개발자도구': 'Dev Tools' },
     purposes: { '비교': 'Comparison', '추세': 'Trend', '구성비': 'Composition', '분포': 'Distribution' },
     semDesc: { Primary: 'Primary actions, CTA buttons', Success: 'Success, completed states', Warning: 'Warning, caution states', Error: 'Errors, danger states', Info: 'Information, guidance messages' },
+    colorPaletteLabel: 'Color Palette', arrayFormatLabel: 'Array Format', recommendedUsageLabel: 'Recommended Usage',
+    copyBtn: 'Copy', arrayCopiedToast: '✓  Array copied',
+    recommendedTags: ['Sales Chart', 'KPI Dashboard', 'Business Analytics', 'Collaboration Tool Analytics'],
     themeCount: (n) => <><strong>{n}</strong> themes</>,
     chartCount: (n) => <><strong>{n}</strong> chart guides</>,
     iconCount: (n) => <><strong>{n}</strong> icons</>,
@@ -703,6 +709,9 @@ const I18N = {
     clientCats: { '엔터프라이즈': 'エンタープライズ', '디자인': 'デザイン', 'AI': 'AI', '인프라': 'インフラ', '핀테크': 'フィンテック', '개발자도구': '開発者ツール' },
     purposes: { '비교': '比較', '추세': 'トレンド', '구성비': '構成比', '분포': '分布' },
     semDesc: { Primary: '主要アクション、CTAボタン', Success: '成功・完了状態', Warning: '警告・注意状態', Error: 'エラー・危険状態', Info: '情報・案内メッセージ' },
+    colorPaletteLabel: 'カラーパレット', arrayFormatLabel: '配列形式', recommendedUsageLabel: '推奨用途',
+    copyBtn: 'コピー', arrayCopiedToast: '✓  配列をコピーしました',
+    recommendedTags: ['売上チャート', 'KPIダッシュボード', 'ビジネス分析', 'コラボツール分析'],
     themeCount: (n) => <>全<strong>{n}件</strong>のテーマ</>,
     chartCount: (n) => <>全<strong>{n}件</strong>のチャートガイド</>,
     iconCount: (n) => <>全<strong>{n}件</strong>のアイコン</>,
@@ -1226,7 +1235,7 @@ function ColorModal({ theme, onClose, showToast, t, lang }) {
           <div style={{display:'flex', gap:12, alignItems:'flex-start', marginBottom:16}}>
             <div style={{flex:1}}>
                   <h3 style={{fontSize:18, fontWeight:700, color:'#ffffff', margin:0}}>{title}</h3>
-              <p style={{fontSize:12, color:'rgba(255,255,255,0.5)', margin:'4px 0 0 0'}}>{theme.clientCat} · {theme.theme === 'cool' ? 'Cool' : 'Warm'}</p>
+              <p style={{fontSize:12, color:'rgba(255,255,255,0.5)', margin:'4px 0 0 0'}}>{t.clientCats[theme.clientCat] || theme.clientCat} · {theme.theme === 'cool' ? 'Cool' : 'Warm'}</p>
             </div>
             <button onClick={onClose} style={{background:'none', border:'none', cursor:'pointer', color:'rgba(255,255,255,0.4)', padding:'4px', display:'flex', alignItems:'center', justifyContent:'center'}} aria-label="Close">
               <IconSvg paths={['M18 6 6 18','M6 6l12 12']} size={18} />
@@ -1235,7 +1244,7 @@ function ColorModal({ theme, onClose, showToast, t, lang }) {
 
           {/* 색상 팔레트 섹션 */}
           <div style={{marginBottom:16}}>
-            <p style={{fontSize:11, fontWeight:600, color:'rgba(255,255,255,0.45)', marginBottom:10, textTransform:'uppercase', letterSpacing:'0.5px'}}>색상 팔레트</p>
+            <p style={{fontSize:11, fontWeight:600, color:'rgba(255,255,255,0.45)', marginBottom:10, textTransform:'uppercase', letterSpacing:'0.5px'}}>{t.colorPaletteLabel}</p>
             <div style={{display:'flex', flexDirection:'column', gap:8}}>
               {theme.brand.map(c => (
                 <div key={c.hex} style={{display:'flex', alignItems:'center', gap:12, padding:'12px', borderRadius:8, background:'rgba(255,255,255,0.04)', border:'1px solid rgba(255,255,255,0.08)'}}>
@@ -1244,7 +1253,7 @@ function ColorModal({ theme, onClose, showToast, t, lang }) {
                     <div style={{fontSize:13, fontWeight:600, color:'#ffffff'}}>{c.name}</div>
                     <div style={{fontSize:12, color:'rgba(255,255,255,0.5)', fontFamily:'monospace'}}>{c.hex}</div>
                   </div>
-                  <button className="resource-btn" style={{padding:'6px 12px', whiteSpace:'nowrap'}} onClick={() => copy(c.hex, `${c.hex} 복사됨`)}>복사</button>
+                  <button className="resource-btn" style={{padding:'6px 12px', whiteSpace:'nowrap'}} onClick={() => copy(c.hex, t.hexCopied(c.hex))}>{t.copyBtn}</button>
                 </div>
               ))}
             </div>
@@ -1252,18 +1261,18 @@ function ColorModal({ theme, onClose, showToast, t, lang }) {
 
           {/* 배열 섹션 */}
           <div style={{marginBottom:14}}>
-            <p style={{fontSize:11, fontWeight:600, color:'rgba(255,255,255,0.45)', marginBottom:8, textTransform:'uppercase', letterSpacing:'0.5px'}}>배열 형태</p>
+            <p style={{fontSize:11, fontWeight:600, color:'rgba(255,255,255,0.45)', marginBottom:8, textTransform:'uppercase', letterSpacing:'0.5px'}}>{t.arrayFormatLabel}</p>
             <div style={{display:'flex', gap:8, alignItems:'center'}}>
               <div style={{flex:1, background:'rgba(0,0,0,0.3)', padding:12, borderRadius:8, color:'rgba(255,255,255,0.6)', fontFamily:'monospace', fontSize:12, wordBreak:'break-all', border:'1px solid rgba(255,255,255,0.08)'}}>{brandArray}</div>
-              <button className="resource-btn" style={{padding:'8px 12px', whiteSpace:'nowrap'}} onClick={() => copy(brandArray, '배열 복사됨')}>복사</button>
+              <button className="resource-btn" style={{padding:'8px 12px', whiteSpace:'nowrap'}} onClick={() => copy(brandArray, t.arrayCopiedToast)}>{t.copyBtn}</button>
             </div>
           </div>
 
           {/* 권장 사용처 태그 */}
           <div>
-            <p style={{fontSize:11, fontWeight:600, color:'rgba(255,255,255,0.45)', marginBottom:8, textTransform:'uppercase', letterSpacing:'0.5px'}}>권장 사용처</p>
+            <p style={{fontSize:11, fontWeight:600, color:'rgba(255,255,255,0.45)', marginBottom:8, textTransform:'uppercase', letterSpacing:'0.5px'}}>{t.recommendedUsageLabel}</p>
             <div style={{display:'flex', gap:8, flexWrap:'wrap'}}>
-              {['매출 차트','KPI 대시보드','비즈니스 분석','협업 도구 분석'].map(tag => (
+              {t.recommendedTags.map(tag => (
                 <button key={tag} className="chip" style={{padding:'6px 10px', fontSize:12, background:'rgba(125, 96, 255, 0.15)', color:'#b5a0ff', border:'none', borderRadius:'6px', cursor:'pointer'}}>{tag}</button>
               ))}
             </div>
