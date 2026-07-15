@@ -638,6 +638,7 @@ const I18N = {
     colorPaletteLabel: '색상 팔레트', arrayFormatLabel: '배열 형태', recommendedUsageLabel: '권장 사용처',
     copyBtn: '복사', arrayCopiedToast: '✓  배열 복사됨',
     recommendedTags: ['매출 차트', 'KPI 대시보드', '비즈니스 분석', '협업 도구 분석'],
+    brandNames: { '산림조합중앙회': '산림조합중앙회', '한화건설': '한화건설', '카카오뱅크': '카카오뱅크' },
     themeCount: (n) => <>총 <strong>{n}개</strong>의 테마</>,
     chartCount: (n) => <>총 <strong>{n}개</strong>의 차트 가이드</>,
     iconCount: (n) => <>총 <strong>{n}개</strong>의 아이콘</>,
@@ -675,6 +676,7 @@ const I18N = {
     colorPaletteLabel: 'Color Palette', arrayFormatLabel: 'Array Format', recommendedUsageLabel: 'Recommended Usage',
     copyBtn: 'Copy', arrayCopiedToast: '✓  Array copied',
     recommendedTags: ['Sales Chart', 'KPI Dashboard', 'Business Analytics', 'Collaboration Tool Analytics'],
+    brandNames: { '산림조합중앙회': 'National Forestry Coop.', '한화건설': 'Hanwha E&C', '카카오뱅크': 'KakaoBank' },
     themeCount: (n) => <><strong>{n}</strong> themes</>,
     chartCount: (n) => <><strong>{n}</strong> chart guides</>,
     iconCount: (n) => <><strong>{n}</strong> icons</>,
@@ -712,6 +714,7 @@ const I18N = {
     colorPaletteLabel: 'カラーパレット', arrayFormatLabel: '配列形式', recommendedUsageLabel: '推奨用途',
     copyBtn: 'コピー', arrayCopiedToast: '✓  配列をコピーしました',
     recommendedTags: ['売上チャート', 'KPIダッシュボード', 'ビジネス分析', 'コラボツール分析'],
+    brandNames: { '산림조합중앙회': '山林組合中央会', '한화건설': 'ハンファ建設', '카카오뱅크': 'カカオバンク' },
     themeCount: (n) => <>全<strong>{n}件</strong>のテーマ</>,
     chartCount: (n) => <>全<strong>{n}件</strong>のチャートガイド</>,
     iconCount: (n) => <>全<strong>{n}件</strong>のアイコン</>,
@@ -827,7 +830,7 @@ function ColorPanel({ showToast, lang }) {
                   </span>
                   <span className="client-cat-pill">{t.clientCats[th.clientCat] || th.clientCat}</span>
                 </div>
-                <div className="theme-card-name">{th.name}</div>
+                <div className="theme-card-name">{t.brandNames[th.name] || th.name}</div>
               </div>
             </div>
           ))}
@@ -1215,7 +1218,7 @@ function IconModal({ icon, onClose, showToast, t }) {
 }
 
 function ColorModal({ theme, onClose, showToast, t, lang }) {
-  const title = lang === 'en' ? (theme.name) : lang === 'ja' ? (theme.name) : theme.name;
+  const title = t.brandNames[theme.name] || theme.name;
   const copy = (text, toastMsg) => { navigator.clipboard.writeText(text).catch(()=>{}); showToast(toastMsg || text); };
   const brandArray = JSON.stringify(theme.brand.map(c => c.hex));
 
