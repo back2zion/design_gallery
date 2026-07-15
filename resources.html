@@ -29,9 +29,12 @@ const COLOR_THEMES = [
   {
     id: 'axis', name: 'AXIS Core', theme: 'cool', clientCat: '디자인',
     brand: [
-      { name: 'Purple', hex: '#7D60FF', rgb: '125, 96, 255',  role: 'Primary'   },
-      { name: 'Blue',   hex: '#2B67FF', rgb: '43, 103, 255',  role: 'Secondary' },
-      { name: 'Mint',   hex: '#63E4B9', rgb: '99, 228, 185',  role: 'Accent'    },
+      { name: 'Purple',   hex: '#7D60FF', rgb: '125, 96, 255', role: 'Primary'    },
+      { name: 'Blue',     hex: '#2B67FF', rgb: '43, 103, 255', role: 'Secondary'  },
+      { name: 'Mint',     hex: '#63E4B9', rgb: '99, 228, 185', role: 'Accent'     },
+      { name: 'Lavender', hex: '#A48BFF', rgb: '164, 139, 255', role: 'Support'    },
+      { name: 'Sky',      hex: '#8CB2FF', rgb: '140, 178, 255', role: 'Tertiary'   },
+      { name: 'Aqua',     hex: '#5DE1D0', rgb: '93, 225, 208', role: 'Highlight'  },
     ],
     semantic: [
       { name: 'Primary', hex: '#7D60FF', rgb: '125, 96, 255', desc: '주요 액션, CTA 버튼' },
@@ -51,9 +54,12 @@ const COLOR_THEMES = [
   {
     id: 'sanrim', name: '산림조합중앙회', theme: 'cool', clientCat: '엔터프라이즈',
     brand: [
-      { name: 'Forest Green', hex: '#2D6A27', rgb: '45, 106, 39',  role: 'Primary'   },
-      { name: 'Wood Brown',   hex: '#8B5E15', rgb: '139, 94, 21',  role: 'Secondary' },
-      { name: 'Leaf',         hex: '#6AAF5B', rgb: '106, 175, 91', role: 'Accent'    },
+      { name: 'Forest Green', hex: '#2D6A27', rgb: '45, 106, 39',  role: 'Primary'    },
+      { name: 'Wood Brown',   hex: '#8B5E15', rgb: '139, 94, 21',  role: 'Secondary'  },
+      { name: 'Leaf',         hex: '#6AAF5B', rgb: '106, 175, 91', role: 'Accent'     },
+      { name: 'Moss',         hex: '#4C8A47', rgb: '76, 138, 71',   role: 'Tertiary'   },
+      { name: 'Earth',        hex: '#B08A49', rgb: '176, 138, 73',  role: 'Support'    },
+      { name: 'Fog',          hex: '#D7E6D3', rgb: '215, 230, 211', role: 'Highlight'  },
     ],
     semantic: [
       { name: 'Primary', hex: '#2D6A27', rgb: '45, 106, 39',  desc: '주요 액션, CTA 버튼' },
@@ -73,9 +79,12 @@ const COLOR_THEMES = [
   {
     id: 'toss', name: 'Toss', theme: 'cool', clientCat: '핀테크',
     brand: [
-      { name: 'Blue',     hex: '#0064FF', rgb: '0, 100, 255',    role: 'Primary'   },
-      { name: 'Navy',     hex: '#1A1C5E', rgb: '26, 28, 94',     role: 'Secondary' },
-      { name: 'Sky Blue', hex: '#70B8FF', rgb: '112, 184, 255',  role: 'Accent'    },
+      { name: 'Blue',      hex: '#0064FF', rgb: '0, 100, 255',    role: 'Primary'    },
+      { name: 'Navy',      hex: '#1A1C5E', rgb: '26, 28, 94',     role: 'Secondary'  },
+      { name: 'Sky Blue',  hex: '#70B8FF', rgb: '112, 184, 255',  role: 'Accent'     },
+      { name: 'Ice',       hex: '#B7DFFF', rgb: '183, 223, 255',  role: 'Tertiary'   },
+      { name: 'Slate',     hex: '#233063', rgb: '35, 48, 99',     role: 'Support'    },
+      { name: 'Cyan',      hex: '#91E1FF', rgb: '145, 225, 255',  role: 'Highlight'  },
     ],
     semantic: [
       { name: 'Primary', hex: '#0064FF', rgb: '0, 100, 255',   desc: '주요 액션, CTA 버튼' },
@@ -95,9 +104,12 @@ const COLOR_THEMES = [
   {
     id: 'github', name: 'GitHub', theme: 'cool', clientCat: '개발자도구',
     brand: [
-      { name: 'Purple', hex: '#6E40C9', rgb: '110, 64, 201',  role: 'Primary'   },
-      { name: 'Dark',   hex: '#24292F', rgb: '36, 41, 47',    role: 'Secondary' },
-      { name: 'Pink',   hex: '#F778BA', rgb: '247, 120, 186', role: 'Accent'    },
+      { name: 'Purple',  hex: '#6E40C9', rgb: '110, 64, 201',  role: 'Primary'    },
+      { name: 'Dark',    hex: '#24292F', rgb: '36, 41, 47',    role: 'Secondary'  },
+      { name: 'Pink',    hex: '#F778BA', rgb: '247, 120, 186', role: 'Accent'     },
+      { name: 'Lilac',   hex: '#A583D8', rgb: '165, 131, 216', role: 'Tertiary'   },
+      { name: 'Midnight',hex: '#161B22', rgb: '22, 27, 34',    role: 'Support'    },
+      { name: 'Rose',    hex: '#FFB7D1', rgb: '255, 183, 209', role: 'Highlight'  },
     ],
     semantic: [
       { name: 'Primary', hex: '#6E40C9', rgb: '110, 64, 201', desc: '주요 액션, CTA 버튼' },
@@ -117,9 +129,12 @@ const COLOR_THEMES = [
   {
     id: 'naver-cloud', name: 'Naver Cloud', theme: 'cool', clientCat: '인프라',
     brand: [
-      { name: 'Green',     hex: '#03C75A', rgb: '3, 199, 90',   role: 'Primary'   },
-      { name: 'Dark Navy', hex: '#1A2236', rgb: '26, 34, 54',   role: 'Secondary' },
-      { name: 'Teal',      hex: '#00C4B4', rgb: '0, 196, 180',  role: 'Accent'    },
+      { name: 'Green',      hex: '#03C75A', rgb: '3, 199, 90',   role: 'Primary'    },
+      { name: 'Dark Navy',  hex: '#1A2236', rgb: '26, 34, 54',   role: 'Secondary'  },
+      { name: 'Teal',       hex: '#00C4B4', rgb: '0, 196, 180',  role: 'Accent'     },
+      { name: 'Sea',        hex: '#29D5C9', rgb: '41, 213, 201', role: 'Tertiary'   },
+      { name: 'Mist',       hex: '#92F0E4', rgb: '146, 240, 228', role: 'Support'    },
+      { name: 'Forest',     hex: '#0A2B36', rgb: '10, 43, 54',   role: 'Highlight'  },
     ],
     semantic: [
       { name: 'Primary', hex: '#03C75A', rgb: '3, 199, 90',   desc: '주요 액션, CTA 버튼' },
@@ -139,9 +154,12 @@ const COLOR_THEMES = [
   {
     id: 'upstage', name: 'Upstage', theme: 'cool', clientCat: 'AI',
     brand: [
-      { name: 'Teal', hex: '#00B2CC', rgb: '0, 178, 204',   role: 'Primary'   },
-      { name: 'Dark', hex: '#0D1B2A', rgb: '13, 27, 42',    role: 'Secondary' },
-      { name: 'Cyan', hex: '#7DEEFC', rgb: '125, 238, 252', role: 'Accent'    },
+      { name: 'Teal',   hex: '#00B2CC', rgb: '0, 178, 204',   role: 'Primary'    },
+      { name: 'Dark',   hex: '#0D1B2A', rgb: '13, 27, 42',    role: 'Secondary'  },
+      { name: 'Cyan',   hex: '#7DEEFC', rgb: '125, 238, 252', role: 'Accent'     },
+      { name: 'Sky',    hex: '#70E0FF', rgb: '112, 224, 255', role: 'Tertiary'   },
+      { name: 'Silver', hex: '#A4D8E6', rgb: '164, 216, 230', role: 'Support'    },
+      { name: 'Ink',    hex: '#061821', rgb: '6, 24, 33',     role: 'Highlight'  },
     ],
     semantic: [
       { name: 'Primary', hex: '#00B2CC', rgb: '0, 178, 204',  desc: '주요 액션, CTA 버튼' },
@@ -162,9 +180,12 @@ const COLOR_THEMES = [
   {
     id: 'hanwha', name: '한화건설', theme: 'warm', clientCat: '엔터프라이즈',
     brand: [
-      { name: 'Orange',       hex: '#E8401C', rgb: '232, 64, 28',  role: 'Primary'   },
-      { name: 'Navy',         hex: '#1A2744', rgb: '26, 39, 68',   role: 'Secondary' },
-      { name: 'Light Orange', hex: '#FF7A56', rgb: '255, 122, 86', role: 'Accent'    },
+      { name: 'Orange',      hex: '#E8401C', rgb: '232, 64, 28',  role: 'Primary'    },
+      { name: 'Navy',        hex: '#1A2744', rgb: '26, 39, 68',   role: 'Secondary'  },
+      { name: 'Light Orange',hex: '#FF7A56', rgb: '255, 122, 86', role: 'Accent'     },
+      { name: 'Brick',       hex: '#C1402C', rgb: '193, 64, 44',  role: 'Tertiary'   },
+      { name: 'Sand',        hex: '#F5A972', rgb: '245, 169, 114',role: 'Support'    },
+      { name: 'Storm',       hex: '#2A334E', rgb: '42, 51, 78',   role: 'Highlight'  },
     ],
     semantic: [
       { name: 'Primary', hex: '#E8401C', rgb: '232, 64, 28',  desc: '주요 액션, CTA 버튼' },
@@ -184,9 +205,12 @@ const COLOR_THEMES = [
   {
     id: 'adobe', name: 'Adobe', theme: 'warm', clientCat: '디자인',
     brand: [
-      { name: 'Red',    hex: '#FF0000', rgb: '255, 0, 0',   role: 'Primary'   },
-      { name: 'Dark',   hex: '#1C1C1C', rgb: '28, 28, 28',  role: 'Secondary' },
-      { name: 'Orange', hex: '#FF6B00', rgb: '255, 107, 0', role: 'Accent'    },
+      { name: 'Red',      hex: '#FF0000', rgb: '255, 0, 0',   role: 'Primary'    },
+      { name: 'Dark',     hex: '#1C1C1C', rgb: '28, 28, 28',  role: 'Secondary'  },
+      { name: 'Orange',   hex: '#FF6B00', rgb: '255, 107, 0', role: 'Accent'     },
+      { name: 'Charcoal', hex: '#2A2A2A', rgb: '42, 42, 42',  role: 'Tertiary'   },
+      { name: 'Coral',    hex: '#FF8578', rgb: '255, 133, 120',role: 'Support'    },
+      { name: 'Flame',    hex: '#FFB26B', rgb: '255, 178, 107',role: 'Highlight'  },
     ],
     semantic: [
       { name: 'Primary', hex: '#FF0000', rgb: '255, 0, 0',    desc: '주요 액션, CTA 버튼' },
@@ -206,9 +230,12 @@ const COLOR_THEMES = [
   {
     id: 'kakaobank', name: '카카오뱅크', theme: 'warm', clientCat: '핀테크',
     brand: [
-      { name: 'Yellow', hex: '#FFCD00', rgb: '255, 205, 0', role: 'Primary'   },
-      { name: 'Dark',   hex: '#3C2000', rgb: '60, 32, 0',   role: 'Secondary' },
-      { name: 'Amber',  hex: '#FFB800', rgb: '255, 184, 0', role: 'Accent'    },
+      { name: 'Yellow',  hex: '#FFCD00', rgb: '255, 205, 0', role: 'Primary'    },
+      { name: 'Dark',    hex: '#3C2000', rgb: '60, 32, 0',   role: 'Secondary'  },
+      { name: 'Amber',   hex: '#FFB800', rgb: '255, 184, 0', role: 'Accent'     },
+      { name: 'Mustard', hex: '#D49C00', rgb: '212, 156, 0', role: 'Tertiary'   },
+      { name: 'Sand',    hex: '#FFF48F', rgb: '255, 244, 143',role: 'Support'    },
+      { name: 'Shadow',  hex: '#4B3800', rgb: '75, 56, 0',   role: 'Highlight'  },
     ],
     semantic: [
       { name: 'Primary', hex: '#FFCD00', rgb: '255, 205, 0',  desc: '주요 액션, CTA 버튼' },
@@ -228,9 +255,12 @@ const COLOR_THEMES = [
   {
     id: 'aws', name: 'AWS', theme: 'warm', clientCat: '인프라',
     brand: [
-      { name: 'Orange',    hex: '#FF9900', rgb: '255, 153, 0', role: 'Primary'   },
-      { name: 'Dark Navy', hex: '#232F3E', rgb: '35, 47, 62',  role: 'Secondary' },
-      { name: 'Light',     hex: '#FFB84D', rgb: '255, 184, 77',role: 'Accent'    },
+      { name: 'Orange',    hex: '#FF9900', rgb: '255, 153, 0',  role: 'Primary'    },
+      { name: 'Dark Navy', hex: '#232F3E', rgb: '35, 47, 62',   role: 'Secondary'  },
+      { name: 'Light',     hex: '#FFB84D', rgb: '255, 184, 77', role: 'Accent'     },
+      { name: 'Amber',     hex: '#FFB931', rgb: '255, 185, 49', role: 'Tertiary'   },
+      { name: 'Graphite',  hex: '#1B2735', rgb: '27, 39, 53',   role: 'Support'    },
+      { name: 'Fawn',      hex: '#FFCC99', rgb: '255, 204, 153',role: 'Highlight'  },
     ],
     semantic: [
       { name: 'Primary', hex: '#FF9900', rgb: '255, 153, 0',  desc: '주요 액션, CTA 버튼' },
@@ -250,9 +280,12 @@ const COLOR_THEMES = [
   {
     id: 'sktelecom', name: 'SK Telecom', theme: 'warm', clientCat: 'AI',
     brand: [
-      { name: 'Red',   hex: '#E51937', rgb: '229, 25, 55',   role: 'Primary'   },
-      { name: 'Navy',  hex: '#003087', rgb: '0, 48, 135',    role: 'Secondary' },
-      { name: 'Coral', hex: '#FF6680', rgb: '255, 102, 128', role: 'Accent'    },
+      { name: 'Red',     hex: '#E51937', rgb: '229, 25, 55',   role: 'Primary'    },
+      { name: 'Navy',    hex: '#003087', rgb: '0, 48, 135',    role: 'Secondary'  },
+      { name: 'Coral',   hex: '#FF6680', rgb: '255, 102, 128', role: 'Accent'     },
+      { name: 'Magenta', hex: '#FF2A6E', rgb: '255, 42, 110',  role: 'Tertiary'   },
+      { name: 'Denim',   hex: '#0B1B46', rgb: '11, 27, 70',   role: 'Support'    },
+      { name: 'Blush',   hex: '#FF9EAB', rgb: '255, 158, 171', role: 'Highlight'  },
     ],
     semantic: [
       { name: 'Primary', hex: '#E51937', rgb: '229, 25, 55',  desc: '주요 액션, CTA 버튼' },
@@ -272,9 +305,12 @@ const COLOR_THEMES = [
   {
     id: 'jetbrains', name: 'JetBrains', theme: 'warm', clientCat: '개발자도구',
     brand: [
-      { name: 'Red',    hex: '#E74C3C', rgb: '231, 76, 60',  role: 'Primary'   },
-      { name: 'Purple', hex: '#9B59B6', rgb: '155, 89, 182', role: 'Secondary' },
-      { name: 'Gold',   hex: '#F39C12', rgb: '243, 156, 18', role: 'Accent'    },
+      { name: 'Red',     hex: '#E74C3C', rgb: '231, 76, 60',  role: 'Primary'    },
+      { name: 'Purple',  hex: '#9B59B6', rgb: '155, 89, 182', role: 'Secondary'  },
+      { name: 'Gold',    hex: '#F39C12', rgb: '243, 156, 18', role: 'Accent'     },
+      { name: 'Magenta', hex: '#D54BBF', rgb: '213, 75, 191', role: 'Tertiary'   },
+      { name: 'Violet',  hex: '#7D4DCC', rgb: '125, 77, 204', role: 'Support'    },
+      { name: 'Bronze',  hex: '#D98F2A', rgb: '217, 143, 42', role: 'Highlight'  },
     ],
     semantic: [
       { name: 'Primary', hex: '#E74C3C', rgb: '231, 76, 60',  desc: '주요 액션, CTA 버튼' },
@@ -590,11 +626,11 @@ const ICONS = [
 const I18N = {
   ko: {
     pageTitle: '디자인 리소스 | AXIS Design Gallery',
-    navGallery: '레퍼런스 갤러리', navResources: '디자인 리소스', navArchive: '고객사 사이트',
-    searchPlaceholder: '레퍼런스 검색',
+    navGallery: 'Design Gallery', navResources: 'Resources', navArchive: 'Clients',
+    searchPlaceholder: 'Search',
     themeToLight: '라이트 모드로 전환', themeToDark: '다크 모드로 전환',
     langLabel: '언어 선택',
-    pageHeading: '디자인 리소스',
+    pageHeading: '리소스',
     all: '전체',
     clientCats: { '엔터프라이즈': '엔터프라이즈', '디자인': '디자인', 'AI': 'AI', '인프라': '인프라', '핀테크': '핀테크', '개발자도구': '개발자도구' },
     purposes: { '비교': '비교', '추세': '추세', '구성비': '구성비', '분포': '분포' },
@@ -607,8 +643,8 @@ const I18N = {
     hexCopied: (hex) => `✓  ${hex}  복사됨`,
     dataPurposeTitle: '데이터 표현 목적',
     anatomyLabel: 'Anatomy — 구성 요소',
-    copyLinkBtn: '웹폰트 link 태그 복사',
-    downloadFontBtn: '로컬 폰트 패키지 다운로드',
+    copyLinkBtn: 'AUD플랫폼 폰트 가이드',
+    downloadFontBtn: '웹폰트 패키지 다운로드',
     linkCopiedToast: '✓  웹폰트 link 태그 복사됨',
     fontPreparingToast: '⬇  폰트 패키지 준비 중...',
     iconSearchPlaceholder: '아이콘 검색...',
@@ -624,8 +660,8 @@ const I18N = {
   },
   en: {
     pageTitle: 'Design Resources | AXIS Design Gallery',
-    navGallery: 'Reference Gallery', navResources: 'Design Resources', navArchive: 'Client Sites',
-    searchPlaceholder: 'Search references',
+    navGallery: 'Design Gallery', navResources: 'Resources', navArchive: 'Clients',
+    searchPlaceholder: 'Search',
     themeToLight: 'Switch to light mode', themeToDark: 'Switch to dark mode',
     langLabel: 'Select language',
     pageHeading: 'Design Resources',
@@ -641,7 +677,7 @@ const I18N = {
     hexCopied: (hex) => `✓  ${hex}  copied`,
     dataPurposeTitle: 'Data Purpose',
     anatomyLabel: 'Anatomy — Components',
-    copyLinkBtn: 'Copy webfont link tag',
+    copyLinkBtn: 'AUD Platform Font Guide',
     downloadFontBtn: 'Download local font package',
     linkCopiedToast: '✓  Webfont link tag copied',
     fontPreparingToast: '⬇  Preparing font package...',
@@ -658,8 +694,8 @@ const I18N = {
   },
   ja: {
     pageTitle: 'デザインリソース | AXIS Design Gallery',
-    navGallery: 'リファレンスギャラリー', navResources: 'デザインリソース', navArchive: '顧客サイト',
-    searchPlaceholder: 'リファレンス検索',
+    navGallery: 'Design Gallery', navResources: 'Resources', navArchive: 'Clients',
+    searchPlaceholder: '検索',
     themeToLight: 'ライトモードに切り替え', themeToDark: 'ダークモードに切り替え',
     langLabel: '言語選択',
     pageHeading: 'デザインリソース',
@@ -675,7 +711,7 @@ const I18N = {
     hexCopied: (hex) => `✓  ${hex}  コピーしました`,
     dataPurposeTitle: 'データ表現の目的',
     anatomyLabel: 'Anatomy — 構成要素',
-    copyLinkBtn: 'Webフォントlinkタグをコピー',
+    copyLinkBtn: 'AUDフォントガイド',
     downloadFontBtn: 'ローカルフォントパッケージをダウンロード',
     linkCopiedToast: '✓  Webフォントlinkタグをコピーしました',
     fontPreparingToast: '⬇  フォントパッケージを準備中...',
@@ -760,13 +796,6 @@ function ColorPanel({ showToast, lang }) {
             </button>
           ))}
         </nav>
-        <div className="lnb-reference">
-          <p className="lnb-ref-label">Reference</p>
-          <a className="lnb-ref-link" href="https://www.supanova.dev/design-systems" target="_blank" rel="noopener noreferrer">
-            <IconSvg paths={['M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6','M15 3h6v6','M10 14L21 3']} size={12} />
-            supanova.dev/design-systems
-          </a>
-        </div>
       </aside>
 
       <main className="gallery-main">
@@ -796,53 +825,13 @@ function ColorPanel({ showToast, lang }) {
         </div>
 
         {selectedTheme && (
-          <div className="theme-detail-panel">
-            <div className="theme-detail-header">
-              <span className="theme-detail-title">{selectedTheme.name}</span>
-              <button className="theme-detail-close" onClick={() => setSelectedId(null)}>
-                <IconSvg paths={['M18 6 6 18','M6 6l12 12']} size={16} />
-              </button>
-            </div>
-
-            <p className="color-section-label">Brand Core</p>
-            <div className="swatch-grid">
-              {selectedTheme.brand.map(c => (
-                <div key={c.name} className="swatch-card" onClick={() => copy(c.hex)} title={t.clickToCopy}>
-                  <div className="swatch-color" style={{ backgroundColor: c.hex }} />
-                  <div className="swatch-info">
-                    <div className="swatch-name">{c.name}</div>
-                    <div className="swatch-hex">{c.hex}</div>
-                    <div className="swatch-role">{c.role}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <p className="color-section-label">Semantic Colors</p>
-            <div className="swatch-grid">
-              {selectedTheme.semantic.map(c => (
-                <div key={c.name} className="swatch-card" onClick={() => copy(c.hex)} title={t.clickToCopy}>
-                  <div className="swatch-color" style={{ backgroundColor: c.hex }} />
-                  <div className="swatch-info">
-                    <div className="swatch-name">{c.name}</div>
-                    <div className="swatch-hex">{c.hex}</div>
-                    <div className="swatch-role">{t.semDesc[c.name] || c.desc}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <p className="color-section-label">Neutrals (Gray Scale)</p>
-            <div className="neutral-strip">
-              {selectedTheme.neutrals.map(c => (
-                <div key={c.name} className="neutral-swatch" onClick={() => copy(c.hex)} title={c.hex}>
-                  <div className="neutral-color" style={{ backgroundColor: c.hex }} />
-                  <div className="neutral-label">{c.name}</div>
-                </div>
-              ))}
-            </div>
-            <p className="text-xs mt-2" style={{color:'rgba(255,255,255,0.25)'}}>{t.swatchHint}</p>
-          </div>
+          <ColorModal
+            theme={selectedTheme}
+            onClose={() => setSelectedId(null)}
+            showToast={showToast}
+            t={t}
+            lang={lang}
+          />
         )}
       </main>
     </div>
@@ -1064,71 +1053,102 @@ function ChartPanel({ lang }) {
 /* ── Font Panel ──────────────────────────────────────────── */
 function FontPanel({ showToast, lang }) {
   const t = I18N[lang];
-  const linkTag = `<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />`;
+  const guideUrl = 'https://audp.bimatrix.co.kr/pages/viewpage.action?pageId=121471359';
+  const downloadFiles = [
+    'fonts/downloads/webfont.zip',
+  ];
 
-  const copyLink = () => {
-    navigator.clipboard.writeText(linkTag).catch(() => {});
-    showToast(t.linkCopiedToast);
-  };
+  const fontGuideSections = [
+    {
+      name: 'Pretendard',
+      family: 'Pretendard, sans-serif',
+      rows: [
+        { role: 'Title', usage: '화면 타이틀 / 대시보드명', weight: 'Bold', weightValue: 700, size: '24px', example: 'Pretendard Bold 24px' },
+        { role: 'Sub-title', usage: '섹션 제목 / 카드 그룹명', weight: 'SemiBold', weightValue: 600, size: '18px', example: 'Pretendard SemiBold 18px' },
+        { role: 'Header', usage: '그리드 헤더 / 테이블 컬럼명 / 필터 라벨', weight: 'Medium', weightValue: 500, size: '14px', example: 'Pretendard Medium 14px' },
+        { role: 'Body', usage: '본문 / 데이터 셀 / 일반 라벨', weight: 'Regular', weightValue: 400, size: '13px', example: 'Pretendard Regular 13px' },
+      ],
+    },
+    {
+      name: 'Noto Sans KR',
+      family: '"Noto Sans KR", sans-serif',
+      rows: [
+        { role: 'Title', usage: '화면 타이틀 / 대시보드명', weight: 'Bold', weightValue: 700, size: '24px', example: 'Noto Sans KR Bold 24px' },
+        { role: 'Sub-title', usage: '섹션 제목 / 카드 그룹명', weight: 'Medium', weightValue: 500, size: '18px', example: 'Noto Sans KR Medium 18px' },
+        { role: 'Header', usage: '그리드 헤더 / 테이블 컬럼명 / 필터 라벨', weight: 'Regular', weightValue: 400, size: '14px', example: 'Noto Sans KR Regular 14px' },
+        { role: 'Body', usage: '본문 / 데이터 셀 / 일반 라벨', weight: 'Regular', weightValue: 400, size: '13px', example: 'Noto Sans KR Regular 13px' },
+      ],
+    },
+  ];
 
   const downloadFont = () => {
     showToast(t.fontPreparingToast);
+    downloadFiles.forEach((url, i) => {
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = url.split('/').pop();
+      document.body.appendChild(a);
+      setTimeout(() => { a.click(); a.remove(); }, i * 600);
+    });
   };
 
   return (
     <div>
       <div className="font-action-bar">
-        <button className="resource-btn" onClick={copyLink}>
+        <a className="resource-btn" href={guideUrl} target="_blank" rel="noopener noreferrer">
           <IconSvg paths={['M20 9h-9a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2z','M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1']} size={14} />
           {t.copyLinkBtn}
-        </button>
+        </a>
         <button className="resource-btn" onClick={downloadFont}>
           <IconSvg paths={['M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4','M7 10l5 5 5-5','M12 15V3']} size={14} />
           {t.downloadFontBtn}
         </button>
       </div>
 
-      <table className="font-spec-table">
-        <thead>
-          <tr>
-            <th>Role</th>
-            <th>Preview</th>
-            <th>Size</th>
-            <th>Weight</th>
-            <th>Line Height</th>
-            <th>Letter Spacing</th>
-            <th>Usage</th>
-          </tr>
-        </thead>
-        <tbody>
-          {FONT_SPECS.map(spec => (
-            <tr key={spec.role}>
-              <td><span className="font-role-tag">{spec.role}</span></td>
-              <td>
-                <span style={{
-                  fontSize: Math.min(parseInt(spec.size), 28) + 'px',
-                  fontWeight: spec.weight,
-                  lineHeight: spec.lh,
-                  letterSpacing: spec.ls,
-                  color: '#ffffff',
-                  display: 'block',
-                  maxWidth: '220px',
-                  overflow: 'hidden',
-                  whiteSpace: 'nowrap',
-                  textOverflow: 'ellipsis',
-                }}>
-                  {L(spec.sample, lang)}
-                </span>
-              </td>
-              <td><span className="code-val">{spec.size}</span></td>
-              <td><span className="code-val">{spec.weight}</span></td>
-              <td><span className="code-val">{spec.lh}</span></td>
-              <td><span className="code-val">{spec.ls || '0'}</span></td>
-              <td style={{color: 'rgba(255,255,255,0.4)', fontSize: '13px'}}>{L(spec.usage, lang)}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="font-guide-list">
+        {fontGuideSections.map(section => (
+          <section className="font-guide-section" key={section.name}>
+            <div className="font-guide-section-header">
+              <h3>{section.name}</h3>
+            </div>
+            <div className="font-guide-table-wrap">
+              <table className="font-guide-table">
+                <thead>
+                  <tr>
+                    <th>Role</th>
+                    <th>Usage</th>
+                    <th>Weight</th>
+                    <th>Size</th>
+                    <th>Example</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {section.rows.map(row => (
+                    <tr key={`${section.name}-${row.role}`}>
+                      <td><span className="font-role-tag">{row.role}</span></td>
+                      <td className="font-usage-text">{row.usage}</td>
+                      <td>{row.weight}</td>
+                      <td>{row.size}</td>
+                      <td>
+                        <span
+                          className="font-preview-text"
+                          style={{
+                            fontFamily: section.family,
+                            fontWeight: row.weightValue,
+                            fontSize: row.size,
+                          }}
+                        >
+                          {row.example}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        ))}
+      </div>
     </div>
   );
 }
@@ -1180,16 +1200,84 @@ function IconModal({ icon, onClose, showToast, t }) {
   );
 }
 
+function ColorModal({ theme, onClose, showToast, t, lang }) {
+  const title = lang === 'en' ? (theme.name) : lang === 'ja' ? (theme.name) : theme.name;
+  const copy = (text, toastMsg) => { navigator.clipboard.writeText(text).catch(()=>{}); showToast(toastMsg || text); };
+  const brandArray = JSON.stringify(theme.brand.map(c => c.hex));
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="color-modal-container" onClick={e => e.stopPropagation()}>
+        {/* 상단 색상 스트립 */}
+        <div className="color-modal-strip">
+          {theme.brand.map((c, idx) => (
+            <div key={idx} style={{flex:1, background:c.hex}} />
+          ))}
+        </div>
+
+        {/* 팝업 내용 */}
+        <div className="color-modal-content">
+          {/* 헤더: 제목 + 닫기 버튼 */}
+          <div style={{display:'flex', gap:12, alignItems:'flex-start', marginBottom:16}}>
+            <div style={{flex:1}}>
+                  <h3 style={{fontSize:18, fontWeight:700, color:'#ffffff', margin:0}}>{title}</h3>
+              <p style={{fontSize:12, color:'rgba(255,255,255,0.5)', margin:'4px 0 0 0'}}>{theme.clientCat} · {theme.theme === 'cool' ? 'Cool' : 'Warm'}</p>
+            </div>
+            <button onClick={onClose} style={{background:'none', border:'none', cursor:'pointer', color:'rgba(255,255,255,0.4)', padding:'4px', display:'flex', alignItems:'center', justifyContent:'center'}} aria-label="Close">
+              <IconSvg paths={['M18 6 6 18','M6 6l12 12']} size={18} />
+            </button>
+          </div>
+
+          {/* 색상 팔레트 섹션 */}
+          <div style={{marginBottom:16}}>
+            <p style={{fontSize:11, fontWeight:600, color:'rgba(255,255,255,0.45)', marginBottom:10, textTransform:'uppercase', letterSpacing:'0.5px'}}>색상 팔레트</p>
+            <div style={{display:'flex', flexDirection:'column', gap:8}}>
+              {theme.brand.map(c => (
+                <div key={c.hex} style={{display:'flex', alignItems:'center', gap:12, padding:'12px', borderRadius:8, background:'rgba(255,255,255,0.04)', border:'1px solid rgba(255,255,255,0.08)'}}>
+                  <div style={{width:32, height:32, borderRadius:6, background:c.hex, flexShrink:0, boxShadow:'0 2px 8px rgba(0,0,0,0.3)'}} />
+                  <div style={{flex:1}}>
+                    <div style={{fontSize:13, fontWeight:600, color:'#ffffff'}}>{c.name}</div>
+                    <div style={{fontSize:12, color:'rgba(255,255,255,0.5)', fontFamily:'monospace'}}>{c.hex}</div>
+                  </div>
+                  <button className="resource-btn" style={{padding:'6px 12px', whiteSpace:'nowrap'}} onClick={() => copy(c.hex, `${c.hex} 복사됨`)}>복사</button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* 배열 섹션 */}
+          <div style={{marginBottom:14}}>
+            <p style={{fontSize:11, fontWeight:600, color:'rgba(255,255,255,0.45)', marginBottom:8, textTransform:'uppercase', letterSpacing:'0.5px'}}>배열 형태</p>
+            <div style={{display:'flex', gap:8, alignItems:'center'}}>
+              <div style={{flex:1, background:'rgba(0,0,0,0.3)', padding:12, borderRadius:8, color:'rgba(255,255,255,0.6)', fontFamily:'monospace', fontSize:12, wordBreak:'break-all', border:'1px solid rgba(255,255,255,0.08)'}}>{brandArray}</div>
+              <button className="resource-btn" style={{padding:'8px 12px', whiteSpace:'nowrap'}} onClick={() => copy(brandArray, '배열 복사됨')}>복사</button>
+            </div>
+          </div>
+
+          {/* 권장 사용처 태그 */}
+          <div>
+            <p style={{fontSize:11, fontWeight:600, color:'rgba(255,255,255,0.45)', marginBottom:8, textTransform:'uppercase', letterSpacing:'0.5px'}}>권장 사용처</p>
+            <div style={{display:'flex', gap:8, flexWrap:'wrap'}}>
+              {['매출 차트','KPI 대시보드','비즈니스 분석','협업 도구 분석'].map(tag => (
+                <button key={tag} className="chip" style={{padding:'6px 10px', fontSize:12, background:'rgba(125, 96, 255, 0.15)', color:'#b5a0ff', border:'none', borderRadius:'6px', cursor:'pointer'}}>{tag}</button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function IconPanel({ showToast, lang }) {
   const t = I18N[lang];
-  const [query, setQuery]         = React.useState('');
-  const [category, setCategory]   = React.useState('전체');
-  const [iconSize, setIconSize]   = React.useState(24);
-  const [theme, setTheme]         = React.useState('Outline');
+  const [query, setQuery] = React.useState('');
+  const [category, setCategory] = React.useState('전체');
+  const [iconSize, setIconSize] = React.useState(24);
   const [selectedIcon, setSelectedIcon] = React.useState(null);
 
   const filtered = ICONS.filter(ic => {
-    const byCat  = category === '전체' || ic.cat === category;
+    const byCat = category === '전체' || ic.cat === category;
     const byName = ic.name.toLowerCase().includes(query.toLowerCase());
     return byCat && byName;
   });
@@ -1214,49 +1302,34 @@ function IconPanel({ showToast, lang }) {
           <div className="icon-search-wrap">
             <IconSvg paths={['M11 17a6 6 0 1 0 0-12 6 6 0 0 0 0 12z','M21 21l-4.35-4.35']} size={15} />
             <input
-              placeholder={t.iconSearchPlaceholder}
               value={query}
-              onChange={e => setQuery(e.target.value)}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder={t.iconSearchPlaceholder}
             />
           </div>
           <div className="toggle-group">
-            {[16, 24, 32].map(s => (
-              <button key={s}
-                className={`toggle-btn ${iconSize === s ? 'active' : ''}`}
-                onClick={() => setIconSize(s)}>
-                {s}px
-              </button>
-            ))}
-          </div>
-          <div className="toggle-group">
-            {['Outline', 'Solid'].map(t => (
-              <button key={t}
-                className={`toggle-btn ${theme === t ? 'active' : ''}`}
-                onClick={() => setTheme(t)}>
-                {t}
+            {[16, 24, 32].map(size => (
+              <button key={size}
+                className={`toggle-btn ${iconSize === size ? 'active' : ''}`}
+                onClick={() => setIconSize(size)}>
+                {size}px
               </button>
             ))}
           </div>
         </div>
 
-        <p className="result-count">{t.iconCount(filtered.length)}</p>
-
-        {filtered.length === 0 ? (
-          <div style={{textAlign:'center', padding:'64px 0', color:'rgba(255,255,255,0.25)', fontSize:'14px'}}>
-            {t.noResults}
-          </div>
-        ) : (
-          <div className="icon-grid-wrap">
-            {filtered.map(icon => (
-              <div key={icon.id} className="icon-item" onClick={() => setSelectedIcon(icon)}>
-                <div style={{color:'rgba(255,255,255,0.8)'}}>
-                  <IconSvg paths={icon.paths} size={iconSize} />
-                </div>
-                <span className="icon-item-name">{icon.name}</span>
+        <div className="icon-grid-wrap">
+          {filtered.length ? filtered.map(ic => (
+            <button key={ic.id} className="icon-item" onClick={() => setSelectedIcon(ic)}>
+              <div style={{ color: 'rgba(255,255,255,0.85)' }}>
+                <IconSvg paths={ic.paths} size={iconSize} />
               </div>
-            ))}
-          </div>
-        )}
+              <div className="icon-item-name">{ic.name}</div>
+            </button>
+          )) : (
+            <div className="empty-state">{t.noResults}</div>
+          )}
+        </div>
 
         {selectedIcon && (
           <IconModal icon={selectedIcon} onClose={() => setSelectedIcon(null)} showToast={showToast} t={t} />
@@ -1273,12 +1346,31 @@ function IconPanel({ showToast, lang }) {
 const TABS = [
   { id: 'chart', label: 'Chart' },
   { id: 'font',  label: 'Font'  },
-  { id: 'icon',  label: 'Icon'  },
   { id: 'color', label: 'Color' },
 ];
 
 function ResourcesPage() {
-  const [activeTab,       setActiveTab]       = React.useState('chart');
+  const getInitialResourceTab = () => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const tabFromQuery = params.get('tab');
+      const tabFromHash = window.location.hash ? window.location.hash.replace('#', '') : '';
+      const nextTab = (tabFromQuery || tabFromHash || 'chart').toLowerCase();
+      return TABS.some(tab => tab.id === nextTab) ? nextTab : 'chart';
+    } catch (e) {
+      return 'chart';
+    }
+  };
+  const [activeTab,       setActiveTab]       = React.useState(getInitialResourceTab);
+  const changeActiveTab = (tabId) => {
+    setActiveTab(tabId);
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.set('tab', tabId);
+      url.hash = '';
+      window.history.replaceState(null, '', url.toString());
+    } catch (e) {}
+  };
   const [theme, setTheme] = React.useState(() => { try{return localStorage.getItem('axis-theme')||'dark';}catch(e){return 'dark';} });
   React.useEffect(() => { document.documentElement.setAttribute('data-theme', theme); }, [theme]);
   const toggleTheme = () => { const n=theme==='dark'?'light':'dark'; setTheme(n); try{localStorage.setItem('axis-theme',n);}catch(e){} };
@@ -1313,7 +1405,6 @@ function ResourcesPage() {
           <nav className="hidden gap-10 font-medium text-white/80 md:flex h-full items-stretch">
             <a href="gallery.html"    className="gnb-link transition hover:text-white">{t.navGallery}</a>
             <a href="resources.html"  className="gnb-link active transition hover:text-white">{t.navResources}</a>
-            <a href="archive.html" className="gnb-link transition hover:text-white">{t.navArchive}</a>
           </nav>
           <div className="flex items-center gap-2 justify-self-end">
             <div className="flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 w-52 focus-within:border-white/30 transition">
@@ -1362,7 +1453,7 @@ function ResourcesPage() {
       {/* Page Header */}
       <div className="page-header">
         <div className="mx-auto max-w-7xl px-8">
-          <p className="page-header-label">Design Resources</p>
+          <p className="page-header-label">Resources</p>
           <h1 className="page-header-title">{t.pageHeading}</h1>
         </div>
       </div>
@@ -1375,7 +1466,7 @@ function ResourcesPage() {
               role="tab"
               aria-selected={activeTab === tab.id}
               className="resource-tab-btn"
-              onClick={() => setActiveTab(tab.id)}>
+              onClick={() => changeActiveTab(tab.id)}>
               {tab.label}
             </button>
           ))}
@@ -1390,86 +1481,73 @@ function ResourcesPage() {
         {activeTab === 'icon'  && <IconPanel  showToast={showToast} lang={lang} />}
       </div>
 
-      {/* Footer */}
-      <footer className="site-footer">
-        <div className="mx-auto max-w-7xl px-8 py-10">
-          <div className="flex items-start justify-between gap-8">
-            <div className="flex flex-col gap-6">
-              <div className="flex items-center gap-4">
-                    <a href="https://www.youtube.com/@BIMATRIXKR" target="_blank" rel="noopener noreferrer"
-                       className="flex items-center justify-center w-9 h-9 rounded-full border border-white/15 bg-white/5 hover:bg-white/15 transition">
-                      <svg viewBox="-1 -1 26 26" aria-hidden="true" focusable="false" fill="rgba(255,255,255,0.65)" width="20">
-                        <path d="M 23.498 6.186 a 3.016 3.016 0 0 0 -2.122 -2.136 C 19.505 3.545 12 3.545 12 3.545 s -7.505 0 -9.377 0.505 A 3.017 3.017 0 0 0 0.502 6.186 C 0 8.07 0 12 0 12 s 0 3.93 0.502 5.814 a 3.016 3.016 0 0 0 2.122 2.136 c 1.871 0.505 9.376 0.505 9.376 0.505 s 7.505 0 9.377 -0.505 a 3.015 3.015 0 0 0 2.122 -2.136 C 24 15.93 24 12 24 12 s 0 -3.93 -0.502 -5.814 Z M 9.545 15.568 V 8.432 L 15.818 12 l -6.273 3.568 Z"></path>
-                      </svg>
-                    </a>
-                    <a href="https://www.facebook.com/bimatrixkorea" target="_blank" rel="noopener noreferrer"
-                       className="flex items-center justify-center w-9 h-9 rounded-full border border-white/15 bg-white/5 hover:bg-white/15 transition">
-                      <svg viewBox="2 2 22 22" aria-hidden="true" focusable="false" fill="rgba(255,255,255,0.65)" width="23">
-                        <path d="M13.6 21v-7.1h2.4l.4-3h-2.8V9c0-.87.24-1.47 1.5-1.47H16.5V4.85C16.2 4.81 15.4 4.75 14.47 4.75c-1.95 0-3.28 1.19-3.28 3.38v2.77H9v3h2.19V21h2.41Z"></path>
-                      </svg>
-                    </a>
-                    <a href="https://blog.naver.com/bi_matrix" target="_blank" rel="noopener noreferrer"
-                       className="flex items-center justify-center w-9 h-9 rounded-full border border-white/15 bg-white/5 hover:bg-white/15 transition">
-                      <svg viewBox="0 0 106.4 86" width="20" height="20" aria-hidden="true" fill="rgba(255,255,255,0.65)">
-                        <path d="M59.5,34c-2.3,0-4.2,1.9-4.2,4.2s1.9,4.2,4.2,4.2,4.2-1.9,4.2-4.2-1.9-4.2-4.2-4.2Z"/>
-                        <path d="M84.6,34c-2.3,0-4.2,1.9-4.2,4.2s1.9,4.2,4.2,4.2,4.2-1.9,4.2-4.2-1.9-4.2-4.2-4.2Z"/>
-                        <path d="M89.6,0H16.8C7.5,0,0,7.3,0,16.2v38.5c0,9,7.5,16.2,16.8,16.2h25.1l8.6,13.4s0,.2.3.4c.5.8,1.4,1.4,2.5,1.4s2-.6,2.5-1.4c.2-.2.3-.4.3-.4l8.6-13.4h25.1c9.3,0,16.8-7.3,16.8-16.2V16.2C106.4,7.3,98.9,0,89.6,0h0ZM23.6,48.1c-3.9,0-5.5-2.8-5.5-2.8v2.1h-6.6v-27.1h6.5v10.3c2.6-2.6,5.5-2.6,5.5-2.6,8.8,0,9.2,9.9,9.2,9.9,0,9.8-9.2,10.1-9.2,10.1h0ZM44.2,29.9v17.5h-6.3v-16.1c0-5.5-3-5.4-3-5.4v-6.3c9.5,0,9.2,10.2,9.2,10.2ZM70.5,38.2c0,9.9-11,9.9-11,9.9-11.1,0-10.8-9.9-10.8-9.9,0-10,10.8-10.1,10.8-10.1,11.4,0,11,10.1,11,10.1ZM94.8,47.2c0,10.3-9.5,10.2-9.5,10.2h-2.5v-5.8h1.6c4.6,0,4.2-4.8,4.2-4.8v-1.5c-2,2.6-5.7,2.5-5.7,2.5-9.1,0-9-9.7-9-9.7,0-10.4,9.2-10,9.2-10,3.6,0,5.5,2.5,5.5,2.5v-1.8h6.3v18.4h0Z"/>
-                        <path d="M22.2,34c-2.3,0-4.2,1.9-4.2,4.2s1.9,4.2,4.2,4.2,4.2-1.9,4.2-4.2-1.9-4.2-4.2-4.2Z"/>
-                      </svg>
-                    </a>
-              </div>
-                  <div className="flex items-center gap-6 text-sm text-white/50">
-                    <a href="https://www.bimatrix.co.kr/privacy/" target="_blank" className="hover:text-white/80 transition">
-                      {t.footerPrivacy}</a>
-                    <span className="text-white/20">|</span>
-                    <a href="https://www.bimatrix.co.kr/pr/newsletter/subscription/" target="_blank" className="hover:text-white/80 transition">
-                      {t.footerNewsletter}</a>
-                    <span className="text-white/20">|</span>
-                    <a href="mailto:hhpark1425@bimatrix.co.kr" target="_blank" className="hover:text-white/80 transition">
-                      {t.footerContact}</a>
-                  </div>
-            </div>
-            <div className="relative flex-shrink-0">
-              <button onClick={() => setFamilySiteOpen(!familySiteOpen)}
-                className="flex items-center gap-2 rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 text-sm text-white/70 hover:bg-white/10 transition min-w-[160px] justify-between">
-                <span>Family Site</span>
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
-                     className={`family-site-chevron ${familySiteOpen ? 'open' : ''}`}>
-                  <path d="M3 4.5L6 7.5L9 4.5" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </button>
-                  {familySiteOpen && (
-                    <div className="family-site-dropdown absolute right-0 bottom-full mb-1 w-48 rounded-lg border border-white/15 overflow-hidden z-10">
-                      {[
-                        {label: t.familySites[0], href: "https://www.bimatrix.co.kr/"},
-                        {label: t.familySites[1], href: "https://audp.bimatrix.co.kr/"},
-                        {label: t.familySites[2], href: "http://aud.bimatrix.co.kr/extention/sso/SimpleSSO4.jsp"},
-                        {label: t.familySites[3], href: "https://cs.bimatrix.co.kr/"},
-                      ].map((item) => (
-                        <a key={item.href} href={item.href} target="_blank"
-                           className="block px-4 py-2.5 text-sm text-white/60 hover:bg-white/10 hover:text-white/90 transition">
-                          {item.label}
-                        </a>
-                      ))}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-        <div className="footer-bottom">
-          <div className="mx-auto max-w-7xl px-8 py-6 flex items-end justify-between gap-8">
-            <div className="flex flex-col gap-1.5 text-xs text-white/35 leading-relaxed">
+          {/* Footer */}
+          <footer className="site-footer">
+            {/* Footer Top */}
+            <div className="mx-auto max-w-7xl px-8 py-10">
+              <div className="flex items-start justify-between gap-8">
+
+                {/* Left: Company Info + Nav links */}
+                <div className="flex flex-col gap-6">
+                {/* Company Info */}
+                <div className="flex flex-col gap-1.5 text-xs text-white/35 leading-relaxed">
                   <p className="text-white/50 font-medium text-sm">{t.company}</p>
                   <p>{t.address} &nbsp;|&nbsp; {t.ceo}</p>
                   <p>Tel: 02-561-4475 &nbsp;|&nbsp; Fax: 02-561-4479</p>
+                  <p>문의: hhpark1425@bimatrix.co.kr</p>
                   <p className="mt-1">© BI MATRIX CO., LTD. ALL RIGHTS RESERVED.</p>
+                </div>
+
+                </div>
+
+                {/* Right: Family Site Dropdown */}
+                <div className="relative flex-shrink-0">
+                  <button onClick={() => setFamilySiteOpen(!familySiteOpen)}
+                    className="flex items-center gap-2 rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 text-sm text-white/70 hover:bg-white/10 transition min-w-[160px] justify-between">
+                    <span>Family Site</span>
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
+                        className={`family-site-chevron ${familySiteOpen ? 'open' : ''}`}>
+                      <path d="M3 4.5L6 7.5L9 4.5" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </button>
+                      {familySiteOpen && (
+                        <div className="family-site-dropdown absolute right-0 bottom-full mb-1 w-48 rounded-lg border border-white/15 overflow-hidden z-10">
+                          {[
+                            {label: t.familySites[0], href: "https://www.bimatrix.co.kr/"},
+                            {label: t.familySites[1], href: "https://audp.bimatrix.co.kr/"},
+                            {label: t.familySites[2], href: "http://aud.bimatrix.co.kr/extention/sso/SimpleSSO4.jsp"},
+                            {label: t.familySites[3], href: "https://cs.bimatrix.co.kr/"},
+                          ].map((item) => (
+                            <a key={item.href} href={item.href} target="_blank"
+                              className="block px-4 py-2.5 text-sm text-white/60 hover:bg-white/10 hover:text-white/90 transition">
+                              {item.label}
+                            </a>
+                          ))}
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
-            <div className="flex-shrink-0">
-              <img src="images/img_logo_footer.svg" alt="AXIS" className="footer-logo" />
+
+            {/* Footer Bottom */}
+            <div className="footer-bottom">
+              <div className="mx-auto max-w-7xl px-8 py-6 flex items-end justify-between gap-8" style={{ marginTop: "-2.5rem" }}>
+                {/* Nav Links */}
+                <div className="flex items-center gap-6 text-sm text-white/50">
+                  <a href="https://www.bimatrix.co.kr/privacy/" target="_blank" className="hover:text-white/80 transition">
+                    {t.footerPrivacy}</a>
+                </div>
+                {/* BI MATRIX Logo */}
+                <div className="flex-shrink-0">
+                  <img
+                    src="images/img_logo_footer.svg"
+                    alt="BI MATRIX"
+                    className="footer-logo"
+                  />
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      </footer>
+          </footer>
 
       {/* Toast */}
       {toast && <div className="toast">{toast}</div>}

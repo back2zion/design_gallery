@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>레퍼런스 갤러리 | AXIS Design Gallery</title>
+  <title>디자인 갤러리 | AXIS Design Gallery</title>
   <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -105,26 +105,31 @@
 
     const I18N = {
       ko: {
-        pageTitle: '레퍼런스 갤러리 | AXIS Design Gallery',
-        navGallery: '레퍼런스 갤러리',
-        navResources: '디자인 리소스',
-        navArchive: '고객사 사이트',
-        searchPlaceholder: '검색',
+        pageTitle: '디자인 갤러리 | AXIS Design Gallery',
+        navGallery: 'Design Gallery',
+        navResources: 'Resources',
+        navArchive: 'Clients',
+        searchPlaceholder: 'Search',
         searchAria: '레퍼런스 검색',
         clearSearch: '검색어 지우기',
         themeToLight: '라이트 모드로 전환',
         themeToDark: '다크 모드로 전환',
-        pageHeaderLabel: 'Reference Gallery',
-        pageHeaderTitle: '레퍼런스 갤러리',
+        pageHeaderLabel: 'Design Gallery',
+        pageHeaderTitle: '디자인 갤러리',
         filterIndustry: '산업군',
         filterScreen: '화면 유형',
         filterPurpose: '활용 목적',
         filterLayout: '레이아웃 구조',
         filterTone: '디자인톤',
         reset: '초기화',
+        ariaClose: '팝업 닫기',
+        metaIndustry: '산업군',
+        metaScreen: '화면 유형',
+        metaLayout: '레이아웃',
+        metaPurpose: '활용 목적',
         resultCount: (n) => <>총 <strong>{n}개</strong>의 레퍼런스</>,
         loadMore: (n) => `더보기 (${n}개 남음)`,
-        noResults: '해당 조건의 레퍼런스가 없습니다.',
+        noResults: '최신 디자인 레퍼런스를 준비하고 있습니다.',
         footerPrivacy: '개인정보처리방침',
         footerNewsletter: '뉴스레터 구독',
         footerContact: '문의하기',
@@ -141,9 +146,9 @@
       },
       en: {
         pageTitle: 'Reference Gallery | AXIS Design Gallery',
-        navGallery: 'Reference Gallery',
-        navResources: 'Design Resources',
-        navArchive: 'Client Sites',
+        navGallery: 'Design Gallery',
+        navResources: 'Resources',
+        navArchive: 'Clients',
         searchPlaceholder: 'Search',
         searchAria: 'Search references',
         clearSearch: 'Clear search',
@@ -157,9 +162,14 @@
         filterLayout: 'Layout',
         filterTone: 'Design Tone',
         reset: 'Reset',
+        ariaClose: 'Close popup',
+        metaIndustry: 'Industry',
+        metaScreen: 'Screen Type',
+        metaLayout: 'Layout',
+        metaPurpose: 'Purpose',
         resultCount: (n) => <><strong>{n}</strong> references in total</>,
         loadMore: (n) => `Load More (${n} remaining)`,
-        noResults: 'No references match the selected filters.',
+        noResults: 'Curating the latest design references for you.',
         footerPrivacy: 'Privacy Policy',
         footerNewsletter: 'Newsletter',
         footerContact: 'Contact Us',
@@ -176,9 +186,9 @@
       },
       ja: {
         pageTitle: 'リファレンスギャラリー | AXIS Design Gallery',
-        navGallery: 'リファレンスギャラリー',
-        navResources: 'デザインリソース',
-        navArchive: '顧客サイト',
+        navGallery: 'Design Gallery',
+        navResources: 'Resources',
+        navArchive: 'Clients',
         searchPlaceholder: '検索',
         searchAria: 'リファレンス検索',
         clearSearch: '検索語をクリア',
@@ -192,9 +202,14 @@
         filterLayout: 'レイアウト構造',
         filterTone: 'デザイントーン',
         reset: 'リセット',
+        ariaClose: 'ポップアップを閉じる',
+        metaIndustry: '業種',
+        metaScreen: '画面タイプ',
+        metaLayout: 'レイアウト',
+        metaPurpose: '活用目的',
         resultCount: (n) => <>全<strong>{n}件</strong>のリファレンス</>,
         loadMore: (n) => `もっと見る (残り${n}件)`,
-        noResults: '条件に一致するリファレンスがありません。',
+        noResults: '最新のデザインリファレンスを準備しております。',
         footerPrivacy: '個人情報処理方針',
         footerNewsletter: 'ニュースレター購読',
         footerContact: 'お問い合わせ',
@@ -211,13 +226,26 @@
       },
     };
 
-    function GalleryCard({ item, lang }) {
+    function GalleryCard({ item, lang, onOpen }) {
       const labels = (I18N[lang] || I18N.ko).labels;
       const displayTitle = lang === 'en' ? (item.titleEn || item.title)
         : lang === 'ja' ? (item.titleJa || item.title)
         : item.title;
+      const handleOpen = (event) => {
+        if (event.type === 'keydown' && event.key !== 'Enter' && event.key !== ' ') return;
+        event.preventDefault();
+        onOpen(item);
+      };
       return (
-        <div className="gallery-card">
+        <div
+          className="gallery-card"
+          onClick={handleOpen}
+          onKeyDown={handleOpen}
+          role="button"
+          tabIndex={0}
+          aria-label={`${displayTitle} 상세 보기`}
+          style={{cursor: 'pointer'}}
+        >
           <div className="gallery-card-thumb">
             <img
               src={item.image}
@@ -321,6 +349,7 @@
       const [selectedLayout, setSelectedLayout] = React.useState('전체');
       const [selectedTone, setSelectedTone] = React.useState('전체');
       const [openFilter, setOpenFilter] = React.useState(null);
+      const [selectedGallery, setSelectedGallery] = React.useState(null);
       const [visibleCount, setVisibleCount] = React.useState(PAGE_SIZE);
 
       const query = searchQuery.trim().toLowerCase();
@@ -359,7 +388,6 @@
               <nav className="hidden gap-10 font-medium text-white/80 md:flex h-full items-stretch">
                 <a href="gallery.html"       className="gnb-link active transition hover:text-white">{t.navGallery}</a>
                 <a href="resources.html" className="gnb-link transition hover:text-white">{t.navResources}</a>
-                <a href="archive.html" className="gnb-link transition hover:text-white">{t.navArchive}</a>
               </nav>
 
               <div className="flex items-center gap-2 justify-self-end">
@@ -553,9 +581,9 @@
 
               {filtered.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-32 text-white/30">
-                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" className="mb-4">
-                    <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="1.5"/>
-                    <path d="M16.5 16.5L21 21" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" className="mb-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l.73-.72" />
+                  <polyline points="12 7 12 12 16 14" />
                   </svg>
                   <p className="text-sm">{t.noResults}</p>
                 </div>
@@ -563,7 +591,7 @@
                 <>
                   <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                     {visible.map(item => (
-                      <GalleryCard key={item.id} item={item} lang={lang} />
+                      <GalleryCard key={item.id} item={item} lang={lang} onOpen={setSelectedGallery} />
                     ))}
                   </div>
 
@@ -580,46 +608,56 @@
             </main>
           </div>
 
-          {/* Footer */}
-          <footer className="site-footer">
-            <div className="mx-auto max-w-7xl px-8 py-10">
-              <div className="flex items-start justify-between gap-8">
-                <div className="flex flex-col gap-6">
-                  <div className="flex items-center gap-4">
-                    <a href="https://www.youtube.com/@BIMATRIXKR" target="_blank" rel="noopener noreferrer"
-                       className="flex items-center justify-center w-9 h-9 rounded-full border border-white/15 bg-white/5 hover:bg-white/15 transition">
-                      <svg viewBox="-1 -1 26 26" aria-hidden="true" focusable="false" fill="rgba(255,255,255,0.65)" width="20">
-                        <path d="M 23.498 6.186 a 3.016 3.016 0 0 0 -2.122 -2.136 C 19.505 3.545 12 3.545 12 3.545 s -7.505 0 -9.377 0.505 A 3.017 3.017 0 0 0 0.502 6.186 C 0 8.07 0 12 0 12 s 0 3.93 0.502 5.814 a 3.016 3.016 0 0 0 2.122 2.136 c 1.871 0.505 9.376 0.505 9.376 0.505 s 7.505 0 9.377 -0.505 a 3.015 3.015 0 0 0 2.122 -2.136 C 24 15.93 24 12 24 12 s 0 -3.93 -0.502 -5.814 Z M 9.545 15.568 V 8.432 L 15.818 12 l -6.273 3.568 Z"></path>
-                      </svg>
-                    </a>
-                    <a href="https://www.facebook.com/bimatrixkorea" target="_blank" rel="noopener noreferrer"
-                       className="flex items-center justify-center w-9 h-9 rounded-full border border-white/15 bg-white/5 hover:bg-white/15 transition">
-                      <svg viewBox="2 2 22 22" aria-hidden="true" focusable="false" fill="rgba(255,255,255,0.65)" width="23">
-                        <path d="M13.6 21v-7.1h2.4l.4-3h-2.8V9c0-.87.24-1.47 1.5-1.47H16.5V4.85C16.2 4.81 15.4 4.75 14.47 4.75c-1.95 0-3.28 1.19-3.28 3.38v2.77H9v3h2.19V21h2.41Z"></path>
-                      </svg>
-                    </a>
-                    <a href="https://blog.naver.com/bi_matrix" target="_blank" rel="noopener noreferrer"
-                       className="flex items-center justify-center w-9 h-9 rounded-full border border-white/15 bg-white/5 hover:bg-white/15 transition">
-                      <svg viewBox="0 0 106.4 86" width="20" height="20" aria-hidden="true" fill="rgba(255,255,255,0.65)">
-                        <path d="M59.5,34c-2.3,0-4.2,1.9-4.2,4.2s1.9,4.2,4.2,4.2,4.2-1.9,4.2-4.2-1.9-4.2-4.2-4.2Z"/>
-                        <path d="M84.6,34c-2.3,0-4.2,1.9-4.2,4.2s1.9,4.2,4.2,4.2,4.2-1.9,4.2-4.2-1.9-4.2-4.2-4.2Z"/>
-                        <path d="M89.6,0H16.8C7.5,0,0,7.3,0,16.2v38.5c0,9,7.5,16.2,16.8,16.2h25.1l8.6,13.4s0,.2.3.4c.5.8,1.4,1.4,2.5,1.4s2-.6,2.5-1.4c.2-.2.3-.4.3-.4l8.6-13.4h25.1c9.3,0,16.8-7.3,16.8-16.2V16.2C106.4,7.3,98.9,0,89.6,0h0ZM23.6,48.1c-3.9,0-5.5-2.8-5.5-2.8v2.1h-6.6v-27.1h6.5v10.3c2.6-2.6,5.5-2.6,5.5-2.6,8.8,0,9.2,9.9,9.2,9.9,0,9.8-9.2,10.1-9.2,10.1h0ZM44.2,29.9v17.5h-6.3v-16.1c0-5.5-3-5.4-3-5.4v-6.3c9.5,0,9.2,10.2,9.2,10.2ZM70.5,38.2c0,9.9-11,9.9-11,9.9-11.1,0-10.8-9.9-10.8-9.9,0-10,10.8-10.1,10.8-10.1,11.4,0,11,10.1,11,10.1ZM94.8,47.2c0,10.3-9.5,10.2-9.5,10.2h-2.5v-5.8h1.6c4.6,0,4.2-4.8,4.2-4.8v-1.5c-2,2.6-5.7,2.5-5.7,2.5-9.1,0-9-9.7-9-9.7,0-10.4,9.2-10,9.2-10,3.6,0,5.5,2.5,5.5,2.5v-1.8h6.3v18.4h0Z"/>
-                        <path d="M22.2,34c-2.3,0-4.2,1.9-4.2,4.2s1.9,4.2,4.2,4.2,4.2-1.9,4.2-4.2-1.9-4.2-4.2-4.2Z"/>
-                      </svg>
-                    </a>
-                  </div>
-                  <div className="flex items-center gap-6 text-sm text-white/50">
-                    <a href="https://www.bimatrix.co.kr/privacy/" target="_blank" className="hover:text-white/80 transition">
-                      {t.footerPrivacy}</a>
-                    <span className="text-white/20">|</span>
-                    <a href="https://www.bimatrix.co.kr/pr/newsletter/subscription/" target="_blank" className="hover:text-white/80 transition">
-                      {t.footerNewsletter}</a>
-                    <span className="text-white/20">|</span>
-                    <a href="mailto:hhpark1425@bimatrix.co.kr" target="_blank" className="hover:text-white/80 transition">
-                      {t.footerContact}</a>
+          {selectedGallery && (
+            <div className="archive-popup-overlay" onClick={(e) => { if (e.target === e.currentTarget) setSelectedGallery(null); }}>
+              <div className="archive-popup gallery-popup" role="dialog" aria-modal="true" aria-labelledby="gallery-popup-title">
+                <div className="archive-popup-controls">
+                  <button type="button" className="archive-popup-action archive-popup-close" onClick={() => setSelectedGallery(null)} aria-label={t.ariaClose}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+                    </svg>
+                  </button>
+                </div>
+                <div className="archive-popup-left">
+                  <img src={selectedGallery.image} alt={lang === 'en' ? (selectedGallery.titleEn || selectedGallery.title) : lang === 'ja' ? (selectedGallery.titleJa || selectedGallery.title) : selectedGallery.title} />
+                </div>
+                <div className="archive-popup-right">
+                  <div className="archive-popup-content">
+                    <div>
+                      <h3 id="gallery-popup-title" className="archive-popup-title">{lang === 'en' ? (selectedGallery.titleEn || selectedGallery.title) : lang === 'ja' ? (selectedGallery.titleJa || selectedGallery.title) : selectedGallery.title}</h3>
+                      <div className="archive-popup-meta">
+                        <div className="archive-popup-meta-item"><strong>{t.metaIndustry}</strong><span>{t.labels[selectedGallery.industry] || selectedGallery.industry}</span></div>
+                        <div className="archive-popup-meta-item"><strong>{t.metaScreen}</strong><span>{selectedGallery.screenType}</span></div>
+                        <div className="archive-popup-meta-item layout-meta"><strong>{t.metaLayout}</strong><span>{selectedGallery.layout}</span></div>
+                        <div className="archive-popup-meta-item"><strong>{t.metaPurpose}</strong><span>{t.labels[selectedGallery.purpose] || selectedGallery.purpose}</span></div>
+                      </div>
+                    </div>
                   </div>
                 </div>
+              </div>
+            </div>
+          )}
 
+          {/* Footer */}
+          <footer className="site-footer">
+            {/* Footer Top */}
+            <div className="mx-auto max-w-7xl px-8 py-10">
+              <div className="flex items-start justify-between gap-8">
+
+                {/* Left: Company Info + Nav links */}
+                <div className="flex flex-col gap-6">
+                {/* Company Info */}
+                <div className="flex flex-col gap-1.5 text-xs text-white/35 leading-relaxed">
+                  <p className="text-white/50 font-medium text-sm">{t.company}</p>
+                  <p>{t.address} &nbsp;|&nbsp; {t.ceo}</p>
+                  <p>Tel: 02-561-4475 &nbsp;|&nbsp; Fax: 02-561-4479</p>
+                  <p>문의: hhpark1425@bimatrix.co.kr</p>
+                  <p className="mt-1">© BI MATRIX CO., LTD. ALL RIGHTS RESERVED.</p>
+                </div>
+
+                </div>
+
+                {/* Right: Family Site Dropdown */}
                 <div className="relative flex-shrink-0">
                   <button
                     onClick={() => setFamilySiteOpen(!familySiteOpen)}
@@ -645,21 +683,25 @@
               </div>
             </div>
 
+            {/* Footer Bottom */}
             <div className="footer-bottom">
-              <div className="mx-auto max-w-7xl px-8 py-6 flex items-end justify-between gap-8">
-                <div className="flex flex-col gap-1.5 text-xs text-white/35 leading-relaxed">
-                  <p className="text-white/50 font-medium text-sm">{t.company}</p>
-                  <p>{t.address} &nbsp;|&nbsp; {t.ceo}</p>
-                  <p>Tel: 02-561-4475 &nbsp;|&nbsp; Fax: 02-561-4479</p>
-                  <p className="mt-1">© BI MATRIX CO., LTD. ALL RIGHTS RESERVED.</p>
+              <div className="mx-auto max-w-7xl px-8 py-6 flex items-end justify-between gap-8" style={{ marginTop: "-2.5rem" }}>
+                {/* Nav Links */}
+                <div className="flex items-center gap-6 text-sm text-white/50">
+                  <a href="https://www.bimatrix.co.kr/privacy/" target="_blank" className="hover:text-white/80 transition">
+                    {t.footerPrivacy}</a>
                 </div>
+                {/* BI MATRIX Logo */}
                 <div className="flex-shrink-0">
-                  <img src="images/img_logo_footer.svg" alt="AXIS" className="footer-logo" />
+                  <img
+                    src="images/img_logo_footer.svg"
+                    alt="BI MATRIX"
+                    className="footer-logo"
+                  />
                 </div>
               </div>
             </div>
           </footer>
-
         </div>
       );
     }

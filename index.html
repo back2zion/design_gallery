@@ -9,6 +9,7 @@
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
   <link rel="icon" type="image/png" sizes="32x32" href="images/favicon.png" />
   <link rel="shortcut icon" href="favicon.ico" />
@@ -36,14 +37,15 @@
     const I18N = {
       ko: {
         pageTitle: 'AXIS Design Gallery',
-        navGallery: '레퍼런스 갤러리', navResources: '디자인 리소스', navClients: '고객사 사이트',
-        searchPlaceholder: '레퍼런스 검색',
+        navGallery: 'Design Gallery', navResources: 'Resources', navClients: 'Clients',
+        searchPlaceholder: 'Search',
         themeToLight: '라이트 모드로 전환', themeToDark: '다크 모드로 전환',
-        heroSubtitle: '레퍼런스가 필요하신가요?', heroTitle: '더 높은 품질을 위한',
-        galleryHeading: '레퍼런스 갤러리',
+        heroSubtitle: 'AXIS', heroTitle: `검증된 디자인 사례와 리소스로
+        더 빠르고, 높은 품질의 결과를 만듭니다.`,
+        galleryHeading: '디자인 갤러리',
         viewAll: '전체 보기 →', viewDetail: '자세히 보기 →',
-        resourcesHeading: '디자인 리소스', resourcesDesc: '색상 · 차트 · 폰트 · 아이콘 실무 가이드',
-        archiveHeading: '프로젝트 자료 아카이브',
+        resourcesHeading: '리소스', resourcesDesc: '색상 · 차트 · 폰트 실무 가이드',
+        archiveHeading: '클라이언트',
         totalThemes: '총 12개 테마 ·', totalCharts: '총 8개 차트 가이드 ·',
         fontScale: 'Pretendard 10단계 타입 스케일 ·', totalIcons: '총 40개 아이콘 ·',
         fontH1: '디자인 갤러리', fontH2: '레퍼런스 갤러리', fontH3: '산업별 템플릿',
@@ -65,14 +67,15 @@
       },
       en: {
         pageTitle: 'AXIS Design Gallery',
-        navGallery: 'Reference Gallery', navResources: 'Design Resources', navClients: 'Client Sites',
-        searchPlaceholder: 'Search references',
+        navGallery: 'Design Gallery', navResources: 'Resources', navClients: 'Clients',
+        searchPlaceholder: 'Search',
         themeToLight: 'Switch to light mode', themeToDark: 'Switch to dark mode',
-        heroSubtitle: 'Need a reference?', heroTitle: 'For Higher Quality',
-        galleryHeading: 'Reference Gallery',
+        heroSubtitle: 'AXIS', heroTitle: `Deliver faster, high-quality results
+        with proven design examples and resources.`,
+        galleryHeading: 'Design Gallery',
         viewAll: 'View All →', viewDetail: 'View Details →',
-        resourcesHeading: 'Design Resources', resourcesDesc: 'Practical guides for color, charts, fonts, and icons',
-        archiveHeading: 'Project Archive',
+        resourcesHeading: 'Resources', resourcesDesc: 'Practical guides for color, charts, fonts, and icons',
+        archiveHeading: 'Clients',
         totalThemes: '12 themes total ·', totalCharts: '8 chart guides total ·',
         fontScale: 'Pretendard 10-step type scale ·', totalIcons: '40 icons total ·',
         fontH1: 'Design Gallery', fontH2: 'Reference Gallery', fontH3: 'Templates by Industry',
@@ -94,10 +97,11 @@
       },
       ja: {
         pageTitle: 'AXIS Design Gallery',
-        navGallery: 'リファレンスギャラリー', navResources: 'デザインリソース', navClients: '顧客サイト',
-        searchPlaceholder: 'リファレンス検索',
+        navGallery: 'Design Gallery', navResources: 'Resources', navClients: 'Clients',
+        searchPlaceholder: '検索',
         themeToLight: 'ライトモードに切替', themeToDark: 'ダークモードに切替',
-        heroSubtitle: 'リファレンスをお探しですか？', heroTitle: 'より高い品質のための',
+        heroSubtitle: 'AXIS', heroTitle: `検証済みのデザイン事例とリソースで、
+        より迅速かつ高品質な成果を創出します。`,
         galleryHeading: 'リファレンスギャラリー',
         viewAll: 'すべて見る →', viewDetail: '詳しく見る →',
         resourcesHeading: 'デザインリソース', resourcesDesc: '色・チャート・フォント・アイコンの実務ガイド',
@@ -123,6 +127,193 @@
       },
     };
 
+    const COLOR_THEMES = [
+      {
+        id: 'axis', name: 'AXIS Core', theme: 'cool', clientCat: '디자인',
+        brand: [
+          { name: 'Purple', hex: '#7D60FF', role: 'Primary' },
+          { name: 'Blue', hex: '#2B67FF', role: 'Secondary' },
+          { name: 'Mint', hex: '#63E4B9', role: 'Accent' },
+          { name: 'Lavender', hex: '#A48BFF', role: 'Support' },
+          { name: 'Sky', hex: '#8CB2FF', role: 'Tertiary' },
+          { name: 'Aqua', hex: '#5DE1D0', role: 'Highlight' },
+        ],
+        semantic: [
+          { name: 'Primary', hex: '#7D60FF', desc: '주요 액션, CTA 버튼' },
+          { name: 'Success', hex: '#22C55E', desc: '성공, 완료 상태' },
+          { name: 'Warning', hex: '#F59E0B', desc: '경고, 주의 상태' },
+          { name: 'Error', hex: '#EF4444', desc: '오류, 위험 상태' },
+          { name: 'Info', hex: '#3B82F6', desc: '정보, 안내 메시지' },
+        ],
+        neutrals: [
+          { name: '50', hex: '#F9FAFB' }, { name: '100', hex: '#F3F4F6' }, { name: '200', hex: '#E5E7EB' },
+          { name: '300', hex: '#D1D5DB' }, { name: '400', hex: '#9CA3AF' }, { name: '500', hex: '#6B7280' },
+          { name: '600', hex: '#4B5563' }, { name: '700', hex: '#374151' }, { name: '800', hex: '#1F2937' }, { name: '900', hex: '#111827' },
+        ],
+      },
+      {
+        id: 'sanrim', name: '산림조합중앙회', theme: 'cool', clientCat: '엔터프라이즈',
+        brand: [
+          { name: 'Forest Green', hex: '#2D6A27', role: 'Primary' },
+          { name: 'Wood Brown', hex: '#8B5E15', role: 'Secondary' },
+          { name: 'Leaf', hex: '#6AAF5B', role: 'Accent' },
+          { name: 'Moss', hex: '#4C8A47', role: 'Tertiary' },
+          { name: 'Earth', hex: '#B08A49', role: 'Support' },
+          { name: 'Fog', hex: '#D7E6D3', role: 'Highlight' },
+        ],
+        semantic: [
+          { name: 'Primary', hex: '#2D6A27', desc: '주요 액션, CTA 버튼' },
+          { name: 'Success', hex: '#22C55E', desc: '성공, 완료 상태' },
+          { name: 'Warning', hex: '#F59E0B', desc: '경고, 주의 상태' },
+          { name: 'Error', hex: '#EF4444', desc: '오류, 위험 상태' },
+          { name: 'Info', hex: '#3B82F6', desc: '정보, 안내 메시지' },
+        ],
+        neutrals: [
+          { name: '50', hex: '#FAFAF7' }, { name: '100', hex: '#F4F4EE' }, { name: '200', hex: '#E8E8DF' },
+          { name: '300', hex: '#D5D5C8' }, { name: '400', hex: '#B0B09F' }, { name: '500', hex: '#8A8A78' },
+          { name: '600', hex: '#6A6A5A' }, { name: '700', hex: '#4E4E40' }, { name: '800', hex: '#35352A' }, { name: '900', hex: '#1E1E17' },
+        ],
+      },
+      {
+        id: 'toss', name: 'Toss', theme: 'cool', clientCat: '핀테크',
+        brand: [
+          { name: 'Blue', hex: '#0064FF', role: 'Primary' },
+          { name: 'Navy', hex: '#1A1C5E', role: 'Secondary' },
+          { name: 'Sky Blue', hex: '#70B8FF', role: 'Accent' },
+          { name: 'Ice', hex: '#B7DFFF', role: 'Tertiary' },
+          { name: 'Slate', hex: '#233063', role: 'Support' },
+          { name: 'Cyan', hex: '#91E1FF', role: 'Highlight' },
+        ],
+        semantic: [
+          { name: 'Primary', hex: '#0064FF', desc: '주요 액션, CTA 버튼' },
+          { name: 'Success', hex: '#22C55E', desc: '성공, 완료 상태' },
+          { name: 'Warning', hex: '#F59E0B', desc: '경고, 주의 상태' },
+          { name: 'Error', hex: '#EF4444', desc: '오류, 위험 상태' },
+          { name: 'Info', hex: '#3B82F6', desc: '정보, 안내 메시지' },
+        ],
+        neutrals: [
+          { name: '50', hex: '#F8FAFF' }, { name: '100', hex: '#EEF2FF' }, { name: '200', hex: '#DDE5FF' },
+          { name: '300', hex: '#C4D0FF' }, { name: '400', hex: '#97AAFF' }, { name: '500', hex: '#6B80FF' },
+          { name: '600', hex: '#4F63CC' }, { name: '700', hex: '#3A4A99' }, { name: '800', hex: '#263166' }, { name: '900', hex: '#141933' },
+        ],
+      },
+      {
+        id: 'github', name: 'GitHub', theme: 'cool', clientCat: '개발자도구',
+        brand: [
+          { name: 'Purple', hex: '#6E40C9', role: 'Primary' },
+          { name: 'Dark', hex: '#24292F', role: 'Secondary' },
+          { name: 'Pink', hex: '#F778BA', role: 'Accent' },
+          { name: 'Lilac', hex: '#A583D8', role: 'Tertiary' },
+          { name: 'Midnight', hex: '#161B22', role: 'Support' },
+          { name: 'Rose', hex: '#FFB7D1', role: 'Highlight' },
+        ],
+        semantic: [
+          { name: 'Primary', hex: '#6E40C9', desc: '주요 액션, CTA 버튼' },
+          { name: 'Success', hex: '#22C55E', desc: '성공, 완료 상태' },
+          { name: 'Warning', hex: '#F59E0B', desc: '경고, 주의 상태' },
+          { name: 'Error', hex: '#EF4444', desc: '오류, 위험 상태' },
+          { name: 'Info', hex: '#3B82F6', desc: '정보, 안내 메시지' },
+        ],
+        neutrals: [
+          { name: '50', hex: '#F6F8FA' }, { name: '100', hex: '#EAEEF2' }, { name: '200', hex: '#D0D7DE' },
+          { name: '300', hex: '#AFB8C1' }, { name: '400', hex: '#8C959F' }, { name: '500', hex: '#6E7781' },
+          { name: '600', hex: '#57606A' }, { name: '700', hex: '#424A53' }, { name: '800', hex: '#32383F' }, { name: '900', hex: '#24292F' },
+        ],
+      },
+      {
+        id: 'hanwha', name: '한화건설', theme: 'warm', clientCat: '엔터프라이즈',
+        brand: [
+          { name: 'Red', hex: '#E8401C', role: 'Primary' },
+          { name: 'Navy', hex: '#1A2744', role: 'Secondary' },
+          { name: 'Coral', hex: '#FF7A56', role: 'Accent' },
+          { name: 'Amber', hex: '#FFB36B', role: 'Support' },
+          { name: 'Clay', hex: '#C5592A', role: 'Tertiary' },
+          { name: 'Cream', hex: '#F6D9C2', role: 'Highlight' },
+        ],
+        semantic: [
+          { name: 'Primary', hex: '#E8401C', desc: '주요 액션, CTA 버튼' },
+          { name: 'Success', hex: '#22C55E', desc: '성공, 완료 상태' },
+          { name: 'Warning', hex: '#F59E0B', desc: '경고, 주의 상태' },
+          { name: 'Error', hex: '#EF4444', desc: '오류, 위험 상태' },
+          { name: 'Info', hex: '#3B82F6', desc: '정보, 안내 메시지' },
+        ],
+        neutrals: [
+          { name: '50', hex: '#FFF9F5' }, { name: '100', hex: '#FFF2E8' }, { name: '200', hex: '#FDE0CC' },
+          { name: '300', hex: '#F3C29B' }, { name: '400', hex: '#E9A372' }, { name: '500', hex: '#C76E3A' },
+          { name: '600', hex: '#A24E26' }, { name: '700', hex: '#7A3820' }, { name: '800', hex: '#4F2818' }, { name: '900', hex: '#26120C' },
+        ],
+      },
+      {
+        id: 'adobe', name: 'Adobe', theme: 'warm', clientCat: '디자인',
+        brand: [
+          { name: 'Red', hex: '#FF0000', role: 'Primary' },
+          { name: 'Dark', hex: '#1C1C1C', role: 'Secondary' },
+          { name: 'Orange', hex: '#FF6B00', role: 'Accent' },
+          { name: 'Amber', hex: '#FFB347', role: 'Support' },
+          { name: 'Copper', hex: '#CC4E00', role: 'Tertiary' },
+          { name: 'Rose', hex: '#FFCFB2', role: 'Highlight' },
+        ],
+        semantic: [
+          { name: 'Primary', hex: '#FF0000', desc: '주요 액션, CTA 버튼' },
+          { name: 'Success', hex: '#22C55E', desc: '성공, 완료 상태' },
+          { name: 'Warning', hex: '#F59E0B', desc: '경고, 주의 상태' },
+          { name: 'Error', hex: '#EF4444', desc: '오류, 위험 상태' },
+          { name: 'Info', hex: '#3B82F6', desc: '정보, 안내 메시지' },
+        ],
+        neutrals: [
+          { name: '50', hex: '#F8F8F8' }, { name: '100', hex: '#F0F0F0' }, { name: '200', hex: '#E6E6E6' },
+          { name: '300', hex: '#D1D1D1' }, { name: '400', hex: '#B0B0B0' }, { name: '500', hex: '#808080' },
+          { name: '600', hex: '#606060' }, { name: '700', hex: '#404040' }, { name: '800', hex: '#202020' }, { name: '900', hex: '#121212' },
+        ],
+      },
+      {
+        id: 'kakaobank', name: '카카오뱅크', theme: 'warm', clientCat: '핀테크',
+        brand: [
+          { name: 'Yellow', hex: '#FFCD00', role: 'Primary' },
+          { name: 'Brown', hex: '#3C2000', role: 'Secondary' },
+          { name: 'Gold', hex: '#FFB800', role: 'Accent' },
+          { name: 'Honey', hex: '#FFD36B', role: 'Support' },
+          { name: 'Caramel', hex: '#B8761E', role: 'Tertiary' },
+          { name: 'Cream', hex: '#FFF3C4', role: 'Highlight' },
+        ],
+        semantic: [
+          { name: 'Primary', hex: '#FFCD00', desc: '주요 액션, CTA 버튼' },
+          { name: 'Success', hex: '#22C55E', desc: '성공, 완료 상태' },
+          { name: 'Warning', hex: '#F59E0B', desc: '경고, 주의 상태' },
+          { name: 'Error', hex: '#EF4444', desc: '오류, 위험 상태' },
+          { name: 'Info', hex: '#3B82F6', desc: '정보, 안내 메시지' },
+        ],
+        neutrals: [
+          { name: '50', hex: '#FFFDF5' }, { name: '100', hex: '#FFF7DD' }, { name: '200', hex: '#FEEFC0' },
+          { name: '300', hex: '#F5D99B' }, { name: '400', hex: '#E3B86A' }, { name: '500', hex: '#C79136' },
+          { name: '600', hex: '#A96F1F' }, { name: '700', hex: '#7F4D12' }, { name: '800', hex: '#52310B' }, { name: '900', hex: '#2B1A05' },
+        ],
+      },
+      {
+        id: 'aws', name: 'AWS', theme: 'warm', clientCat: '인프라',
+        brand: [
+          { name: 'Orange', hex: '#FF9900', role: 'Primary' },
+          { name: 'Navy', hex: '#232F3E', role: 'Secondary' },
+          { name: 'Gold', hex: '#FFB84D', role: 'Accent' },
+          { name: 'Amber', hex: '#FFD27A', role: 'Support' },
+          { name: 'Rust', hex: '#CC7A00', role: 'Tertiary' },
+          { name: 'Sand', hex: '#FFF1D6', role: 'Highlight' },
+        ],
+        semantic: [
+          { name: 'Primary', hex: '#FF9900', desc: '주요 액션, CTA 버튼' },
+          { name: 'Success', hex: '#22C55E', desc: '성공, 완료 상태' },
+          { name: 'Warning', hex: '#F59E0B', desc: '경고, 주의 상태' },
+          { name: 'Error', hex: '#EF4444', desc: '오류, 위험 상태' },
+          { name: 'Info', hex: '#3B82F6', desc: '정보, 안내 메시지' },
+        ],
+        neutrals: [
+          { name: '50', hex: '#FFF9F0' }, { name: '100', hex: '#FFF3E1' }, { name: '200', hex: '#FDE2B4' },
+          { name: '300', hex: '#F4C77D' }, { name: '400', hex: '#DDA151' }, { name: '500', hex: '#B9782A' },
+          { name: '600', hex: '#90521D' }, { name: '700', hex: '#6A3814' }, { name: '800', hex: '#45230D' }, { name: '900', hex: '#221107' },
+        ],
+      },
+    ];
+
     function BxdiMainPagePrototype() {
       const [familySiteOpen, setFamilySiteOpen] = React.useState(false);
       const [theme, setTheme] = React.useState(() => { try{return localStorage.getItem('axis-theme')||'dark';}catch(e){return 'dark';} });
@@ -141,6 +332,7 @@
       const [activeResourceTab, setActiveResourceTab] = React.useState('Chart');
       const [selectedGalleryIndex, setSelectedGalleryIndex] = React.useState(null);
       const [selectedChartIndex, setSelectedChartIndex] = React.useState(null);
+      const [selectedColorTheme, setSelectedColorTheme] = React.useState(null);
 
       // Mini chart renderer - available globally
       const P='#7D60FF', S='#2B67FF', A='#63E4B9';
@@ -523,7 +715,6 @@
               <nav className="hidden gap-10 font-medium text-white/80 md:flex h-full items-stretch">
                 <a href="gallery.html" className="gnb-link transition hover:text-white">{t.navGallery}</a>
                 <a href="resources.html" className="gnb-link transition hover:text-white">{t.navResources}</a>
-                <a href="archive.html" className="gnb-link transition hover:text-white">{t.navClients}</a>
               </nav>
 
               {/* Utility */}
@@ -581,15 +772,14 @@
             <div class="hero-canvas">
 
               <div class="hero-content">
-                <p class="hero-subtitle">{t.heroSubtitle}</p>
+                <div class="hero-subtitle">{t.heroSubtitle}
+                  <span>Design Gallery</span>
+                </div>
 
                 <h1 class="hero-title">
                   {t.heroTitle}
                 </h1>
 
-                <div class="hero-logo">
-                  <span>Design Gallery</span>
-                </div>
               </div>
 
               <div class="hero-visual">
@@ -604,7 +794,7 @@
           <section className="mx-auto max-w-7xl px-8 py-20">
             <div className="mb-6 flex items-end justify-between">
               <div>
-                <p className="page-header-label">Reference Gallery</p>
+                <p className="page-header-label">Design Gallery</p>
                 <h2 className="mt-2 text-3xl font-bold">{t.galleryHeading}</h2>
               </div>
               <a href="gallery.html" className="rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm hover:bg-white/10">
@@ -662,9 +852,9 @@
 
             {/* Tab Navigation */}
             <div style={{display:'flex', borderBottom:`1px solid ${theme==='dark'?'rgba(255,255,255,0.08)':'rgba(9,30,66,0.1)'}`, marginBottom:'28px'}}>
-              {['Chart','Font','Icon','Color'].map(tab => (
+              {['Chart','Font','Color'].map(tab => (
                 <button key={tab} onClick={() => setActiveResourceTab(tab)} style={{
-                  padding:'12px 28px', fontSize:'15px', fontWeight:'500',
+                  padding:'12px 28px', fontSize:'16px', fontWeight:'600', lineHeight:'1.35', letterSpacing:'0.01em',
                   fontFamily:'Pretendard, sans-serif',
                   color: activeResourceTab===tab ? (theme==='dark'?'#fff':'#172B4D') : (theme==='dark'?'rgba(255,255,255,0.4)':'rgba(9,30,66,0.4)'),
                   background:'transparent', border:'none',
@@ -677,6 +867,98 @@
 
             {/* ── Color Tab ─────────────────────────── */}
             {activeResourceTab === 'Color' && (() => {
+              const openTheme = (theme) => setSelectedColorTheme(theme);
+              const closeTheme = () => setSelectedColorTheme(null);
+              return (
+                <div>
+                  <div className="theme-card-grid">
+                    {COLOR_THEMES.map((tm) => (
+                      <button
+                        key={tm.id}
+                        type="button"
+                        className={`theme-card ${selectedColorTheme && selectedColorTheme.id === tm.id ? 'selected' : ''}`}
+                        onClick={() => openTheme(tm)}
+                        style={{ textAlign: 'left', padding: 0, width: '100%' }}>
+                        <div className="theme-card-strip">
+                          {tm.brand.map((c, idx) => (
+                            <div key={idx} className="theme-card-strip-seg" style={{ background: c.hex }} />
+                          ))}
+                        </div>
+                        <div className="theme-card-body">
+                          <div className="theme-card-badges">
+                            <span className={`theme-badge-pill ${tm.theme}`}>{tm.theme === 'cool' ? 'Cool' : 'Warm'}</span>
+                            <span className="client-cat-pill">{t.catLabels[tm.clientCat] || tm.clientCat}</span>
+                          </div>
+                          <div className="theme-card-name">{t.brandNames[tm.name] || tm.name}</div>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+
+                  <p style={{ marginTop: '10px', fontSize: '13px', color: theme === 'dark' ? 'rgba(255,255,255,0.3)' : 'rgba(9,30,66,0.4)', textAlign: 'right' }}>
+                    {t.totalThemes} <a href="resources.html?tab=color" style={{ color: 'rgba(99,228,185,0.6)', textDecoration: 'none' }}>{t.viewAll}</a>
+                  </p>
+
+                  {selectedColorTheme && (
+                    <div className="modal-overlay" onClick={closeTheme}>
+                      <div className="color-modal-container" onClick={(e) => e.stopPropagation()}>
+                        <div className="color-modal-strip">
+                          {selectedColorTheme.brand.map((c, idx) => (
+                            <div key={idx} style={{ flex: 1, background: c.hex }} />
+                          ))}
+                        </div>
+                        <div className="color-modal-content">
+                          <div style={{ display: 'flex', gap: 12, alignItems: 'flex-start', marginBottom: 16 }}>
+                            <div style={{ flex: 1 }}>
+                              <h3 style={{ fontSize: 18, fontWeight: 700, color: '#ffffff', margin: 0 }}>
+                                {t.brandNames[selectedColorTheme.name] || selectedColorTheme.name}
+                              </h3>
+                              <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', margin: '4px 0 0 0' }}>
+                                {selectedColorTheme.clientCat} · {selectedColorTheme.theme === 'cool' ? 'Cool' : 'Warm'}
+                              </p>
+                            </div>
+                            <button onClick={closeTheme} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(255,255,255,0.4)', padding: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center' }} aria-label="Close">
+                              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M18 6 6 18" />
+                                <path d="M6 6l12 12" />
+                              </svg>
+                            </button>
+                          </div>
+
+                          <div style={{ marginBottom: 16 }}>
+                            <p style={{ fontSize: 11, fontWeight: 600, color: 'rgba(255,255,255,0.45)', marginBottom: 10, textTransform: 'uppercase', letterSpacing: '0.5px' }}>색상 팔레트</p>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                              {selectedColorTheme.brand.map((c) => (
+                                <div key={c.hex} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px', borderRadius: 8, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                                  <div style={{ width: 32, height: 32, borderRadius: 6, background: c.hex, flexShrink: 0, boxShadow: '0 2px 8px rgba(0,0,0,0.3)' }} />
+                                  <div style={{ flex: 1 }}>
+                                    <div style={{ fontSize: 13, fontWeight: 600, color: '#ffffff' }}>{c.name}</div>
+                                    <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', fontFamily: 'monospace' }}>{c.hex}</div>
+                                  </div>
+                                  <button className="resource-btn" style={{ padding: '6px 12px', whiteSpace: 'nowrap' }} onClick={() => navigator.clipboard.writeText(c.hex).catch(() => {})}>복사</button>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+
+                          <div>
+                            <p style={{ fontSize: 11, fontWeight: 600, color: 'rgba(255,255,255,0.45)', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.5px' }}>배열 형태</p>
+                            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                              <div style={{ flex: 1, background: 'rgba(0,0,0,0.3)', padding: 12, borderRadius: 8, color: 'rgba(255,255,255,0.6)', fontFamily: 'monospace', fontSize: 12, wordBreak: 'break-all', border: '1px solid rgba(255,255,255,0.08)' }}>
+                                {JSON.stringify(selectedColorTheme.brand.map((c) => c.hex))}
+                              </div>
+                              <button className="resource-btn" style={{ padding: '8px 12px', whiteSpace: 'nowrap' }} onClick={() => navigator.clipboard.writeText(JSON.stringify(selectedColorTheme.brand.map((c) => c.hex))).catch(() => {})}>복사</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
+
+            {false && activeResourceTab === 'Color' && (() => {
               const themes = [
                 { name:'AXIS Core',     theme:'cool', cat:'디자인',      colors:['#7D60FF','#2B67FF','#63E4B9'] },
                 { name:'산림조합중앙회',  theme:'cool', cat:'엔터프라이즈', colors:['#2D6A27','#8B5E15','#6AAF5B'] },
@@ -699,15 +981,15 @@
                         </div>
                         <div style={{padding:'10px 12px'}}>
                           <div style={{display:'flex', gap:'5px', marginBottom:'6px', flexWrap:'wrap'}}>
-                            <span style={{fontSize:'9px', fontWeight:'700', letterSpacing:'0.08em', textTransform:'uppercase', padding:'2px 6px', borderRadius:'4px', background:tm.theme==='cool'?'rgba(43,103,255,0.18)':'rgba(232,100,28,0.18)', color:tm.theme==='cool'?'#7AADFF':'#FFAA7A'}}>{tm.theme==='cool'?'Cool':'Warm'}</span>
-                            <span style={{fontSize:'9px', fontWeight:'600', padding:'2px 6px', borderRadius:'4px', background:theme==='dark'?'rgba(255,255,255,0.07)':'rgba(9,30,66,0.07)', color:theme==='dark'?'rgba(255,255,255,0.45)':'rgba(9,30,66,0.5)'}}>{t.catLabels[tm.cat] || tm.cat}</span>
+                            <span style={{fontSize:'12px', fontWeight:'700', letterSpacing:'0.08em', textTransform:'uppercase', padding:'3px 7px', borderRadius:'4px', background:tm.theme==='cool'?'rgba(43,103,255,0.18)':'rgba(232,100,28,0.18)', color:tm.theme==='cool'?'#7AADFF':'#FFAA7A'}}>{tm.theme==='cool'?'Cool':'Warm'}</span>
+                            <span style={{fontSize:'12px', fontWeight:'600', padding:'3px 7px', borderRadius:'4px', background:theme==='dark'?'rgba(255,255,255,0.07)':'rgba(9,30,66,0.07)', color:theme==='dark'?'rgba(255,255,255,0.45)':'rgba(9,30,66,0.5)'}}>{t.catLabels[tm.cat] || tm.cat}</span>
                           </div>
-                          <div style={{fontSize:'12px', fontWeight:'600', color:theme==='dark'?'rgba(255,255,255,0.85)':'#172B4D', overflow:'hidden', whiteSpace:'nowrap', textOverflow:'ellipsis'}}>{t.brandNames[tm.name] || tm.name}</div>
+                          <div style={{fontSize:'14px', fontWeight:'600', color:theme==='dark'?'rgba(255,255,255,0.85)':'#172B4D', overflow:'hidden', whiteSpace:'nowrap', textOverflow:'ellipsis'}}>{t.brandNames[tm.name] || tm.name}</div>
                         </div>
                       </a>
                     ))}
                   </div>
-                  <p style={{marginTop:'10px', fontSize:'12px', color:'rgba(255,255,255,0.3)', textAlign:'right'}}>{t.totalThemes} <a href="resources.html" style={{color:'rgba(99,228,185,0.6)', textDecoration:'none'}}>{t.viewAll}</a></p>
+                  <p style={{marginTop:'10px', fontSize:'13px', color:'rgba(255,255,255,0.3)', textAlign:'right'}}>{t.totalThemes} <a href="resources.html" style={{color:'rgba(99,228,185,0.6)', textDecoration:'none'}}>{t.viewAll}</a></p>
                 </div>
               );
             })()}
@@ -735,42 +1017,103 @@
                           {miniChartRenderer(chart.id)}
                         </div>
                         <div style={{padding:'10px 14px'}}>
-                          <span style={{fontSize:'9px', fontWeight:'700', letterSpacing:'0.08em', textTransform:'uppercase', padding:'2px 6px', borderRadius:'4px', background:'rgba(125,96,255,0.15)', color:'#b5a0ff', display:'inline-block', marginBottom:'5px'}}>{t.purposeLabels[chart.purpose] || chart.purpose}</span>
-                          <div style={{fontSize:'12px', fontWeight:'600', color:'rgba(255,255,255,0.85)'}}>{chart.name}</div>
+                          <span style={{fontSize:'12px', fontWeight:'700', letterSpacing:'0.08em', textTransform:'uppercase', padding:'3px 7px', borderRadius:'4px', background:'rgba(125,96,255,0.15)', color:'#b5a0ff', display:'inline-block', marginBottom:'5px'}}>{t.purposeLabels[chart.purpose] || chart.purpose}</span>
+                          <div style={{fontSize:'14px', fontWeight:'600', color:'rgba(255,255,255,0.85)'}}>{chart.name}</div>
                         </div>
                       </div>
                     ))}
                   </div>
-                  <p style={{marginTop:'10px', fontSize:'12px', color:'rgba(255,255,255,0.3)', textAlign:'right'}}>{t.totalCharts} <a href="resources.html" style={{color:'rgba(99,228,185,0.6)', textDecoration:'none'}}>{t.viewAll}</a></p>
+                  <p style={{marginTop:'10px', fontSize:'13px', color:'rgba(255,255,255,0.3)', textAlign:'right'}}>{t.totalCharts} <a href="resources.html" style={{color:'rgba(99,228,185,0.6)', textDecoration:'none'}}>{t.viewAll}</a></p>
                 </div>
               );
             })()}
 
             {/* ── Font Tab ──────────────────────────── */}
             {activeResourceTab === 'Font' && (() => {
-              const specs = [
-                {role:'Display', size:'56px', weight:'700', ls:'-0.03em', sample:'AXIS Design Gallery'},
-                {role:'H1',      size:'40px', weight:'700', ls:'-0.02em', sample:t.fontH1},
-                {role:'H2',      size:'32px', weight:'600', ls:'-0.02em', sample:t.fontH2},
-                {role:'H3',      size:'24px', weight:'600', ls:'-0.01em', sample:t.fontH3},
-                {role:'Body L',  size:'18px', weight:'400', ls:'0',       sample:t.fontBody},
-                {role:'Body M',  size:'16px', weight:'400', ls:'0',       sample:t.fontBody},
-                {role:'Caption', size:'12px', weight:'400', ls:'0.01em',  sample:t.fontCaption},
-                {role:'Label',   size:'11px', weight:'600', ls:'0.07em',  sample:'TEMPLATE CURATION'},
+              const fontCards = [
+                {
+                  no: '01',
+                  family: 'Pretendard',
+                  korean: '프리텐다드',
+                  badge: 'Primary UI Font',
+                  desc: 'BI 대시보드 · 업무 화면 · 데이터 그리드 기본 권장',
+                  visual: 'T',
+                  visualFont: 'Georgia, serif',
+                  gradient: theme==='dark'
+                    ? 'radial-gradient(circle at 82% 28%, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.04) 28%, transparent 45%), linear-gradient(135deg, rgba(125,96,255,0.28) 0%, rgba(43,103,255,0.16) 48%, rgba(99,228,185,0.18) 100%)'
+                    : 'radial-gradient(circle at 82% 28%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.55) 30%, transparent 48%), linear-gradient(135deg, #EEF0FF 0%, #F8F9FF 48%, #E7FBF5 100%)',
+                  samples: [
+                    {label:'Title', usage:'화면 타이틀 / 대시보드명', spec:'24px · Bold', weight:'700', size:'24px', text:'Pretendard Bold 24px'},
+                    {label:'Sub-title', usage:'섹션 제목 / 카드 그룹명', spec:'18px · SemiBold', weight:'600', size:'18px', text:'Pretendard SemiBold 18px'},
+                    {label:'Header', usage:'그리드 헤더 / 컬럼명 / 필터 라벨', spec:'14px · Medium', weight:'500', size:'14px', text:'Pretendard Medium 14px'},
+                    {label:'Body', usage:'본문 / 데이터 셀 / 일반 라벨', spec:'13px · Regular', weight:'400', size:'13px', text:'Pretendard Regular 13px'},
+                  ],
+                },
+                {
+                  no: '02',
+                  family: 'Noto Sans KR',
+                  korean: '노토 산스 KR',
+                  badge: 'Korean Alternative',
+                  desc: '한글 중심 화면 · 고객사 환경 호환용 대체 폰트',
+                  visual: '가',
+                  visualFont: 'Noto Sans KR, Pretendard, sans-serif',
+                  gradient: theme==='dark'
+                    ? 'radial-gradient(circle at 82% 28%, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.04) 30%, transparent 48%), linear-gradient(135deg, rgba(140,178,255,0.24) 0%, rgba(164,139,255,0.18) 52%, rgba(255,255,255,0.08) 100%)'
+                    : 'radial-gradient(circle at 82% 28%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.58) 30%, transparent 48%), linear-gradient(135deg, #EEF4FF 0%, #F6F2FF 52%, #FFFFFF 100%)',
+                  samples: [
+                    {label:'Title', usage:'화면 타이틀 / 대시보드명', spec:'24px · Bold', weight:'700', size:'24px', text:'Noto Sans KR Bold 24px'},
+                    {label:'Sub-title', usage:'섹션 제목 / 카드 그룹명', spec:'18px · Medium', weight:'500', size:'18px', text:'Noto Sans KR Medium 18px'},
+                    {label:'Header', usage:'그리드 헤더 / 컬럼명 / 필터 라벨', spec:'14px · Regular', weight:'400', size:'14px', text:'Noto Sans KR Regular 14px'},
+                    {label:'Body', usage:'본문 / 데이터 셀 / 일반 라벨', spec:'13px · Regular', weight:'400', size:'13px', text:'Noto Sans KR Regular 13px'},
+                  ],
+                },
               ];
+              const textColor = theme==='dark' ? '#ffffff' : '#172B4D';
+              const subTextColor = theme==='dark' ? 'rgba(255,255,255,0.58)' : 'rgba(9,30,66,0.58)';
+              const mutedTextColor = theme==='dark' ? 'rgba(255,255,255,0.38)' : 'rgba(9,30,66,0.45)';
+              const borderColor = theme==='dark' ? 'rgba(255,255,255,0.08)' : 'rgba(9,30,66,0.11)';
+              const cardBg = theme==='dark' ? 'rgba(255,255,255,0.025)' : '#FFFFFF';
+              const chipBg = theme==='dark' ? 'rgba(255,255,255,0.045)' : '#FFFFFF';
+              const chipBorder = theme==='dark' ? 'rgba(255,255,255,0.075)' : 'rgba(9,30,66,0.10)';
               return (
                 <div>
-                  <div style={{display:'flex', flexDirection:'column', gap:'4px'}}>
-                    {specs.map((spec, i) => (
-                      <div key={i} style={{display:'flex', alignItems:'center', gap:'16px', padding:'12px 20px', borderRadius:'16px', border:'1px solid rgba(255,255,255,0.05)', background:'rgba(255,255,255,0.02)'}}>
-                        <span style={{fontSize:'10px', fontWeight:'700', letterSpacing:'0.06em', padding:'3px 8px', borderRadius:'5px', background:'rgba(125,96,255,0.15)', color:'#b5a0ff', flexShrink:0, width:'58px', textAlign:'center', display:'inline-block'}}>{spec.role}</span>
-                        <div style={{fontSize:Math.min(parseInt(spec.size),22)+'px', fontWeight:spec.weight, letterSpacing:spec.ls, color:'rgba(255,255,255,0.85)', overflow:'hidden', whiteSpace:'nowrap', textOverflow:'ellipsis', flex:1}}>{spec.sample}</div>
-                        <span style={{fontSize:'11px', fontFamily:'monospace', color:'rgba(99,228,185,0.7)', flexShrink:0}}>{spec.size}</span>
-                        <span style={{fontSize:'11px', fontFamily:'monospace', color:'rgba(255,255,255,0.28)', flexShrink:0}}>{spec.weight}</span>
-                      </div>
+                  <div style={{display:'grid', gridTemplateColumns:'repeat(2,minmax(0,1fr))', gap:'18px'}}>
+                    {fontCards.map((card) => (
+                      <a key={card.family} href="resources.html?tab=font" style={{display:'block', textDecoration:'none', borderRadius:'22px', overflow:'hidden', border:`1px solid ${borderColor}`, background:cardBg, boxShadow:theme==='dark'?'0 22px 60px rgba(0,0,0,0.22)':'0 18px 40px rgba(9,30,66,0.08)', transition:'transform 0.18s ease, border-color 0.18s ease'}}
+                        onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-3px)';e.currentTarget.style.borderColor=theme==='dark'?'rgba(125,96,255,0.35)':'rgba(12,102,228,0.25)';}}
+                        onMouseLeave={e=>{e.currentTarget.style.transform='';e.currentTarget.style.borderColor=borderColor;}}>
+                        <div style={{position:'relative', minHeight:'154px', padding:'22px 24px', background:card.gradient, overflow:'hidden'}}>
+                          <div style={{position:'absolute', right:'26px', top:'50%', width:'96px', height:'96px', transform:'translateY(-50%)', borderRadius:'50%', background:theme==='dark'?'rgba(255,255,255,0.11)':'rgba(255,255,255,0.72)', boxShadow:theme==='dark'?'0 14px 34px rgba(0,0,0,0.22)':'0 14px 30px rgba(70,86,150,0.16)', display:'flex', alignItems:'center', justifyContent:'center'}}>
+                            <div style={{position:'absolute', inset:'21px', border:'1.5px dashed rgba(43,74,145,0.50)', borderRadius:'8px'}} />
+                            <span style={{position:'relative', fontFamily:card.visualFont, fontSize:card.visual==='T'?'56px':'48px', fontWeight:'700', color:theme==='dark'?'rgba(230,238,255,0.82)':'#344B86', textShadow:theme==='dark'?'0 0 20px rgba(125,96,255,0.22)':'0 7px 16px rgba(52,75,134,0.14)'}}>{card.visual}</span>
+                          </div>
+                          <div style={{position:'absolute', right:'18px', top:'22px', color:theme==='dark'?'rgba(255,255,255,0.35)':'rgba(43,74,145,0.36)', fontSize:'19px', fontWeight:'300'}}>+</div>
+                          <div style={{position:'absolute', right:'138px', top:'54px', width:'6px', height:'6px', borderRadius:'50%', border:'1.5px solid rgba(125,96,255,0.34)'}} />
+                          <div style={{position:'relative', maxWidth:'calc(100% - 118px)'}}>
+                            <h3 style={{margin:0, fontFamily:card.family === 'Pretendard' ? 'Pretendard, sans-serif' : 'Noto Sans KR, Pretendard, sans-serif', fontSize:'32px', lineHeight:'1.05', fontWeight:'700', letterSpacing:'-0.04em', color:theme==='dark'?'#ffffff':'#172B4D'}}>{card.family}</h3>
+                            <p style={{margin:'6px 0 0', fontFamily:card.family === 'Pretendard' ? 'Pretendard, sans-serif' : 'Noto Sans KR, Pretendard, sans-serif', fontSize:'18px', fontWeight:'400', color:theme==='dark'?'rgba(255,255,255,0.66)':'rgba(23,43,77,0.72)'}}>{card.korean}</p>
+                            <div style={{display:'inline-flex', marginTop:'14px', padding:'5px 9px', borderRadius:'999px', background:theme==='dark'?'rgba(255,255,255,0.10)':'rgba(255,255,255,0.72)', border:`1px solid ${theme==='dark'?'rgba(255,255,255,0.10)':'rgba(43,74,145,0.10)'}`, color:theme==='dark'?'rgba(255,255,255,0.82)':'#344B86', fontSize:'11px', fontWeight:'700', letterSpacing:'0.03em'}}>{card.badge}</div>
+                          </div>
+                        </div>
+                        <div style={{padding:'14px 16px 16px'}}>
+                          <p style={{margin:'0 2px 12px', color:subTextColor, fontSize:'12.5px', lineHeight:'1.45'}}>{card.desc}</p>
+                          <div style={{display:'grid', gap:'8px'}}>
+                            {card.samples.map((sample) => (
+                              <div key={sample.label} style={{borderRadius:'13px', border:`1px solid ${chipBorder}`, background:chipBg, padding:'10px 12px', display:'grid', gridTemplateColumns:'76px minmax(0,1fr) auto', alignItems:'center', columnGap:'10px'}}>
+                                <div style={{display:'inline-flex', width:'fit-content', padding:'4px 7px', borderRadius:'7px', background:theme==='dark'?'rgba(125,96,255,0.18)':'rgba(125,96,255,0.10)', color:theme==='dark'?'#B6A7FF':'#6554D9', fontSize:'11px', fontWeight:'800'}}>{sample.label}</div>
+                                <div style={{minWidth:0}}>
+                                  <div style={{fontSize:'12px', fontWeight:'600', color:subTextColor, marginBottom:'3px', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis'}}>{sample.usage}</div>
+                                  <div style={{fontFamily:card.family === 'Pretendard' ? 'Pretendard, sans-serif' : 'Noto Sans KR, Pretendard, sans-serif', fontSize:sample.size, fontWeight:sample.weight, color:textColor, lineHeight:'1.18', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis'}}>{sample.text}</div>
+                                </div>
+                                <div style={{fontSize:'12px', fontWeight:'700', color:'rgba(99,228,185,0.75)', whiteSpace:'nowrap'}}>{sample.spec}</div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </a>
                     ))}
                   </div>
-                  <p style={{marginTop:'10px', fontSize:'12px', color:'rgba(255,255,255,0.3)', textAlign:'right'}}>{t.fontScale} <a href="resources.html" style={{color:'rgba(99,228,185,0.6)', textDecoration:'none'}}>{t.viewAll}</a></p>
+                  <p style={{marginTop:'12px', fontSize:'13px', color:theme==='dark'?'rgba(255,255,255,0.3)':'rgba(9,30,66,0.35)', textAlign:'right'}}>AUD 업무 화면 권장 폰트 2종 · <a href="resources.html?tab=font" style={{color:'rgba(99,228,185,0.75)', textDecoration:'none'}}>{t.viewAll}</a></p>
                 </div>
               );
             })()}
@@ -805,11 +1148,11 @@
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                           {icon.paths.map((d,j) => <path key={j} d={d}/>)}
                         </svg>
-                        <span style={{fontSize:'9px', textAlign:'center', lineHeight:'1.3', fontFamily:'Pretendard, sans-serif'}}>{icon.name}</span>
+                        <span style={{fontSize:'12px', textAlign:'center', lineHeight:'1.4', fontFamily:'Pretendard, sans-serif'}}>{icon.name}</span>
                       </a>
                     ))}
                   </div>
-                  <p style={{marginTop:'10px', fontSize:'12px', color:'rgba(255,255,255,0.3)', textAlign:'right'}}>{t.totalIcons} <a href="resources.html" style={{color:'rgba(99,228,185,0.6)', textDecoration:'none'}}>{t.viewAll}</a></p>
+                  <p style={{marginTop:'10px', fontSize:'13px', color:'rgba(255,255,255,0.3)', textAlign:'right'}}>{t.totalIcons} <a href="resources.html" style={{color:'rgba(99,228,185,0.6)', textDecoration:'none'}}>{t.viewAll}</a></p>
                 </div>
               );
             })()}
@@ -848,17 +1191,8 @@
                       <div key={`${item.id}-${i}`}
                         style={{
                           width:`${W}px`, height:`${H}px`, flexShrink:0,
-                          cursor:'pointer', perspective:'1200px',
+                          perspective:'1200px',
                           transition:'transform 0.3s cubic-bezier(0.34,1.56,0.64,1)',
-                        }}
-                        onClick={() => setSelectedArchiveIndex(item.id - 1)}
-                        onMouseEnter={e => {
-                          e.currentTarget.style.transform = 'translateY(-10px)';
-                          e.currentTarget.querySelector('.archive-inner').style.transform = 'rotateY(180deg)';
-                        }}
-                        onMouseLeave={e => {
-                          e.currentTarget.style.transform = 'translateY(0)';
-                          e.currentTarget.querySelector('.archive-inner').style.transform = 'rotateY(0deg)';
                         }}
                       >
                         <div className="archive-inner" style={{
@@ -921,16 +1255,12 @@
         }}>
         <div className="flex items-end justify-between">
           <div>
-            <p className="page-header-label">Project Archive</p>
+            <p className="page-header-label">Clients</p>
             <h2 className="mt-2 text-3xl font-bold" style={{color:nameCl
               }}>
               {t.archiveHeading}
             </h2>
           </div>
-          <a href="resources.html"
-            className="rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm hover:bg-white/10 transition">
-            {t.viewAll}
-          </a>
         </div>
       </div>
 
@@ -1114,47 +1444,17 @@
             <div className="mx-auto max-w-7xl px-8 py-10">
               <div className="flex items-start justify-between gap-8">
 
-                {/* Left: SNS + Nav links */}
+                {/* Left: Company Info + Nav links */}
                 <div className="flex flex-col gap-6">
-                  {/* SNS Icons */}
-                  <div className="flex items-center gap-4">
-                    {/* YouTube */}
-                    <a href="https://www.youtube.com/@BIMATRIXKR" target="_blank" rel="noopener noreferrer"
-                       className="flex items-center justify-center w-9 h-9 rounded-full border border-white/15 bg-white/5 hover:bg-white/15 transition">
-                      <svg viewBox="-1 -1 26 26" aria-hidden="true" focusable="false" fill="rgba(255,255,255,0.65)" width="20">
-                        <path d="M 23.498 6.186 a 3.016 3.016 0 0 0 -2.122 -2.136 C 19.505 3.545 12 3.545 12 3.545 s -7.505 0 -9.377 0.505 A 3.017 3.017 0 0 0 0.502 6.186 C 0 8.07 0 12 0 12 s 0 3.93 0.502 5.814 a 3.016 3.016 0 0 0 2.122 2.136 c 1.871 0.505 9.376 0.505 9.376 0.505 s 7.505 0 9.377 -0.505 a 3.015 3.015 0 0 0 2.122 -2.136 C 24 15.93 24 12 24 12 s 0 -3.93 -0.502 -5.814 Z M 9.545 15.568 V 8.432 L 15.818 12 l -6.273 3.568 Z"></path>
-                      </svg>
-                    </a>
-                    {/* Facebook */}
-                    <a href="https://www.facebook.com/bimatrixkorea" target="_blank" rel="noopener noreferrer"
-                       className="flex items-center justify-center w-9 h-9 rounded-full border border-white/15 bg-white/5 hover:bg-white/15 transition">
-                      <svg viewBox="2 2 22 22" aria-hidden="true" focusable="false" fill="rgba(255,255,255,0.65)" width="23">
-                        <path d="M13.6 21v-7.1h2.4l.4-3h-2.8V9c0-.87.24-1.47 1.5-1.47H16.5V4.85C16.2 4.81 15.4 4.75 14.47 4.75c-1.95 0-3.28 1.19-3.28 3.38v2.77H9v3h2.19V21h2.41Z"></path>
-                      </svg>
-                    </a>
-                    {/* Naver Blog */}
-                    <a href="https://blog.naver.com/bi_matrix" target="_blank" rel="noopener noreferrer"
-                       className="flex items-center justify-center w-9 h-9 rounded-full border border-white/15 bg-white/5 hover:bg-white/15 transition">
-                      <svg viewBox="0 0 106.4 86" width="20" height="20" aria-hidden="true" fill="rgba(255,255,255,0.65)">
-                        <path d="M59.5,34c-2.3,0-4.2,1.9-4.2,4.2s1.9,4.2,4.2,4.2,4.2-1.9,4.2-4.2-1.9-4.2-4.2-4.2Z"/>
-                        <path d="M84.6,34c-2.3,0-4.2,1.9-4.2,4.2s1.9,4.2,4.2,4.2,4.2-1.9,4.2-4.2-1.9-4.2-4.2-4.2Z"/>
-                        <path d="M89.6,0H16.8C7.5,0,0,7.3,0,16.2v38.5c0,9,7.5,16.2,16.8,16.2h25.1l8.6,13.4s0,.2.3.4c.5.8,1.4,1.4,2.5,1.4s2-.6,2.5-1.4c.2-.2.3-.4.3-.4l8.6-13.4h25.1c9.3,0,16.8-7.3,16.8-16.2V16.2C106.4,7.3,98.9,0,89.6,0h0ZM23.6,48.1c-3.9,0-5.5-2.8-5.5-2.8v2.1h-6.6v-27.1h6.5v10.3c2.6-2.6,5.5-2.6,5.5-2.6,8.8,0,9.2,9.9,9.2,9.9,0,9.8-9.2,10.1-9.2,10.1h0ZM44.2,29.9v17.5h-6.3v-16.1c0-5.5-3-5.4-3-5.4v-6.3c9.5,0,9.2,10.2,9.2,10.2ZM70.5,38.2c0,9.9-11,9.9-11,9.9-11.1,0-10.8-9.9-10.8-9.9,0-10,10.8-10.1,10.8-10.1,11.4,0,11,10.1,11,10.1ZM94.8,47.2c0,10.3-9.5,10.2-9.5,10.2h-2.5v-5.8h1.6c4.6,0,4.2-4.8,4.2-4.8v-1.5c-2,2.6-5.7,2.5-5.7,2.5-9.1,0-9-9.7-9-9.7,0-10.4,9.2-10,9.2-10,3.6,0,5.5,2.5,5.5,2.5v-1.8h6.3v18.4h0Z"/>
-                        <path d="M22.2,34c-2.3,0-4.2,1.9-4.2,4.2s1.9,4.2,4.2,4.2,4.2-1.9,4.2-4.2-1.9-4.2-4.2-4.2Z"/>
-                      </svg>
-                    </a>
-                  </div>
+                {/* Company Info */}
+                <div className="flex flex-col gap-1.5 text-xs text-white/35 leading-relaxed">
+                  <p className="text-white/50 font-medium text-sm">{t.footerCompany}</p>
+                  <p>{t.footerAddress} &nbsp;|&nbsp; {t.footerCeo}</p>
+                  <p>Tel: 02-561-4475 &nbsp;|&nbsp; Fax: 02-561-4479</p>
+                  <p>문의: hhpark1425@bimatrix.co.kr</p>
+                  <p className="mt-1">© BI MATRIX CO., LTD. ALL RIGHTS RESERVED.</p>
+                </div>
 
-                  {/* Nav Links */}
-                  <div className="flex items-center gap-6 text-sm text-white/50">
-                    <a href="https://www.bimatrix.co.kr/privacy/" target="_blank" className="hover:text-white/80 transition">
-                      {t.footerPrivacy}</a>
-                    <span className="text-white/20">|</span>
-                    <a href="https://www.bimatrix.co.kr/pr/newsletter/subscription/" target="_blank" className="hover:text-white/80 transition">
-                      {t.footerNewsletter}</a>
-                    <span className="text-white/20">|</span>
-                    <a href="mailto:hhpark1425@bimatrix.co.kr" target="_blank" className="hover:text-white/80 transition">
-                      {t.footerContact}</a>
-                  </div>
                 </div>
 
                 {/* Right: Family Site Dropdown */}
@@ -1192,15 +1492,12 @@
 
             {/* Footer Bottom */}
             <div className="footer-bottom">
-              <div className="mx-auto max-w-7xl px-8 py-6 flex items-end justify-between gap-8">
-                {/* Company Info */}
-                <div className="flex flex-col gap-1.5 text-xs text-white/35 leading-relaxed">
-                  <p className="text-white/50 font-medium text-sm">{t.footerCompany}</p>
-                  <p>{t.footerAddress} &nbsp;|&nbsp; {t.footerCeo}</p>
-                  <p>Tel: 02-561-4475 &nbsp;|&nbsp; Fax: 02-561-4479</p>
-                  <p className="mt-1">© BI MATRIX CO., LTD. ALL RIGHTS RESERVED.</p>
+              <div className="mx-auto max-w-7xl px-8 py-6 flex items-end justify-between gap-8" style={{ marginTop: "-2.5rem" }}>
+                {/* Nav Links */}
+                <div className="flex items-center gap-6 text-sm text-white/50">
+                  <a href="https://www.bimatrix.co.kr/privacy/" target="_blank" className="hover:text-white/80 transition">
+                    {t.footerPrivacy}</a>
                 </div>
-
                 {/* BI MATRIX Logo */}
                 <div className="flex-shrink-0">
                   <img
